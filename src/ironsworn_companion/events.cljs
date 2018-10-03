@@ -52,7 +52,7 @@
  :update-char
  validate-spec
  (fn [db [_ [char-name prop-path value]]]
-   (update-in db
+   (assoc-in db
               (vec
                (concat [:characters char-name]
                        prop-path))

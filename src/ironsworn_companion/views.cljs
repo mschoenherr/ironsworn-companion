@@ -39,7 +39,7 @@
      [text (:name @char)]
      (for [stat (sort-by first (seq (:stats @char)))]
        ^{:key stat}
-       [stat-view (:name char) stat])]))
+       [stat-view name stat])]))
 
 (defn chars-view []
   "Component for viewing all chars in db."
