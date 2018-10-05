@@ -27,10 +27,14 @@
   [view
    [text stat-name]
    [text stat-value]
-   [button {:title "+" :on-press #(dispatch [:update-char
+   [button {:title "+" :on-press #(dispatch [:mod-stat
                                              [char-name
-                                              [:stats stat-name]
-                                              (inc stat-value)]])}]])
+                                              stat-name
+                                              1]])}]
+   [button {:title "-" :on-press #(dispatch [:mod-stat
+                                             [char-name
+                                              stat-name
+                                              -1]])}]])
 
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."

@@ -69,3 +69,8 @@
              :roll-result nil
              :active-screen :journal
              :oracle "Unclear Future"})
+
+;; model functions
+(defn mod-stat [num value]
+  "Modifies num by value, assuring it remains in [1,4]."
+  (max 1 (min 4 (+ num value))))

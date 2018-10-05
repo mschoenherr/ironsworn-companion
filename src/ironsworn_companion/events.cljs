@@ -49,11 +49,9 @@
    (update-in db [:nav-history] pop)))
 
 (reg-event-db
- :update-char
+ :mod-stat
  validate-spec
- (fn [db [_ [char-name prop-path value]]]
-   (assoc-in db
-              (vec
-               (concat [:characters char-name]
-                       prop-path))
-              value)))
+ (fn [db [_ [char-name stat-name value]]]
+   (update-in db
+              [:characters char-name :stats stat-name]
+              db/mod-stat value)))
