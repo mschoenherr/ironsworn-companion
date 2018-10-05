@@ -81,7 +81,7 @@
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
-    [scroll-view
+    [view
      [text (:name @char)]
      [ini-view name (:initiative @char)]
      [momentum-view name (:momentum @char)]
@@ -95,10 +95,11 @@
 (defn chars-view []
   "Component for viewing all chars in db."
   (let [chars (subscribe [:get-chars])]
-    [view
-     (for [char-name (keys @chars)]
-       ^{:key char-name}
-       [char-view char-name])]))
+    [view {:style {:flex 7}}
+     [scroll-view 
+      (for [char-name (keys @chars)]
+        ^{:key char-name}
+        [char-view char-name])]]))
 
 ;; Nav-views
 (defn choose-screen []

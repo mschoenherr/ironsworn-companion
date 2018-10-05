@@ -12,8 +12,8 @@
 
 ;; Set the entry point for app-root
 (defn app-root []
-  [view
-   [tool-bar {:title "Ironsworn" :height 64 :actions [{:title "Journal"} {:title "Character"}]
+  [view {:style {:flex 1}}
+   [tool-bar {:title "Ironsworn" :style {:flex 1} :actions [{:title "Journal"} {:title "Character"}]
               :on-action-selected #(case %
                                          0 (dispatch [:set-screen :journal])
                                          1 (dispatch [:set-screen :chars]))}]
