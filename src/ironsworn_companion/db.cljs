@@ -18,8 +18,7 @@
 (s/def ::lvl #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
 (s/def ::progress (s/tuple ::lvl ::progress-track))
 
-(s/def ::vow (s/tuple ::name ::progress))
-(s/def ::vows (s/coll-of ::vow))
+(s/def ::vows (s/map-of ::name ::progress))
 
 (s/def ::bond-names (s/coll-of ::name))
 (s/def ::bonds (s/keys :req-un [::bond-names ::progress]))
@@ -28,8 +27,8 @@
 (s/def ::resource-name #{"Health" "Spirit" "Supply"})
 (s/def ::resources (s/map-of ::resource-name ::resource))
 
-(s/def ::debility (s/tuple ::name boolean?))
-(s/def ::debilites (s/coll-of ::debility))
+(s/def ::debility #{"Wounded Unprepared Shaken Encumbered Maimed Corrupted Cursed Tormented"})
+(s/def ::debilites (s/map-of ::debility boolean?))
 
 (s/def ::initiative boolean?)
 
@@ -59,10 +58,10 @@
              :characters {"Hans" {:name "Hans"
                                   :momentum 2
                                   :stats {"Edge" 2 "Heart" 2}
-                                  :vows [["Tear down that wall" ["Dangerous" 0]]]
+                                  :vows {"Tear down that wall" ["Dangerous" 0]}
                                   :bonds {:bond-names ["Georg"] :progress ["Dangerous" 3]}
                                   :resources {"Health" 0}
-                                  :debilities [["Wounded" false]]
+                                  :debilities {"Wounded" false}
                                   :initiative false}}
              :active-char nil
              :nav-history (list)
