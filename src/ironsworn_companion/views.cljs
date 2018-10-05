@@ -11,6 +11,7 @@
 (def text-input (r/adapt-react-class (.-TextInput ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
 (def button (r/adapt-react-class (.-Button ReactNative)))
+(def switch-comp (r/adapt-react-class (.-Switch ReactNative)))
 
 (defn- sorted-hash-seq [m]
   "Returns a (seq m) sorted by first."
@@ -54,11 +55,19 @@
                                               res-name
                                               -1]])}]])
 
+(defn ini-view [char-name value]
+  "Component for rendering initiative for given char."
+  [view
+   [text "Initiative"]
+   [switch-comp {:value value :on-value-change #(dispatch [:set-ini
+                                                           [char-name %]])}]])
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
     [view
      [text (:name @char)]
+     [ini-view name (:initiative @char)]
      (for [stat (sorted-hash-seq (:stats @char))]
        ^{:key stat}
        [stat-view name stat])

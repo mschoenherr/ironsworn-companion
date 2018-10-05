@@ -77,3 +77,4 @@
 (defn mod-res [num value]
   "Modifies num by value, assuring it remains in [0,5]."
   (max 0 (min 5 (+ num value))))
+

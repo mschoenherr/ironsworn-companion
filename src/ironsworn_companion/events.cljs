@@ -63,3 +63,11 @@
    (update-in db
               [:characters char-name :resources res-name]
               db/mod-res value)))
+
+(reg-event-db
+ :set-ini
+ validate-spec
+ (fn [db [_ [char-name value]]]
+   (assoc-in db
+              [:characters char-name :initiative]
+              value)))
