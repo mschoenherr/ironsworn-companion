@@ -55,3 +55,11 @@
    (update-in db
               [:characters char-name :stats stat-name]
               db/mod-stat value)))
+
+(reg-event-db
+ :mod-res
+ validate-spec
+ (fn [db [_ [char-name res-name value]]]
+   (update-in db
+              [:characters char-name :resources res-name]
+              db/mod-res value)))

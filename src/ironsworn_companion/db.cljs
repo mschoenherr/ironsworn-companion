@@ -74,3 +74,7 @@
 (defn mod-stat [num value]
   "Modifies num by value, assuring it remains in [1,4]."
   (max 1 (min 4 (+ num value))))
+
+(defn mod-res [num value]
+  "Modifies num by value, assuring it remains in [0,5]."
+  (max 0 (min 5 (+ num value))))

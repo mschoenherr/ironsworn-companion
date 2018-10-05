@@ -12,6 +12,10 @@
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
 (def button (r/adapt-react-class (.-Button ReactNative)))
 
+(defn- sorted-hash-seq [m]
+  "Returns a (seq m) sorted by first."
+  (sort-by first (seq m)))
+
 (defn journal-view []
   "View for reading journal and inserting new entries."
   (let [journal (subscribe [:get-journal])]
@@ -36,14 +40,31 @@
                                               stat-name
                                               -1]])}]])
 
+(defn res-view [char-name [res-name res-value]]
+  "Component for rendering and updating resources."
+  [view
+   [text res-name]
+   [text res-value]
+   [button {:title "+" :on-press #(dispatch [:mod-res
+                                             [char-name
+                                              res-name
+                                              1]])}]
+   [button {:title "-" :on-press #(dispatch [:mod-res
+                                             [char-name
+                                              res-name
+                                              -1]])}]])
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
     [view
      [text (:name @char)]
-     (for [stat (sort-by first (seq (:stats @char)))]
+     (for [stat (sorted-hash-seq (:stats @char))]
        ^{:key stat}
-       [stat-view name stat])]))
+       [stat-view name stat])
+     (for [res (sorted-hash-seq (:resources @char))]
+       ^{:key res}
+       [res-view name res])]))
 
 (defn chars-view []
   "Component for viewing all chars in db."
