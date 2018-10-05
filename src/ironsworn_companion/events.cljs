@@ -71,3 +71,21 @@
    (assoc-in db
               [:characters char-name :initiative]
               value)))
+
+(reg-event-db
+ :mod-momentum
+ validate-spec
+ (fn [db [_ [char-name value]]]
+   (let [debilities (get-in db [:characters char-name :debilities])]
+     (update-in db
+                [:characters char-name :momentum]
+                db/mod-momentum value debilities))))
+
+(reg-event-db
+ :reset-momentum
+ validate-spec
+ (fn [db [_ char-name]]
+   (let [debilities (get-in db [:characters char-name :debilities])]
+     (update-in db
+                [:characters char-name :momentum]
+                db/reset-momentum debilities))))

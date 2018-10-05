@@ -78,3 +78,18 @@
   "Modifies num by value, assuring it remains in [0,5]."
   (max 0 (min 5 (+ num value))))
 
+(defn mod-momentum [num value debilities]
+  "Modifies num by value, taking into account the number of marked debilities."
+  (let [num-debs (count (filter second debilities))]
+      (max -6
+        (min (- 10 num-debs)
+             (+ num value)))))
+
+(defn reset-momentum [num debilities]
+  "Resets Momentum based on the number of debilities marked."
+  (let [num-debs (count (filter second debilities))]
+    (case num-debs
+      0 2
+      1 1
+      0)))
+
