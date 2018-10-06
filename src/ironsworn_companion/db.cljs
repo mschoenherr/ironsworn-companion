@@ -2,7 +2,13 @@
   (:require [clojure.spec.alpha :as s]))
 
 ;; spec of app-db
+
+(defn valid-ticks? [ticks]
+  "Returns false if ticks are not valid."
+  (and (<= ticks 40) (>= ticks 0)))
+
 (def non-empty-string? (s/and string? (comp not empty?)))
+
 (s/def ::journal-entry non-empty-string?)
 (s/def ::journal (s/coll-of ::journal-entry))
 
@@ -20,8 +26,7 @@
 
 (s/def ::vows (s/map-of ::name ::progress))
 
-(s/def ::bond-names (s/coll-of ::name))
-(s/def ::bonds (s/keys :req-un [::bond-names ::progress]))
+(s/def ::bonds (s/and integer? valid-ticks?))
 
 (s/def ::resource (s/and integer? #(<= % 5) #(>= % 0)))
 (s/def ::resource-name #{"Health" "Spirit" "Supply"})
@@ -59,7 +64,7 @@
                                   :momentum 2
                                   :stats {"Edge" 2 "Heart" 2}
                                   :vows {"Tear down that wall" ["Dangerous" 0]}
-                                  :bonds {:bond-names ["Georg"] :progress ["Dangerous" 3]}
+                                  :bonds 3 
                                   :resources {"Health" 0}
                                   :debilities {"Wounded" false}
                                   :initiative false}}
@@ -103,7 +108,12 @@
                        "Extreme" 2
                        "Epic" 1))
         new-ticks (+ ticks increment)]
-    (if (and (<= new-ticks 40) (>= new-ticks 0))
+    (if (valid-ticks? new-ticks)
       [lvl new-ticks]
       [lvl ticks])))
 
+(defn mod-bond-ticks [ticks value]
+  "Updated bond ticks adjusted by lvl."
+  (let [new-ticks (+ ticks value)]
+    (max 0
+         (min 40 new-ticks))))

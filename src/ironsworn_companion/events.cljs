@@ -105,3 +105,10 @@
    (update-in db
               [:characters char-name :vows vow-name]
               db/mod-progress value)))
+(reg-event-db
+ :mod-bonds
+ validate-spec
+ (fn [db [_ [char-name value]]]
+   (update-in db
+              [:characters char-name :bonds]
+              db/mod-bond-ticks value)))

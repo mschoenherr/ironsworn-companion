@@ -100,6 +100,19 @@
                                               vow-name
                                               1]])}]])
 
+(defn bonds-view [char-name ticks]
+  "Component for rendering bonds."
+  [view
+   [text "Bonds"]
+   [button {:title "-" :on-press #(dispatch [:mod-bonds
+                                             [char-name
+                                              -1]])}]
+   [text ticks]
+   [button {:title "+" :on-press #(dispatch [:mod-bonds
+                                             [char-name
+                                              1]])}]])
+
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
@@ -118,7 +131,8 @@
        [debility-view name deb])
      (for [vow (sorted-hash-seq (:vows @char))]
        ^{:key vow}
-       [vow-view name vow])]))
+       [vow-view name vow])
+     [bonds-view name (:bonds @char)]]))
 
 (defn chars-view []
   "Component for viewing all chars in db."
