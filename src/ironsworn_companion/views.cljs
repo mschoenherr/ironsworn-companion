@@ -64,6 +64,13 @@
    [switch-comp {:value value :on-value-change #(dispatch [:set-ini
                                                            [char-name %]])}]])
 
+(defn debility-view [char-name [deb-name value]]
+  "Component for rendering debility for given char."
+  [view
+   [text deb-name]
+   [switch-comp {:value value :on-value-change #(dispatch [:set-debility
+                                                           [char-name deb-name %]])}]])
+
 (defn momentum-view [char-name value]
   "Component for rendering momentum for a given char."
   [view
@@ -90,7 +97,10 @@
        [stat-view name stat])
      (for [res (sorted-hash-seq (:resources @char))]
        ^{:key res}
-       [res-view name res])]))
+       [res-view name res])
+     (for [deb (sorted-hash-seq (:debilities @char))]
+       ^{:key deb}
+       [debility-view name deb])]))
 
 (defn chars-view []
   "Component for viewing all chars in db."

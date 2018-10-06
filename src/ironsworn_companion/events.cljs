@@ -73,6 +73,14 @@
               value)))
 
 (reg-event-db
+ :set-debility
+ validate-spec
+ (fn [db [_ [char-name deb-name value]]]
+   (assoc-in db
+             [:characters char-name :debilities deb-name]
+             value)))
+
+(reg-event-db
  :mod-momentum
  validate-spec
  (fn [db [_ [char-name value]]]
