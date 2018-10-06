@@ -93,3 +93,17 @@
       1 1
       0)))
 
+(defn mod-progress [[lvl ticks] value]
+  "Updates progress ticks adjusted by value and lvl."
+  (let [increment (* value
+                     (case lvl
+                       "Troublesome" 12
+                       "Dangerous" 8
+                       "Formidable" 4
+                       "Extreme" 2
+                       "Epic" 1))
+        new-ticks (+ ticks increment)]
+    (if (and (<= new-ticks 40) (>= new-ticks 0))
+      [lvl new-ticks]
+      [lvl ticks])))
+

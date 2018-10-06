@@ -85,6 +85,21 @@
    [button {:title "Reset" :on-press #(dispatch [:reset-momentum
                                                  char-name])}]])
 
+(defn vow-view [char-name [vow-name [lvl ticks]]]
+  "Component for rendering vows."
+  [view
+   [text vow-name]
+   [text lvl]
+   [button {:title "-" :on-press #(dispatch [:mod-vow
+                                             [char-name
+                                              vow-name
+                                              -1]])}]
+   [text ticks]
+   [button {:title "+" :on-press #(dispatch [:mod-vow
+                                             [char-name
+                                              vow-name
+                                              1]])}]])
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
@@ -100,7 +115,10 @@
        [res-view name res])
      (for [deb (sorted-hash-seq (:debilities @char))]
        ^{:key deb}
-       [debility-view name deb])]))
+       [debility-view name deb])
+     (for [vow (sorted-hash-seq (:vows @char))]
+       ^{:key vow}
+       [vow-view name vow])]))
 
 (defn chars-view []
   "Component for viewing all chars in db."

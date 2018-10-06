@@ -97,3 +97,11 @@
      (update-in db
                 [:characters char-name :momentum]
                 db/reset-momentum debilities))))
+
+(reg-event-db
+ :mod-vow
+ validate-spec
+ (fn [db [_ [char-name vow-name value]]]
+   (update-in db
+              [:characters char-name :vows vow-name]
+              db/mod-progress value)))
