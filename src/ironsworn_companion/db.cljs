@@ -1,6 +1,24 @@
 (ns ironsworn-companion.db
   (:require [clojure.spec.alpha :as s]))
 
+;; default values
+
+(def new-char {:name "New Char"
+               :momentum 2
+               :stats {"Edge" 1 "Heart" 1 "Iron" 1 "Shadow" 1 "Wits" 1}
+               :vows {}
+               :bonds 3 
+               :resources {"Health" 5 "Spirit" 5 "Supply" 5}
+               :debilities {"Wounded" false
+                            "Shaken" false
+                            "Unprepared" false
+                            "Encumbered" false
+                            "Maimed" false
+                            "Corrupted" false
+                            "Tormented" false
+                            "Cursed" false}
+               :initiative false})
+
 ;; spec of app-db
 
 (defn valid-ticks? [ticks]
@@ -60,14 +78,7 @@
 
 ;; initial state of app-db
 (def app-db {:journal (list)
-             :characters {"Hans" {:name "Hans"
-                                  :momentum 2
-                                  :stats {"Edge" 2 "Heart" 2}
-                                  :vows {"Tear down that wall" ["Dangerous" 0]}
-                                  :bonds 3 
-                                  :resources {"Health" 0}
-                                  :debilities {"Wounded" false}
-                                  :initiative false}}
+             :characters {"Hans" (assoc new-char :name "Hans")}
              :active-char nil
              :nav-history (list)
              :roll-result nil

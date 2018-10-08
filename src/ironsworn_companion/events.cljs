@@ -112,3 +112,11 @@
    (update-in db
               [:characters char-name :bonds]
               db/mod-bond-ticks value)))
+
+(reg-event-db
+ :insert-new-char
+ validate-spec
+ (fn [db [_ char-name]]
+   (assoc-in db
+             [:characters char-name]
+             (assoc db/new-char :name char-name))))

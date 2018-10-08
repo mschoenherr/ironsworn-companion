@@ -136,12 +136,20 @@
 
 (defn chars-view []
   "Component for viewing all chars in db."
-  (let [chars (subscribe [:get-chars])]
-    [view {:style {:flex 7}}
-     [scroll-view 
-      (for [char-name (keys @chars)]
-        ^{:key char-name}
-        [char-view char-name])]]))
+  (let [chars (subscribe [:get-chars])
+        input-new-char? (atom false)]
+    (fn []
+      [view {:style {:flex 7}}
+      [scroll-view 
+       (for [char-name (keys @chars)]
+         ^{:key char-name}
+         [char-view char-name])
+       (if @input-new-char?
+         [text-input {:on-submit-editing #(do
+                                            (dispatch [:insert-new-char (.. % -nativeEvent -text)])
+                                            (swap! input-new-char? not))
+                      :width 128 :placeholder "Character Name"}]
+         [button {:title "New Character" :on-press #(swap! input-new-char? not)}])]])))
 
 ;; Nav-views
 (defn choose-screen []
