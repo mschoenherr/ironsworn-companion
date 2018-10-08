@@ -13,10 +13,13 @@
 ;; Set the entry point for app-root
 (defn app-root []
   [view {:style {:flex 1}}
-   [tool-bar {:title "Ironsworn" :style {:flex 1} :actions [{:title "Journal"} {:title "Character"}]
+   [tool-bar {:title "Ironsworn" :style {:flex 1}
+              :actions [{:title "Journal"} {:title "Character"}
+                        {:title "Progress Tracks"}]
               :on-action-selected #(case %
                                          0 (dispatch [:set-screen :journal])
-                                         1 (dispatch [:set-screen :chars]))}]
+                                         1 (dispatch [:set-screen :chars])
+                                         2 (dispatch [:set-screen :progress-tracks]))}]
    [views/choose-screen]])
 
 (defn init []

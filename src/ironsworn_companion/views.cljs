@@ -1,6 +1,7 @@
 (ns ironsworn-companion.views
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [ironsworn-companion.db :as db]
             [ironsworn-companion.events]
             [ironsworn-companion.subs]))
 
@@ -12,6 +13,8 @@
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
 (def button (r/adapt-react-class (.-Button ReactNative)))
 (def switch-comp (r/adapt-react-class (.-Switch ReactNative)))
+(def picker (r/adapt-react-class (.-Picker ReactNative)))
+(def picker-item (r/adapt-react-class (.. ReactNative -Picker -Item)))
 
 (defn- sorted-hash-seq [m]
   "Returns a (seq m) sorted by first."
@@ -97,8 +100,7 @@
    [text ticks]
    [button {:title "+" :on-press #(dispatch [:mod-vow
                                              [char-name
-                                              vow-name
-                                              1]])}]])
+                                              vow-name 1]])}]])
 
 (defn bonds-view [char-name ticks]
   "Component for rendering bonds."
@@ -159,6 +161,46 @@
                       :placeholder "Type name of character to delete"}]
          [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
+(defn progress-view [[name [lvl ticks]]]
+  "Component for viewing progress track."
+  (let [delete-prog? (atom false)]
+   (fn [[name [lvl ticks]]]
+     [view
+      [text name]
+      (if @delete-prog?
+        [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name])}]
+        [button {:title "Delete"} :on-press #(swap! delete-prog? not)])
+      [picker {:selected-value lvl
+               :on-value-change (fn [val index]
+                                  (dispatch [:mod-progress-lvl [name val]]))}
+       (for [level (sort db/levels)]
+         ^{:key level}
+         [picker-item {:label level :value level}])]
+      [button {:title "-" :on-press #(dispatch [:mod-progress
+                                                [name
+                                                 -1]]
+                                               )}]
+      [text ticks]
+      [button {:title "+" :on-press #(dispatch [:mod-progress
+                                                [name
+                                                 1]])}]])))
+
+(defn progress-tracks-view []
+  "Component for viewing all progress-tracks."
+  (let [pts (subscribe [:get-progress-tracks])
+        input-new-pt? (atom false)]
+    (fn []
+      [view {:style {:flex 7}}
+       (for [pt (sorted-hash-seq @pts)]
+         ^{:key pt}
+         [progress-view pt])
+       (if @input-new-pt?
+         [text-input {:on-submit-editing #(do
+                                            (dispatch [:insert-new-pt (.. % -nativeEvent -text)])
+                                            (swap! input-new-pt? not))
+                      :width 128 :placeholder "Name"}]
+         [button {:title "New" :on-press #(swap! input-new-pt? not)}])])))
+
 ;; Nav-views
 (defn choose-screen []
   "High-level view that simply invokes the component corresponding to ::active-screen."
@@ -166,6 +208,7 @@
     (case @active-screen
       :journal [journal-view]
       :chars [chars-view]
+      :progress-tracks [progress-tracks-view]
       :default [text "hi"])))
 
 

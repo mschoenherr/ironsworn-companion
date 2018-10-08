@@ -36,3 +36,8 @@
  :get-oracle
  (fn [db _]
    (:oracle db)))
+
+(reg-sub
+ :get-progress-tracks
+ (fn [db _]
+   (:progress-tracks db)))

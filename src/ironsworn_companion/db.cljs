@@ -19,6 +19,8 @@
                             "Cursed" false}
                :initiative false})
 
+(def levels #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
+
 ;; spec of app-db
 
 (defn valid-ticks? [ticks]
@@ -39,8 +41,10 @@
 (s/def ::stats (s/map-of ::stat-name ::stat))
 
 (s/def ::progress-track (s/and integer? #(<= % 40) #(>= % 0)))
-(s/def ::lvl #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
+(s/def ::lvl levels)
 (s/def ::progress (s/tuple ::lvl ::progress-track))
+
+(s/def ::progress-tracks (s/map-of ::name ::progress))
 
 (s/def ::vows (s/map-of ::name ::progress))
 
@@ -68,21 +72,21 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :oracle})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :oracle :progress-tracks})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
-
 (s/def ::app-db
-  (s/keys :req-un [::journal ::characters ::active-char ::roll-result ::oracle ::active-screen ::nav-history]))
+  (s/keys :req-un [::journal ::characters ::progress-tracks ::active-char ::roll-result ::oracle ::active-screen ::nav-history]))
 
 ;; initial state of app-db
 (def app-db {:journal (list)
              :characters {}
+             :progress-tracks {}
              :active-char nil
              :nav-history (list)
              :roll-result nil
-             :active-screen :journal
+             :active-screen :chars
              :oracle "Unclear Future"})
 
 ;; model functions
