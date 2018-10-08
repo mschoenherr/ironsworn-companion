@@ -120,3 +120,11 @@
    (assoc-in db
              [:characters char-name]
              (assoc db/new-char :name char-name))))
+
+(reg-event-db
+ :delete-char
+ validate-spec
+ (fn [db [_ char-name]]
+   (update db
+           :characters
+           #(dissoc % char-name))))

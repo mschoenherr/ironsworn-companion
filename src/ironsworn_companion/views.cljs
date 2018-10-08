@@ -137,7 +137,8 @@
 (defn chars-view []
   "Component for viewing all chars in db."
   (let [chars (subscribe [:get-chars])
-        input-new-char? (atom false)]
+        input-new-char? (atom false)
+        delete-char? (atom false)]
     (fn []
       [view {:style {:flex 7}}
       [scroll-view 
@@ -149,7 +150,14 @@
                                             (dispatch [:insert-new-char (.. % -nativeEvent -text)])
                                             (swap! input-new-char? not))
                       :width 128 :placeholder "Character Name"}]
-         [button {:title "New Character" :on-press #(swap! input-new-char? not)}])]])))
+         [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
+       (if @delete-char?
+         [text-input {:on-submit-editing #(do
+                                            (dispatch [:delete-char (.. % -nativeEvent -text)])
+                                            (swap! delete-char? not))
+                      :width 128
+                      :placeholder "Type name of character to delete"}]
+         [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
 ;; Nav-views
 (defn choose-screen []

@@ -78,7 +78,7 @@
 
 ;; initial state of app-db
 (def app-db {:journal (list)
-             :characters {"Hans" (assoc new-char :name "Hans")}
+             :characters {}
              :active-char nil
              :nav-history (list)
              :roll-result nil
