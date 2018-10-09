@@ -169,7 +169,7 @@
       [text name]
       (if @delete-prog?
         [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name])}]
-        [button {:title "Delete"} :on-press #(swap! delete-prog? not)])
+        [button {:title "Delete" :on-press #(swap! delete-prog? not)}])
       [picker {:selected-value lvl
                :on-value-change (fn [val index]
                                   (dispatch [:mod-progress-lvl [name val]]))}
