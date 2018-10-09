@@ -122,7 +122,7 @@
                        "Formidable" 4
                        "Extreme" 2
                        "Epic" 1))
-        new-ticks (+ ticks increment)]
+        new-ticks (max 0 (min 40 (+ ticks increment)))]
     (if (valid-ticks? new-ticks)
       [lvl new-ticks]
       [lvl ticks])))

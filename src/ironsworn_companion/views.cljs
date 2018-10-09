@@ -88,19 +88,37 @@
    [button {:title "Reset" :on-press #(dispatch [:reset-momentum
                                                  char-name])}]])
 
+(defn progress-view [[name [lvl ticks]] & {:keys [location char-name]
+                                           :or {location :progress-tracks
+                                                char-name nil}}]
+  "Component for viewing progress track."
+  (let [delete-prog? (atom false)]
+    (fn [[name [lvl ticks]] & {:keys [location char-name]
+                               :or {location :progress-tracks
+                                    char-name nil}}]
+     [view
+      [text name]
+      (if @delete-prog?
+        [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name :location location :char-name char-name])}]
+        [button {:title "Delete" :on-press #(swap! delete-prog? not)}])
+      [picker {:selected-value lvl
+               :on-value-change (fn [val index]
+                                  (dispatch [:mod-progress-lvl [name val] :location location
+                                             :char-name char-name]))}
+       (for [level (sort db/levels)]
+         ^{:key level}
+         [picker-item {:label level :value level}])]
+      [button {:title "-" :on-press #(dispatch [:mod-progress
+                                                [name -1]
+                                                :location location :char-name char-name])}]
+      [text ticks]
+      [button {:title "+" :on-press #(dispatch [:mod-progress
+                                                [name 1]
+                                                :location location :char-name char-name])}]])))
+
 (defn vow-view [char-name [vow-name [lvl ticks]]]
   "Component for rendering vows."
-  [view
-   [text vow-name]
-   [text lvl]
-   [button {:title "-" :on-press #(dispatch [:mod-vow
-                                             [char-name
-                                              vow-name
-                                              -1]])}]
-   [text ticks]
-   [button {:title "+" :on-press #(dispatch [:mod-vow
-                                             [char-name
-                                              vow-name 1]])}]])
+  [progress-view [vow-name [lvl ticks]] :location :vows :char-name char-name])
 
 (defn bonds-view [char-name ticks]
   "Component for rendering bonds."
@@ -134,6 +152,10 @@
      (for [vow (sorted-hash-seq (:vows @char))]
        ^{:key vow}
        [vow-view name vow])
+     [text-input {:on-submit-editing #(do
+                                        (dispatch [:insert-new-pt (.. % -nativeEvent -text)
+                                                   :location :vows :char-name name]))
+                  :width 128 :placeholder "New bond name"}]
      [bonds-view name (:bonds @char)]]))
 
 (defn chars-view []
@@ -161,29 +183,7 @@
                       :placeholder "Type name of character to delete"}]
          [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
-(defn progress-view [[name [lvl ticks]]]
-  "Component for viewing progress track."
-  (let [delete-prog? (atom false)]
-   (fn [[name [lvl ticks]]]
-     [view
-      [text name]
-      (if @delete-prog?
-        [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name])}]
-        [button {:title "Delete" :on-press #(swap! delete-prog? not)}])
-      [picker {:selected-value lvl
-               :on-value-change (fn [val index]
-                                  (dispatch [:mod-progress-lvl [name val]]))}
-       (for [level (sort db/levels)]
-         ^{:key level}
-         [picker-item {:label level :value level}])]
-      [button {:title "-" :on-press #(dispatch [:mod-progress
-                                                [name
-                                                 -1]]
-                                               )}]
-      [text ticks]
-      [button {:title "+" :on-press #(dispatch [:mod-progress
-                                                [name
-                                                 1]])}]])))
+
 
 (defn progress-tracks-view []
   "Component for viewing all progress-tracks."

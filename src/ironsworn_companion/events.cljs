@@ -99,43 +99,50 @@
                 db/reset-momentum debilities))))
 
 (reg-event-db
- :mod-vow
- validate-spec
- (fn [db [_ [char-name vow-name value]]]
-   (update-in db
-              [:characters char-name :vows vow-name]
-              db/mod-progress value)))
-
-(reg-event-db
  :mod-progress
  validate-spec
- (fn [db [_ [pt-name value]]]
-   (update-in db
-              [:progress-tracks pt-name]
-              db/mod-progress value)))
+ (fn [db [_ [pt-name value] & {:keys [location char-name]}]]
+   (case location
+     :progress-tracks (update-in db
+                                 [:progress-tracks pt-name]
+                                 db/mod-progress value)
+     :vows (update-in db
+                      [:characters char-name :vows pt-name]
+                      db/mod-progress value))))
 
 (reg-event-db
  :mod-progress-lvl
  validate-spec
- (fn [db [_ [pt-name lvl]]]
-   (assoc-in db
-              [:progress-tracks pt-name 0]
-              lvl)))
+ (fn [db [_ [pt-name lvl] & {:keys [location char-name]}]]
+   (case location
+     :progress-tracks (assoc-in db
+                                [:progress-tracks pt-name 0]
+                                lvl)
+     :vows (assoc-in db
+                     [:characters char-name :vows pt-name 0]
+                     lvl))))
 
 (reg-event-db
  :insert-new-pt
  validate-spec
- (fn [db [_ pt-name]]
-   (assoc-in db
-             [:progress-tracks pt-name]
-             ["Dangerous" 0])))
+ (fn [db [_ pt-name & {:keys [location char-name]}]]
+   (case location
+     :progress-tracks (assoc-in db
+                                [:progress-tracks pt-name]
+                                ["Dangerous" 0])
+     :vows (assoc-in db
+                     [:characters char-name :vows pt-name]
+                     ["Dangerous" 0]))))
 
 (reg-event-db
  :delete-prog
  validate-spec
- (fn [db [_ pt-name]]
-   (update db :progress-tracks
-           #(dissoc % pt-name))))
+ (fn [db [_ pt-name & {:keys [location char-name]}]]
+   (case location
+     :progress-tracks (update db :progress-tracks
+                              #(dissoc % pt-name))
+     :vows (update-in db [:characters char-name :vows]
+                      #(dissoc % pt-name)))))
 
 (reg-event-db
  :mod-bonds
