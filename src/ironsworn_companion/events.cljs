@@ -167,3 +167,11 @@
    (update db
            :characters
            #(dissoc % char-name))))
+
+(reg-event-db
+ :set-active-move
+ validate-spec
+ (fn [db [_ move]]
+   (assoc db
+           :active-move
+           move)))

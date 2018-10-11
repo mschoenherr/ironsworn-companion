@@ -1,5 +1,6 @@
 (ns ironsworn-companion.db
-  (:require [clojure.spec.alpha :as s]))
+  (:require [clojure.spec.alpha :as s]
+            [ironsworn-companion.moves :refer [all-moves]]))
 
 ;; default values
 
@@ -28,6 +29,8 @@
   (and (<= ticks 40) (>= ticks 0)))
 
 (def non-empty-string? (s/and string? (comp not empty?)))
+
+(def integer-proba? (s/and integer? #(<= % 100) #(>= % 1)))
 
 (s/def ::journal-entry non-empty-string?)
 (s/def ::journal (s/coll-of ::journal-entry))
@@ -76,8 +79,24 @@
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
+(s/def ::description ::name)
+(s/def ::result-name #{"Strong Hit" "Weak Hit" "Miss" "Random Event"})
+(s/def ::options (s/or :empty nil?
+                       :list (s/coll-of ::description)))
+(s/def ::random-event (s/tuple integer-proba? ::description))
+(s/def ::random-events (s/or :empty nil?
+                             :list (s/coll-of ::random-event)))
+(s/def ::result (s/keys ::req-un [::description ::options ::random-events]))
+(s/def ::results (s/map-of ::result-name ::result))
+(s/def ::move-type #{:normal :progress :progress-vow :progress-bonds})
+
+(s/def ::move (s/keys ::req-un [::move-type ::name ::description ::results]))
+(s/def ::moves (s/coll-of ::move))
+(s/def ::active-move (s/or :empty nil?
+                           :move ::move))
+
 (s/def ::app-db
-  (s/keys :req-un [::journal ::characters ::progress-tracks ::active-char ::roll-result ::oracle ::active-screen ::nav-history]))
+  (s/keys :req-un [::journal ::characters ::progress-tracks ::active-char ::roll-result ::oracle ::active-screen ::nav-history ::moves ::active-move]))
 
 ;; initial state of app-db
 (def app-db {:journal (list)
@@ -87,7 +106,9 @@
              :nav-history (list)
              :roll-result nil
              :active-screen :chars
-             :oracle "Unclear Future"})
+             :oracle "Unclear Future"
+             :moves all-moves
+             :active-move nil})
 
 ;; model functions
 (defn mod-stat [num value]

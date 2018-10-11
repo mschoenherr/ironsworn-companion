@@ -41,3 +41,13 @@
  :get-progress-tracks
  (fn [db _]
    (:progress-tracks db)))
+
+(reg-sub
+ :get-moves
+ (fn [db _]
+   (:moves db)))
+
+(reg-sub
+ :get-active-move
+ (fn [db _]
+   (:active-move db)))

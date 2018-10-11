@@ -201,6 +201,28 @@
                       :width 128 :placeholder "Name"}]
          [button {:title "New" :on-press #(swap! input-new-pt? not)}])])))
 
+(defn move-link [move]
+  "Component for viewing the link to a particular move."
+  [view
+   [button {:title (:name move) :on-press #(do
+                                             (dispatch [:set-active-move move])
+                                             (dispatch [:set-screen :move]))}]])
+
+(defn move-view []
+  "Component for viewing the active move and rolling on it."
+  (let [move (subscribe [:get-active-move])]
+    [view
+     [text (:name @move)]
+     [text (:description @move)]]))
+
+(defn moves-list []
+  "Component for viewing all moves."
+  (let [moves (subscribe [:get-moves])]
+    [scroll-view {:style {:flex 7}}
+     (for [move @moves]
+       ^{:key (:name move)}
+       [move-link move])]))
+
 ;; Nav-views
 (defn choose-screen []
   "High-level view that simply invokes the component corresponding to ::active-screen."
@@ -209,6 +231,8 @@
       :journal [journal-view]
       :chars [chars-view]
       :progress-tracks [progress-tracks-view]
+      :move-list [moves-list]
+      :move [move-view]
       :default [text "hi"])))
 
 
