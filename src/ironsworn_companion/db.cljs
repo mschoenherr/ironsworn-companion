@@ -66,7 +66,7 @@
 (s/def ::characters (s/map-of ::name ::character))
 
 (s/def ::active-char (s/or :empty nil?
-                           :char ::character))
+                           :char ::name))
 
 (s/def ::d6 (s/and integer? #(<= % 6) #(>= % 1)))
 (s/def ::d10 (s/and integer? #(<= % 10) #(>= % 1)))

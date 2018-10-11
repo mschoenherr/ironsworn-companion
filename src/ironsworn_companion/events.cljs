@@ -175,3 +175,11 @@
    (assoc db
            :active-move
            move)))
+
+(reg-event-db
+ :set-active-char
+ validate-spec
+ (fn [db [_ char-name]]
+   (assoc db
+          :active-char
+          char-name)))

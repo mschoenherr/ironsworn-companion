@@ -1,6 +1,7 @@
 (ns ironsworn-companion.views
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
             [ironsworn-companion.events]
             [ironsworn-companion.subs]))
@@ -132,7 +133,6 @@
                                              [char-name
                                               1]])}]])
 
-
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
@@ -210,10 +210,49 @@
 
 (defn move-view []
   "Component for viewing the active move and rolling on it."
-  (let [move (subscribe [:get-active-move])]
-    [view
-     [text (:name @move)]
-     [text (:description @move)]]))
+  (let [move (subscribe [:get-active-move])
+        roll-result (atom nil)
+        use-val (atom 0)
+        add-val (atom 0)
+        active-char (subscribe [:get-active-char])
+        chars (subscribe [:get-chars])]
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       [text (:name @move)]
+       [text (:description @move)]
+       [view
+        [text "Who's rolling?"]
+        [picker {:selected-value (:name @active-char) 
+                 :on-value-change (fn [val index]
+                                    (dispatch [:set-active-char val]))}
+         (for [char-name (map #(:name (second %)) @chars)]
+           ^{:key char-name}
+           [picker-item {:label char-name :value char-name}])]]
+;;       [char-view (:name @active-char)]
+       [view
+        [button {:title "-" :on-press #(swap! use-val dec)}]
+        [text "Use"]
+        [text @use-val]
+        [button {:title "+" :on-press #(swap! use-val inc)}]]
+       [view
+        [button {:title "-" :on-press #(swap! add-val dec)}]
+        [text "Add"]
+        [text @add-val]
+        [button {:title "+" :on-press #(swap! add-val inc)}]]
+       (when @roll-result
+         [view
+          [text "Action Die:"]
+          [text (rolls/get-action-rating @roll-result)]
+          [text "Challenge Dice:"]
+          (let [challenges (rolls/get-challenge-ratings @roll-result)]
+            [view
+             [text (first challenges)]
+             [text (second challenges)]])])
+       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
+       [button {:title "Burn momentum" :on-press #(swap! roll-result rolls/burn-momentum @active-char)}]
+       (when @roll-result
+         (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
+           [text (get-in @move [:results result-type :description])]))])))
 
 (defn moves-list []
   "Component for viewing all moves."
