@@ -56,11 +56,15 @@
 
 (defn burn-momentum [{:keys [action-die challenge1 challenge2]} {:keys [momentum]}]
   "Modifies result to accomodate burn result effect. Char is left unmodified."
-  (cond
-    (> momentum (first challenge1)) {:action-die action-die
-                                     :challenge1 [(first challenge1) false]
-                                     :challenge2 challenge2}
-    (> momentum (first challenge2)) {:action-die action-die
-                                     :challenge1 challenge1
-                                     :challenge2 [(first challenge2) false]}
-    :else {:action-die action-die :challenge1 challenge1 :challenge2 challenge2}))
+  (let [result {:action-die action-die
+                :challenge1 challenge1
+                :challenge2 challenge2}]
+    (cond
+      (not (and (second challenge1) (second challenge2))) result
+      (> momentum (first challenge1)) (update-in result [:challenge1 1] not)
+      (> momentum (first challenge2)) (update-in result [:challenge2 1] not)
+     :else result)))
+
+(defn burn-possible? [result char]
+  "Returns true, if momentum can be burned."
+  (not= (burn-momentum result char) result))

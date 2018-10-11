@@ -249,7 +249,10 @@
              [text (first challenges)]
              [text (second challenges)]])])
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
-       [button {:title "Burn momentum" :on-press #(swap! roll-result rolls/burn-momentum @active-char)}]
+       [button {:title "Burn momentum" :on-press #(when (rolls/burn-possible? @roll-result @active-char)
+                                                    (do
+                                                      (dispatch [:reset-momentum (:name @active-char)])
+                                                      (swap! roll-result rolls/burn-momentum @active-char)))}]
        (when @roll-result
          (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
            [text (get-in @move [:results result-type :description])]))])))
