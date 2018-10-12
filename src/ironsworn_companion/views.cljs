@@ -282,8 +282,8 @@
         (for [pt-name (map first (seq @p-tracks))]
           ^{:key pt-name}
           [picker-item {:label pt-name :value pt-name}])]
-       [text @selected-p-track]
-       [progress-view [@selected-p-track (get-in @p-tracks @selected-p-track)]]
+       [progress-view (first (filter #(= (first %) @selected-p-track)
+                                     (sorted-hash-seq @p-tracks)))]
        (when @roll-result
          [challenge-dice-view roll-result])
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
