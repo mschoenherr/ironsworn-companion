@@ -208,6 +208,15 @@
                                              (dispatch [:set-active-move move])
                                              (dispatch [:set-screen :move]))}]])
 
+(defn challenge-dice-view [result-atom]
+  "Component for viewing and rerolling challenge-dice."
+  [view
+   [text "Challenge Dice:"]
+   (let [challenges (rolls/get-challenge-ratings @result-atom)]
+            [view
+             [text (first challenges)]
+             [text (second challenges)]])])
+
 ;; normal-move-view is one of the complex components as of yet and should be broken up a little
 (defn normal-move-view []
   "Component for viewing the active move and rolling on it."
@@ -247,11 +256,7 @@
          [view
           [text "Action Die:"]
           [text (rolls/get-action-rating @roll-result)]
-          [text "Challenge Dice:"]
-          (let [challenges (rolls/get-challenge-ratings @roll-result)]
-            [view
-             [text (first challenges)]
-             [text (second challenges)]])])
+          [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
        (when (and @roll-result
                   @active-char
@@ -266,14 +271,27 @@
 (defn progress-move-view []
   "Component for resolving progress moves."
   (let [p-tracks (subscribe [:get-progress-tracks])
-        selected-p-track (atom nil)]
+        selected-p-track (atom (first (first (sorted-hash-seq @p-tracks)))) ;; why is this not properly reset
+        move (subscribe [:get-active-move])
+        roll-result (atom nil)]
+    (fn []
       [view
        [picker {:selected-value @selected-p-track 
-               :on-value-change (fn [val index]
-                                  (reset! selected-p-track val))}
-       (for [pt-name (map first (seq @p-tracks))]
-         ^{:key pt-name}
-         [picker-item {:label pt-name :value pt-name}])]]))
+                :on-value-change (fn [val index]
+                                   (reset! selected-p-track val))}
+        (for [pt-name (map first (seq @p-tracks))]
+          ^{:key pt-name}
+          [picker-item {:label pt-name :value pt-name}])]
+       [text @selected-p-track]
+       [progress-view [@selected-p-track (get-in @p-tracks @selected-p-track)]]
+       (when @roll-result
+         [challenge-dice-view roll-result])
+       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
+       (when @roll-result
+         (let [result-type (rolls/result-type-progress @roll-result
+                                                       (get-in @p-tracks
+                                                               [@selected-p-track 1]))]
+           [text (get-in @move [:results result-type :description])]))])))
 
 (defn vow-move-view []
   "Component for resolving vow moves."

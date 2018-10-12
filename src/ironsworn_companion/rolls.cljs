@@ -13,7 +13,8 @@
 
 (defn roll-challenge-dice []
   "Returns two challenge dice."
-  [(roll-challenge-die) (roll-challenge-die)])
+  {:challenge1 (roll-challenge-die)
+   :challenge2 (roll-challenge-die)})
 
 (defn roll-result [char]
   "Returns a map of roll-results."
@@ -53,6 +54,15 @@
       (and (> action-rating cha1) (> action-rating cha2)) "Strong Hit"
       (or (> action-rating cha1) (> action-rating cha2)) "Weak Hit"
       :else "Miss")))
+
+(defn result-type-progress [{:keys [challenge1 challenge2]} ticks]
+  "Returns result for progress rolls."
+  (let [cha1 (* 4 (first challenge1))
+        cha2 (* 4 (first challenge2))]
+    (cond
+     (and (> ticks cha1) (> ticks cha2)) "Strong Hit"
+     (or (> ticks cha1) (> ticks cha2)) "Weak Hit"
+     :else "Miss")))
 
 (defn burn-momentum [{:keys [action-die challenge1 challenge2] :as result} {:keys [momentum]}]
   "Modifies result to accomodate burn result effect. Char is left unmodified."
