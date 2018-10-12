@@ -208,7 +208,7 @@
                                              (dispatch [:set-active-move move])
                                              (dispatch [:set-screen :move]))}]])
 
-(defn move-view []
+(defn normal-move-view []
   "Component for viewing the active move and rolling on it."
   (let [move (subscribe [:get-active-move])
         roll-result (atom nil)
@@ -217,6 +217,9 @@
         active-char (subscribe [:get-active-char])
         chars (subscribe [:get-chars])]
     (fn []
+      (when-not @active-char
+        (dispatch [:set-active-char
+                   (:name (first (map second (sorted-hash-seq @chars))))])) ;; ensure there is an active char if there is any
       [scroll-view {:style {:flex 7}}
        [text (:name @move)]
        [text (:description @move)]
@@ -249,10 +252,12 @@
              [text (first challenges)]
              [text (second challenges)]])])
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
-       [button {:title "Burn momentum" :on-press #(when (rolls/burn-possible? @roll-result @active-char)
-                                                    (do
+       (when (and @roll-result
+                  @active-char
+                  (rolls/burn-possible? @roll-result @active-char))
+         [button {:title "Burn momentum" :on-press #(do
                                                       (dispatch [:reset-momentum (:name @active-char)])
-                                                      (swap! roll-result rolls/burn-momentum @active-char)))}]
+                                                      (swap! roll-result rolls/burn-momentum @active-char))}])
        (when @roll-result
          (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
            [text (get-in @move [:results result-type :description])]))])))
@@ -264,6 +269,12 @@
      (for [move @moves]
        ^{:key (:name move)}
        [move-link move])]))
+
+(defn move-view []
+  "Returns component corresponding to :move-type."
+  (let [move (subscribe [:get-active-move])]
+    (case (:move-type @move)
+     :normal [normal-move-view])))
 
 ;; Nav-views
 (defn choose-screen []
