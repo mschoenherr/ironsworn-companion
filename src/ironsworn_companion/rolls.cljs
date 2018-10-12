@@ -54,16 +54,13 @@
       (or (> action-rating cha1) (> action-rating cha2)) "Weak Hit"
       :else "Miss")))
 
-(defn burn-momentum [{:keys [action-die challenge1 challenge2]} {:keys [momentum]}]
+(defn burn-momentum [{:keys [action-die challenge1 challenge2] :as result} {:keys [momentum]}]
   "Modifies result to accomodate burn result effect. Char is left unmodified."
-  (let [result {:action-die action-die
-                :challenge1 challenge1
-                :challenge2 challenge2}]
-    (cond
-      (not (and (second challenge1) (second challenge2))) result
-      (> momentum (first challenge1)) (update-in result [:challenge1 1] not)
-      (> momentum (first challenge2)) (update-in result [:challenge2 1] not)
-     :else result)))
+  (cond
+    (not (and (second challenge1) (second challenge2))) result
+    (> momentum (first challenge1)) (update-in result [:challenge1 1] not)
+    (> momentum (first challenge2)) (update-in result [:challenge2 1] not)
+    :else result))
 
 (defn burn-possible? [result char]
   "Returns true, if momentum can be burned."
