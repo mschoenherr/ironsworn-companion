@@ -198,7 +198,7 @@
          [text-input {:on-submit-editing #(do
                                             (dispatch [:insert-new-pt (.. % -nativeEvent -text)])
                                             (swap! input-new-pt? not))
-                      :width 128 :placeholder "Name"}]
+                      :width 128 :placeholder "Insert Name"}]
          [button {:title "New" :on-press #(swap! input-new-pt? not)}])])))
 
 (defn move-link [move]
@@ -208,6 +208,7 @@
                                              (dispatch [:set-active-move move])
                                              (dispatch [:set-screen :move]))}]])
 
+;; normal-move-view is one of the complex components as of yet and should be broken up a little
 (defn normal-move-view []
   "Component for viewing the active move and rolling on it."
   (let [move (subscribe [:get-active-move])
@@ -262,6 +263,23 @@
          (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
            [text (get-in @move [:results result-type :description])]))])))
 
+(defn progress-move-view []
+  "Component for resolving progress moves."
+  (let [p-tracks (subscribe [:get-progress-tracks])
+        selected-p-track (atom nil)]
+      [view
+       [picker {:selected-value @selected-p-track 
+               :on-value-change (fn [val index]
+                                  (reset! selected-p-track val))}
+       (for [pt-name (map first (seq @p-tracks))]
+         ^{:key pt-name}
+         [picker-item {:label pt-name :value pt-name}])]]))
+
+(defn vow-move-view []
+  "Component for resolving vow moves."
+  [view
+   [text "Fill me up, before you gogo."]])
+
 (defn moves-list []
   "Component for viewing all moves."
   (let [moves (subscribe [:get-moves])]
@@ -274,7 +292,9 @@
   "Returns component corresponding to :move-type."
   (let [move (subscribe [:get-active-move])]
     (case (:move-type @move)
-     :normal [normal-move-view])))
+      :normal [normal-move-view]
+      :progress-track [progress-move-view]
+      :vow-move [vow-move-view])))
 
 ;; Nav-views
 (defn choose-screen []

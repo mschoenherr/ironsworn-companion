@@ -125,7 +125,9 @@
 (reg-event-db
  :insert-new-pt
  validate-spec
- (fn [db [_ pt-name & {:keys [location char-name]}]]
+ (fn [db [_ pt-name & {:keys [location char-name]
+                       :or {location :progress-tracks
+                            char-name nil}}]]
    (case location
      :progress-tracks (assoc-in db
                                 [:progress-tracks pt-name]
