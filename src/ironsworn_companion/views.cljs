@@ -271,7 +271,7 @@
 (defn progress-move-view []
   "Component for resolving progress moves."
   (let [p-tracks (subscribe [:get-progress-tracks])
-        selected-p-track (atom (first (first (sorted-hash-seq @p-tracks)))) ;; why is this not properly reset
+        selected-p-track (atom (first (first (sorted-hash-seq @p-tracks)))) ;; why is this not properly reset, if nil is used
         move (subscribe [:get-active-move])
         roll-result (atom nil)]
     (fn []
@@ -295,8 +295,26 @@
 
 (defn vow-move-view []
   "Component for resolving vow moves."
-  [view
-   [text "Fill me up, before you gogo."]])
+  (let [chars (subscribe [:get-chars])
+        active-char (subscribe [:get-active-char])
+        selected-vow (atom (first (sorted-hash-seq (:vows @active-char))))
+        move (subscribe [:get-active-move])
+        roll-result (atom nil)]
+    [view
+     [text "Who rolls?"]
+     [picker {:selected-value (:name @active-char) 
+                :on-value-change (fn [val index]
+                                   (dispatch [:set-active-char val]))}
+        (for [char-name (map first (seq @chars))]
+          ^{:key char-name}
+          [picker-item {:label char-name :value char-name}])]
+     [picker {:selected-value @selected-vow 
+                :on-value-change (fn [val index]
+                                   (reset! selected-vow val))}
+        (for [vow-name (map first (seq (:vows @active-char)))]
+          ^{:key vow-name}
+          [picker-item {:label vow-name :value vow-name}])]
+    ]))
 
 (defn moves-list []
   "Component for viewing all moves."
