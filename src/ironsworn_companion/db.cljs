@@ -80,7 +80,7 @@
 (s/def ::nav-history (s/coll-of ::active-screen))
 
 (s/def ::description ::name)
-(s/def ::result-name #{"Strong Hit" "Weak Hit" "Miss" "Random Event"})
+(s/def ::result-name #{"Strong Hit" "Weak Hit" "Miss" "Other"})
 (s/def ::options (s/or :empty nil?
                        :list (s/coll-of ::description)))
 (s/def ::random-event (s/tuple integer-proba? ::description))
