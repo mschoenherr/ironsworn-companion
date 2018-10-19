@@ -51,3 +51,9 @@
  :get-active-move
  (fn [db _]
    (:active-move db)))
+
+(reg-sub
+ :get-active-vows
+ (fn [db _]
+   (let [act-char-key (:active-char db)]
+     (get-in db [:characters act-char-key :vows]))))

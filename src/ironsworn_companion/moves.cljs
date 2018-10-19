@@ -343,7 +343,10 @@
                           :random-event nil}
               "Miss" {:description "Also suffer -1 momentum. If you are at spirit 0, you must mark shaken or corrupted (if currently unmarked) or roll on the following table."
                       :options nil
-                      :random-event nil}}} ;; random table here
+                      :random-event [[10 "You are overwhelmed. Face Desolation."]
+                                     [25 "You give up. Forsake Your Vow (if possible, one relevant to your current crisis."]
+                                     [50 "You give in to fear or compulsion, and act against your better instincts."]
+                                     [100 "You persevere."]]}}}
    {:name "Face Desolation"
     :move-type :normal
     :description "When you are brought to the brink of desolation, roll +heart."
@@ -414,11 +417,53 @@
                        :options ["Make the most obvious negative outcome happen."
                                  "Envision two negative outcomes. Rate one as likely, and Ask the Oracle using the yes/no table. On a yes, make that outcome happen. Otherwise make it the other."
                                  "Roll on the following table."]
-                       :random-event nil}}} ;; random-table here
+                       :random-event [[2 "Roll again and apply that result but make it worse. If you roll this result yet again, think of something dreadful that changes the course of your quest (Ask the Oracle if unsure) and make it happen."]
+                                      [5 "A person or community you trusted loses faith in you, or acts against you."]
+                                      [9 "A person or community you care about is exposed to danger."]
+                                      [16 "You are separated from something or someone."]
+                                      [23 "Your action has an unintended effect."]
+                                      [32 "Something of value is lost destroyed."]
+                                      [41 "The current situation worsens."]
+                                      [50 "A new danger or foe is revealed."]
+                                      [59 "It causes delay or puts you at a disadvantage."]
+                                      [68 "It is harmful."]
+                                      [77 "It is stressful."]
+                                      [85 "A suprising devolpment complicates your quest."]
+                                      [90 "It wastes resources."]
+                                      [94 "It forces you to act against your best intentions."]
+                                      [98 "A friend, companion, or ally is put in harm's way (or you are, if alone)."]
+                                      [100 "Roll twice more on this table. Both results occur. If they are the same result, make it worse."]]}}} ;; random-table here
    {:name "Ask the Oracle"
     :move-type :no-roll
     :description "When you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events."
     :results {"Other" {:description "You may:"
-                       :options nil
-                       :random-event nil}}} ;; more work here
+                       :options ["Draw a conclusion: Decide the answer based on the most interesting and obvious result."
+                                 {:description "Ask a yes/no question. Decide the odds of a 'yes', and roll."
+                                  :options [{:description "Almost Certain."
+                                             :options nil
+                                             :random-event [[10 "No"]
+                                                            [100 "Yes"]]}
+                                            {:description "Likely."
+                                             :options nil
+                                             :random-event [[25 "No"]
+                                                            [100 "Yes"]]}
+                                            {:description "50/50."
+                                             :options nil
+                                             :random-event [[50 "No"]
+                                                            [100 "Yes"]]}
+                                            {:description "Unlikely."
+                                             :options nil
+                                             :random-event [[75 "No"]
+                                                            [100 "Yes"]]}
+                                            {:description "Small Chance."
+                                             :options nil
+                                             :random-event [[90 "No"]
+                                                            [100 "Yes"]]}]
+                                  :random-event nil}
+                                 {:description "Pick two: Envision two options, the first being 'likely' and roll to see which one happens."
+                                  :options nil
+                                  :random-event [[25 "First option."]
+                                                 [100 "The other option."]]}
+                                 "Spark an idea: Brainstorm or use a random prompt."] 
+                       :random-event nil}}}
    ])

@@ -216,8 +216,10 @@
         [text result]
         [view
          [text (:description result)]
-         (for [option (:options result)]
-           [result-view option]) ;; this is needed for nested results, especially nested random tables in ask the oracle
+         (when (:options result)
+           (for [option (:options result)]
+            ^{:key option}
+            [result-view option])) ;; this is needed for nested results, especially nested random tables in ask the oracle
          (when (:random-event result)
            [button {:title "Roll on Table" :on-press #(reset! w100 (rolls/roll-d100))}])
          (when @w100
@@ -290,7 +292,7 @@
         move (subscribe [:get-active-move])
         roll-result (atom nil)]
     (fn []
-      [view
+      [scroll-view {:style {:flex 7}}
        [picker {:selected-value @selected-p-track 
                 :on-value-change (fn [val index]
                                    (reset! selected-p-track val))}
@@ -306,30 +308,43 @@
          (let [result-type (rolls/result-type-progress @roll-result
                                                        (get-in @p-tracks
                                                                [@selected-p-track 1]))]
-           [text (get-in @move [:results result-type :description])]))])))
+           [result-view (get-in @move [:results result-type])]))])))
 
 (defn vow-move-view []
   "Component for resolving vow moves."
   (let [chars (subscribe [:get-chars])
         active-char (subscribe [:get-active-char])
-        selected-vow (atom (first (sorted-hash-seq (:vows @active-char))))
+        active-vows (subscribe [:get-active-vows])
+        selected-vow (atom nil)
         move (subscribe [:get-active-move])
         roll-result (atom nil)]
     [view
      [text "Who rolls?"]
+     (when-not @active-char
+        (dispatch [:set-active-char
+                   (:name (first (map second (sorted-hash-seq @chars))))]))
      [picker {:selected-value (:name @active-char) 
-                :on-value-change (fn [val index]
-                                   (dispatch [:set-active-char val]))}
-        (for [char-name (map first (seq @chars))]
-          ^{:key char-name}
+              :on-value-change (fn [val index]
+                                 (dispatch [:set-active-char val]))}
+        (for [char-name (map first (sorted-hash-seq @chars))]
+          ^{:key char-name} ;; for whatever reason, react complains about missing unique key TODO
           [picker-item {:label char-name :value char-name}])]
-     [picker {:selected-value @selected-vow 
-                :on-value-change (fn [val index]
-                                   (reset! selected-vow val))}
-        (for [vow-name (map first (seq (:vows @active-char)))]
-          ^{:key vow-name}
-          [picker-item {:label vow-name :value vow-name}])]
-    ]))
+     [picker {:selected-value @selected-vow
+              :on-value-change (fn [val index]
+                                 (reset! selected-vow val))}
+      (for [vow-name (map first (sorted-hash-seq @active-vows))]
+        ^{:key vow-name} ;; for whatever reason, react complains about missing unique key 
+        [picker-item {:label vow-name :value vow-name}])]
+     [vow-view [(:name active-char)
+                [@selected-vow
+                 (get @active-vows @selected-vow)]]]]))
+
+(defn no-roll-view []
+  "Component for resolving moves without rolling the challenge dice."
+  (let [move (subscribe [:get-active-move])]
+    [scroll-view {:style {:flex 7}}
+     [text (:description @move)]
+     [result-view (get-in @move [:results "Other"])]]))
 
 (defn moves-list []
   "Component for viewing all moves."
@@ -345,7 +360,8 @@
     (case (:move-type @move)
       :normal [normal-move-view]
       :progress-track [progress-move-view]
-      :vow-move [vow-move-view])))
+      :vow-move [vow-move-view]
+      :no-roll [no-roll-view])))
 
 ;; Nav-views
 (defn choose-screen []
