@@ -205,7 +205,7 @@
     :results {"Strong Hit" {:description "Things come to pass as you hoped."
                             :options nil
                             :random-event nil}
-              "Weak Hit" {:description "Your life takes an unexpected turn, but not necessarily for the worse. You find yourself spending your days with someone or in a place you did not foresee. Envision it (Ask the Oracle if unsure)".
+              "Weak Hit" {:description "Your life takes an unexpected turn, but not necessarily for the worse. You find yourself spending your days with someone or in a place you did not foresee. Envision it (Ask the Oracle if unsure)."
                           :options nil
                           :random-event nil}
               "Miss" {:description "Your fears are realized."
@@ -291,7 +291,21 @@
                           :random-event nil}
               "Miss" {:description "Also suffer -1 momentum. If you are at 0 health, you must mark wounded or maimed (if currently unmarked) or roll on the following table."
                       :options nil
-                      :random-event nil}}} ;; this one needs a random-table
+                      :random-event [[10 {:description "The harm is mortal. Face Death."
+                                          :options nil
+                                          :random-event nil}]
+                                     [20 {:description "You are dying. You need to Heal within an hour or two, or Face Death."
+                                          :options nil
+                                          :random-event nil}]
+                                     [35 {:description "You are unconscious and out of action. If left alone, you come back to your senses in an hour or two. If you are are vulnerable to a foe not inclined to show mercy, Face Death."
+                                          :options nil
+                                          :random-event nil}]
+                                     [50 {:description "You are reeling and fighting to stay conscious. If you engage in any vigorous activity (such as running or fighting) before taking a breather for a few minutes, roll on this table again (before resolving the other move)."
+                                          :options nil
+                                          :random-event nil}]
+                                     [100 {:description "You are battered but still standing."
+                                           :options nil
+                                           :random-event nil}]]}}} ;; this one needs a random-table
    {:name "Face Death"
     :move-type :normal
     :description "When your are brought to the brink of death, and glimpse the world beyond, roll +heart."

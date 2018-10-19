@@ -208,6 +208,21 @@
                                              (dispatch [:set-active-move move])
                                              (dispatch [:set-screen :move]))}]])
 
+(defn result-view [result]
+  "Component for viewing a specific result. Recurses through results in options or random event."
+  (let [w100 (atom nil)]
+    (fn [result]
+      (if (string? result)
+        [text result]
+        [view
+         [text (:description result)]
+         (for [option (:options result)]
+           [result-view option]) ;; this is needed for nested results, especially nested random tables in ask the oracle
+         (when (:random-event result)
+           [button {:title "Roll on Table" :on-press #(reset! w100 (rolls/roll-d100))}])
+         (when @w100
+           [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
+
 (defn challenge-dice-view [result-atom]
   "Component for viewing and rerolling challenge-dice."
   [view
@@ -266,7 +281,7 @@
                                                       (swap! roll-result rolls/burn-momentum @active-char))}])
        (when @roll-result
          (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
-           [text (get-in @move [:results result-type :description])]))])))
+           [result-view (get-in @move [:results result-type])]))])))
 
 (defn progress-move-view []
   "Component for resolving progress moves."

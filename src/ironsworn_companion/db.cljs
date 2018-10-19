@@ -68,7 +68,7 @@
 (s/def ::active-char (s/or :empty nil?
                            :char ::name))
 
-(s/def ::d6 (s/and integer? #(<= % 6) #(>= % 1)))
+(s/def ::d6 (s/and integer? #(<= % 6) #(>= % 1))) ;; these roll sections are very likely obsolete and can be removed
 (s/def ::d10 (s/and integer? #(<= % 10) #(>= % 1)))
 (s/def ::roll-result (s/or :empty nil?
                            :dice (s/tuple ::d6 ::d10 ::d10)))
@@ -81,13 +81,16 @@
 
 (s/def ::description ::name)
 (s/def ::result-name #{"Strong Hit" "Weak Hit" "Miss" "Other"})
-(s/def ::options (s/or :empty nil?
-                       :list (s/coll-of ::description)))
+
 (s/def ::random-event (s/tuple integer-proba? ::description))
 (s/def ::random-events (s/or :empty nil?
                              :list (s/coll-of ::random-event)))
-(s/def ::result (s/keys ::req-un [::description ::options ::random-events]))
+(s/def ::result (s/or :string string?
+                      :complex-result (s/keys ::req-un [::description ::options ::random-events])))
 (s/def ::results (s/map-of ::result-name ::result))
+(s/def ::options (s/or :empty nil?
+                       :list (s/coll-of ::result)))
+
 (s/def ::move-type #{:normal :progress :progress-vow :progress-bonds})
 
 (s/def ::move (s/keys ::req-un [::move-type ::name ::description ::results]))

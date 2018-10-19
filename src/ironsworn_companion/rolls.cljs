@@ -11,6 +11,10 @@
   "Rolls the challenge die and returns a tuple of the result and true."
   [(inc (rand-int 10)) true])
 
+(defn roll-d100 []
+  "Rolls a d100"
+  (inc (rand-int 100)))
+
 (defn roll-challenge-dice []
   "Returns two challenge dice."
   {:challenge1 (roll-challenge-die)
@@ -75,3 +79,10 @@
 (defn burn-possible? [result char]
   "Returns true, if momentum can be burned."
   (not= (burn-momentum result char) result))
+
+(defn get-random-result [w100 random-events]
+  "Returns the random-event in [[proba event]] where proba >= w100."
+  (second
+   (first
+    (filter #(>= (first %) w100)
+            random-events))))
