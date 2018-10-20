@@ -226,7 +226,7 @@
            [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
 
 (defn challenge-dice-view [result-atom]
-  "Component for viewing and rerolling challenge-dice."
+  "Component for viewing and rerolling challenge-dice. Takes an atom (!) as an argument, to enable rerolling."
   [view
    [text "Challenge Dice:"]
    (let [challenges (rolls/get-challenge-ratings @result-atom)]
@@ -285,12 +285,24 @@
          (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
            [result-view (get-in @move [:results result-type])]))])))
 
+(defn progress-roll-view [p-track move]
+  "Component for rolling on progress tracks."
+  (let [roll-result (atom nil)]
+    (fn [p-track move]
+      [view
+       (when @roll-result
+         [challenge-dice-view roll-result]) ;; passing the atom here, for rerolling of dice
+       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
+       (when @roll-result
+         (let [result-type (rolls/result-type-progress @roll-result
+                                                       (get p-track 1))]
+           [result-view (get-in move [:results result-type])]))])))
+
 (defn progress-move-view []
   "Component for resolving progress moves."
   (let [p-tracks (subscribe [:get-progress-tracks])
         selected-p-track (atom (first (first (sorted-hash-seq @p-tracks)))) ;; why is this not properly reset, if nil is used
-        move (subscribe [:get-active-move])
-        roll-result (atom nil)]
+        move (subscribe [:get-active-move])]
     (fn []
       [scroll-view {:style {:flex 7}}
        [picker {:selected-value @selected-p-track 
@@ -301,14 +313,7 @@
           [picker-item {:label pt-name :value pt-name}])]
        [progress-view (first (filter #(= (first %) @selected-p-track)
                                      (sorted-hash-seq @p-tracks)))]
-       (when @roll-result
-         [challenge-dice-view roll-result])
-       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
-       (when @roll-result
-         (let [result-type (rolls/result-type-progress @roll-result
-                                                       (get-in @p-tracks
-                                                               [@selected-p-track 1]))]
-           [result-view (get-in @move [:results result-type])]))])))
+       [progress-roll-view (get @p-tracks @selected-p-track) @move]])))
 
 (defn vow-move-view []
   "Component for resolving vow moves."
@@ -339,14 +344,7 @@
           [picker-item {:label vow-name :value vow-name}])]
        [vow-view (:name @active-char)
         [@selected-vow (get @active-vows @selected-vow)]]
-       (when @roll-result
-         [challenge-dice-view roll-result])
-       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
-       (when @roll-result
-         (let [result-type (rolls/result-type-progress @roll-result
-                                                       (get-in @active-vows
-                                                               [@selected-vow 1]))]
-           [result-view (get-in @move [:results result-type])]))])))
+       [progress-roll-view (get @active-vows @selected-vow) @move]])))
 
 (defn no-roll-view []
   "Component for resolving moves without rolling the challenge dice."
