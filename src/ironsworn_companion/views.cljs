@@ -315,29 +315,38 @@
   (let [chars (subscribe [:get-chars])
         active-char (subscribe [:get-active-char])
         active-vows (subscribe [:get-active-vows])
-        selected-vow (atom nil)
+        selected-vow (atom (first (first (sorted-hash-seq @active-vows))))
         move (subscribe [:get-active-move])
         roll-result (atom nil)]
-    [view
-     [text "Who rolls?"]
-     (when-not @active-char
-        (dispatch [:set-active-char
-                   (:name (first (map second (sorted-hash-seq @chars))))]))
-     [picker {:selected-value (:name @active-char) 
-              :on-value-change (fn [val index]
-                                 (dispatch [:set-active-char val]))}
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       [text (:description @move)]
+       [text "Who rolls?"]
+       (when-not @active-char
+         (dispatch [:set-active-char
+                    (:name (first (map second (sorted-hash-seq @chars))))]))
+       [picker {:selected-value (:name @active-char) 
+                :on-value-change (fn [val index]
+                                   (dispatch [:set-active-char val]))}
         (for [char-name (map first (sorted-hash-seq @chars))]
-          ^{:key char-name} ;; for whatever reason, react complains about missing unique key TODO
+          ^{:key char-name}
           [picker-item {:label char-name :value char-name}])]
-     [picker {:selected-value @selected-vow
-              :on-value-change (fn [val index]
-                                 (reset! selected-vow val))}
-      (for [vow-name (map first (sorted-hash-seq @active-vows))]
-        ^{:key vow-name} ;; for whatever reason, react complains about missing unique key 
-        [picker-item {:label vow-name :value vow-name}])]
-     [vow-view [(:name active-char)
-                [@selected-vow
-                 (get @active-vows @selected-vow)]]]]))
+       [picker {:selected-value @selected-vow
+                :on-value-change (fn [val index]
+                                   (reset! selected-vow val))}
+        (for [vow-name (map first (sorted-hash-seq @active-vows))]
+          ^{:key vow-name}
+          [picker-item {:label vow-name :value vow-name}])]
+       [vow-view (:name @active-char)
+        [@selected-vow (get @active-vows @selected-vow)]]
+       (when @roll-result
+         [challenge-dice-view roll-result])
+       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-challenge-dice))}]
+       (when @roll-result
+         (let [result-type (rolls/result-type-progress @roll-result
+                                                       (get-in @active-vows
+                                                               [@selected-vow 1]))]
+           [result-view (get-in @move [:results result-type])]))])))
 
 (defn no-roll-view []
   "Component for resolving moves without rolling the challenge dice."
