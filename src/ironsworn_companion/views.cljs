@@ -346,6 +346,27 @@
         [@selected-vow (get @active-vows @selected-vow)]]
        [progress-roll-view (get @active-vows @selected-vow) @move]])))
 
+(defn bond-move-view []
+  "Component for resolving moves concerning the bonds track."
+  (let [chars (subscribe [:get-chars])
+        active-char (subscribe [:get-active-char])
+        move (subscribe [:get-active-move])]
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       [text (:description @move)]
+       [text "Who rolls?"]
+       (when-not @active-char
+         (dispatch [:set-active-char
+                    (:name (first (map second (sorted-hash-seq @chars))))]))
+       [picker {:selected-value (:name @active-char) 
+                :on-value-change (fn [val index]
+                                   (dispatch [:set-active-char val]))}
+        (for [char-name (map first (sorted-hash-seq @chars))]
+          ^{:key char-name}
+          [picker-item {:label char-name :value char-name}])]
+       [bonds-view (:name @active-char) (:bonds @active-char)]
+       [progress-roll-view ["Epic" (:bonds @active-char)] @move]])))
+
 (defn no-roll-view []
   "Component for resolving moves without rolling the challenge dice."
   (let [move (subscribe [:get-active-move])]
@@ -368,6 +389,7 @@
       :normal [normal-move-view]
       :progress-track [progress-move-view]
       :vow-move [vow-move-view]
+      :bond-move [bond-move-view]
       :no-roll [no-roll-view])))
 
 ;; Nav-views
