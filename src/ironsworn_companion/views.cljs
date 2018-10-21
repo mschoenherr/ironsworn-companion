@@ -36,30 +36,44 @@
 (defn stat-view [char-name [stat-name stat-value]]
   "Component for rendering and updating stats."
   [view
-   [text stat-name]
-   [text stat-value]
-   [button {:title "+" :on-press #(dispatch [:mod-stat
-                                             [char-name
-                                              stat-name
-                                              1]])}]
-   [button {:title "-" :on-press #(dispatch [:mod-stat
-                                             [char-name
-                                              stat-name
-                                              -1]])}]])
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"}}
+    [text stat-name]
+    [text {:style {:padding 5}}
+     stat-value]]
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"}}
+    [button {:title "-" :on-press #(dispatch [:mod-stat
+                                              [char-name
+                                               stat-name
+                                               -1]])}]
+    [button {:title "+" :on-press #(dispatch [:mod-stat
+                                              [char-name
+                                               stat-name
+                                               1]])}]]])
 
 (defn res-view [char-name [res-name res-value]]
   "Component for rendering and updating resources."
   [view
-   [text res-name]
-   [text res-value]
-   [button {:title "+" :on-press #(dispatch [:mod-res
-                                             [char-name
-                                              res-name
-                                              1]])}]
-   [button {:title "-" :on-press #(dispatch [:mod-res
-                                             [char-name
-                                              res-name
-                                              -1]])}]])
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"}}
+    [text res-name]
+    [text {:style {:padding 5}}
+     res-value]]
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"}}
+    [button {:title "-" :on-press #(dispatch [:mod-res
+                                              [char-name
+                                               res-name
+                                               -1]])}]
+    [button {:title "+" :on-press #(dispatch [:mod-res
+                                              [char-name
+                                               res-name
+                                               1]])}]]])
 
 (defn ini-view [char-name value]
   "Component for rendering initiative for given char."
@@ -78,16 +92,25 @@
 (defn momentum-view [char-name value]
   "Component for rendering momentum for a given char."
   [view
-   [text "Momentum"]
-   [text value]
-   [button {:title "+" :on-press #(dispatch [:mod-momentum
-                                             [char-name
-                                              1]])}]
-   [button {:title "-" :on-press #(dispatch [:mod-momentum
-                                             [char-name
-                                              -1]])}]
-   [button {:title "Reset" :on-press #(dispatch [:reset-momentum
-                                                 char-name])}]])
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"
+                  :margin 5}}
+    [text {:style {:padding 5}}
+     "Momentum"]
+    [button {:title "Reset"
+             :on-press #(dispatch [:reset-momentum
+                                   char-name])}]]
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"}}
+    [button {:title "-" :on-press #(dispatch [:mod-momentum
+                                              [char-name
+                                               -1]])}]
+    [text value]
+    [button {:title "+" :on-press #(dispatch [:mod-momentum
+                                              [char-name
+                                               1]])}]]])
 
 (defn progress-view [[name [lvl ticks]] & {:keys [location char-name]
                                            :or {location :progress-tracks
@@ -133,29 +156,50 @@
                                              [char-name
                                               1]])}]])
 
+(defn stats-view [name stats]
+  "Component for viewing and changing stats."
+  [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+   (for [stat (sorted-hash-seq stats)]
+     ^{:key stat}
+     [stat-view name stat])])
+
+(defn resources-view [name resources]
+  "Component for viewing and changing resources."
+  [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+   (for [res (sorted-hash-seq resources)]
+     ^{:key res}
+     [res-view name res])])
+
+(defn debilities-view [name debilities]
+  "Component for viewing all debilities."
+  [view {:style {:flex-direction "row" :justify-content "space-evenly" :flex-wrap "wrap"}}
+   (for [deb (sorted-hash-seq debilities)]
+     ^{:key deb}
+     [debility-view name deb])])
+
+(defn vows-view [name vows]
+  "Component for viewing all vows."
+  [view {:style {:flex-direction "column" :justify-content "space-evenly"}}
+   (for [vow (sorted-hash-seq vows)]
+     ^{:key vow}
+     [vow-view name vow])
+   [text-input {:on-submit-editing #(do
+                                      (dispatch [:insert-new-pt (.. % -nativeEvent -text)
+                                                 :location :vows :char-name name]))
+                :width 128 :placeholder "New vow name"}]])
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
     [view
      [text (:name @char)]
-     [ini-view name (:initiative @char)]
-     [momentum-view name (:momentum @char)]
-     (for [stat (sorted-hash-seq (:stats @char))]
-       ^{:key stat}
-       [stat-view name stat])
-     (for [res (sorted-hash-seq (:resources @char))]
-       ^{:key res}
-       [res-view name res])
-     (for [deb (sorted-hash-seq (:debilities @char))]
-       ^{:key deb}
-       [debility-view name deb])
-     (for [vow (sorted-hash-seq (:vows @char))]
-       ^{:key vow}
-       [vow-view name vow])
-     [text-input {:on-submit-editing #(do
-                                        (dispatch [:insert-new-pt (.. % -nativeEvent -text)
-                                                   :location :vows :char-name name]))
-                  :width 128 :placeholder "New bond name"}]
+     [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+      [ini-view name (:initiative @char)]
+      [momentum-view name (:momentum @char)]]
+     [stats-view name (:stats @char)]
+     [resources-view name (:resources @char)]
+     [debilities-view name (:debilities @char)]
+     [vows-view name (:vows @char)]
      [bonds-view name (:bonds @char)]]))
 
 (defn chars-view []
@@ -226,7 +270,7 @@
            [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
 
 (defn challenge-dice-view [result-atom]
-  "Component for viewing and rerolling challenge-dice. Takes an atom (!) as an argument, to enable rerolling."
+  "Component for viewing and rerolling challenge-dice. Takes an atom (!) as an argument, to enable rerolling." ;; TODO: rerolling, matches!
   [view
    [text "Challenge Dice:"]
    (let [challenges (rolls/get-challenge-ratings @result-atom)]
