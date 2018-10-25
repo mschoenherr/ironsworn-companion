@@ -1,5 +1,6 @@
 (ns ironsworn-companion.db
   (:require [clojure.spec.alpha :as s]
+            [ironsworn-companion.assets :refer [all-assets]]
             [ironsworn-companion.moves :refer [all-moves]]))
 
 ;; default values
@@ -18,7 +19,8 @@
                             "Corrupted" false
                             "Tormented" false
                             "Cursed" false}
-               :initiative false})
+               :initiative false
+               :assets nil})
 
 (def levels #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
 
@@ -62,7 +64,18 @@
 
 (s/def ::initiative boolean?)
 
-(s/def ::character (s/keys :req-un [::name ::momentum ::stats ::vows ::bonds ::resources ::debilities ::initiative]))
+(s/def ::res-counter (s/keys :req-un [::current ::max]))
+(s/def ::enabled boolean?)
+(s/def ::id (s/or ::name keyword?))
+(s/def ::perk (s/keys :req-un [::id ::enabled ::result]))
+(s/def ::perks (s/coll-of ::perk))
+(s/def ::custom-note (s/tuple ::name ::name))
+(s/def ::asset-type #{"Companion" "Ritual" "Path" "Combat Talent"})
+(s/def ::asset (s/keys :req-un [::name ::asset-type ::perks]
+                       :opt-un [::description ::custom-note ::res-counter]))
+(s/def ::assets (s/coll-of ::asset))
+
+(s/def ::character (s/keys :req-un [::name ::momentum ::stats ::vows ::bonds ::resources ::debilities ::initiative ::assets]))
 (s/def ::characters (s/map-of ::name ::character))
 
 (s/def ::active-char (s/or :empty nil?
@@ -111,6 +124,7 @@
              :active-screen :chars
              :oracle "Unclear Future"
              :moves all-moves
+             :assets all-assets
              :active-move nil})
 
 ;; model functions
