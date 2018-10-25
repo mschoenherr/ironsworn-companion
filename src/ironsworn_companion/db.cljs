@@ -20,7 +20,7 @@
                             "Tormented" false
                             "Cursed" false}
                :initiative false
-               :assets nil})
+               :assets [(first all-assets)]}) ;; for debugging, non-empty asset-list
 
 (def levels #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
 
@@ -66,7 +66,8 @@
 
 (s/def ::res-counter (s/keys :req-un [::current ::max]))
 (s/def ::enabled boolean?)
-(s/def ::id (s/or ::name keyword?))
+(s/def ::id (s/or :string ::name
+                  :keyword keyword?))
 (s/def ::perk (s/keys :req-un [::id ::enabled ::result]))
 (s/def ::perks (s/coll-of ::perk))
 (s/def ::custom-note (s/tuple ::name ::name))
@@ -112,7 +113,17 @@
                            :move ::move))
 
 (s/def ::app-db
-  (s/keys :req-un [::journal ::characters ::progress-tracks ::active-char ::roll-result ::oracle ::active-screen ::nav-history ::moves ::active-move]))
+  (s/keys :req-un [::journal
+                   ::characters
+                   ::progress-tracks
+                   ::active-char
+                   ::roll-result
+                   ::oracle
+                   ::active-screen
+                   ::nav-history
+                   ::moves
+                   ::assets
+                   ::active-move]))
 
 ;; initial state of app-db
 (def app-db {:journal (list)
@@ -170,3 +181,20 @@
   (let [new-ticks (+ ticks value)]
     (max 0
          (min 40 new-ticks))))
+
+(defn mod-asset-res [asset value]
+  "Update res-counter for asset."
+  (let [max-val (get-in asset [:res-counter :max])
+        new-val (+ (get-in asset [:res-counter :current]) value)]
+    (assoc-in asset [:res-counter :current]
+              (min max-val
+                   (max 0 new-val)))))
+
+;; helper functions for accessing and updating coll elements
+(defn update-val-in-coll [coll val new-val]
+  "Finds val in coll and replaces it by new-val."
+  (map #(if (= val %)
+          new-val
+          %)
+       coll))
+

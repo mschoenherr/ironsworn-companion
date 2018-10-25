@@ -57,3 +57,8 @@
  (fn [db _]
    (let [act-char-key (:active-char db)]
      (get-in db [:characters act-char-key :vows]))))
+
+(reg-sub
+ :get-all-assets
+ (fn [db _]
+   (:assets db)))

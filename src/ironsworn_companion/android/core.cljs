@@ -17,12 +17,14 @@
               :actions [{:title "Journal"}
                         {:title "Character"}
                         {:title "Progress Tracks"}
-                        {:title "Moves"}]
+                        {:title "Moves"}
+                        {:title "Assets"}]
               :on-action-selected #(case %
                                          0 (dispatch [:set-screen :journal])
                                          1 (dispatch [:set-screen :chars])
                                          2 (dispatch [:set-screen :progress-tracks])
-                                         3 (dispatch [:set-screen :move-list]))}]
+                                         3 (dispatch [:set-screen :move-list])
+                                         4 (dispatch [:set-screen :asset-list]))}]
    [views/choose-screen]])
 
 (defn init []

@@ -1,7 +1,8 @@
 (ns ironsworn-companion.assets)
 
 (def all-assets
-  [{:name "Hawk"
+  [
+   {:name "Hawk"
     :asset-type "Companion"
     :description "Your hawk can aid you when it is aloft."
     :perks [{:id "Far-seeing"
@@ -139,4 +140,5 @@
              :result "When you Heal a companion, ally, or other character, and you score a hit, take +1 spirit or +1 momentum."}
             {:id :third
              :enabled false
-             :result "When you Make Camp and choose the option to partake, you can use your supplies to create a restorative meal. If you do, you and your companions may take +1 health. Any allies who choose to partake may also take +1 health."}]}])
+             :result "When you Make Camp and choose the option to partake, you can use your supplies to create a restorative meal. If you do, you and your companions may take +1 health. Any allies who choose to partake may also take +1 health."}]}
+   ])

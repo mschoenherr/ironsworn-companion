@@ -2,6 +2,7 @@
   (:require
    [re-frame.core :refer [reg-event-db after]]
    [clojure.spec.alpha :as s]
+   [ironsworn-companion.db :as db]
    [ironsworn-companion.db :as db :refer [app-db]]))
 
 ;; -- Interceptors ------------------------------------------------------------
@@ -185,3 +186,38 @@
    (assoc db
           :active-char
           char-name)))
+
+(reg-event-db
+ :change-asset-note
+ validate-spec
+ (fn [db [_ char-name asset new-note]]
+   (assoc-in db [:characters char-name :assets]
+             (db/update-val-in-coll
+              (get-in db [:characters char-name :assets])
+              asset
+              (assoc-in asset [:custom-note 1]
+                        new-note)))))
+
+(reg-event-db
+ :toggle-perk
+ validate-spec
+ (fn [db [_ char-name asset perk]]
+   (let [char-assets (get-in db [:characters char-name :assets])]
+     (assoc-in db [:characters char-name :assets]
+               (db/update-val-in-coll char-assets
+                                     asset
+                                     (assoc asset :perks
+                                            (db/update-val-in-coll
+                                             (:perks asset)
+                                             perk
+                                             (update perk :enabled not))))))))
+
+(reg-event-db
+ :mod-asset-resource
+ validate-spec
+ (fn [db [_ char-name asset value]]
+   (let [char-assets (get-in db [:characters char-name :assets])]
+     (assoc-in db [:characters char-name :assets]
+               (db/update-val-in-coll char-assets
+                                      asset
+                                      (db/mod-asset-res asset value))))))

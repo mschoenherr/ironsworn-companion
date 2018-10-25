@@ -188,6 +188,67 @@
                                                  :location :vows :char-name name]))
                 :width 128 :placeholder "New vow name"}]])
 
+(defn result-view [result]
+  "Component for viewing a specific result. Recurses through results in options or random event."
+  (let [w100 (atom nil)]
+    (fn [result]
+      (if (string? result)
+        [text result]
+        [view
+         [text (:description result)]
+         (when (:options result)
+           (for [option (:options result)]
+            ^{:key option}
+            [result-view option])) ;; this is needed for nested results, especially nested random tables in ask the oracle
+         (when (:random-event result)
+           [button {:title "Roll on Table" :on-press #(reset! w100 (rolls/roll-d100))}])
+         (when @w100
+           [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
+
+(defn asset-view [asset & {:keys [char-name]
+                           :or {char-name nil}}]
+  "Component for viewing an asset."
+  (let [edit-note (atom false)]
+    (fn [asset & {:keys [char-name]
+                  :or {char-name nil}}]
+      [view
+       [text (:name asset)]
+       (when (and char-name (:custom-note asset))
+         [text (get-in asset [:custom-note 0])]
+         (if @edit-note
+           [text-input {:placeholder (get-in asset [:custom-note 1])
+                        :on-submit-editing #(do
+                                              (swap! edit-note not)
+                                              (dispatch [:change-asset-note char-name asset (.. % -nativeEvent -text)]))}]
+           [view
+            [button {:title "Edit" :on-press #(swap! edit-note not)}]
+            [text (get-in asset [:custom-note 1])]]))
+       [text (:asset-type asset)]
+       (when (:description asset)
+         [text (:description asset)])
+       (for [perk (:perks asset)]
+         ^{:key perk}
+         [view
+          (if char-name
+            [switch-comp {:value (:enabled perk)
+                          :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
+            [switch-comp {:value (:enabled perk)}])
+          [result-view (:result perk)]])
+       (when (:res-counter asset)
+         [view
+          (when char-name
+            [button {:title "-" :on-press #(dispatch [:mod-asset-resource char-name asset -1])}])
+          [text (get-in asset [:res-counter :current])]
+          (when char-name
+            [button {:title "+" :on-press #(dispatch [:mod-asset-resource char-name asset 1])}])])])))
+
+(defn assets-view [char-name assets]
+  "Component for viewing all assets in list"
+  [view
+   (for [asset assets]
+     ^{:key (:name asset)}
+     [asset-view asset :char-name char-name])])
+
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
@@ -200,7 +261,8 @@
      [resources-view name (:resources @char)]
      [debilities-view name (:debilities @char)]
      [vows-view name (:vows @char)]
-     [bonds-view name (:bonds @char)]]))
+     [bonds-view name (:bonds @char)]
+     [assets-view name (:assets @char)]]))
 
 (defn chars-view []
   "Component for viewing all chars in db."
@@ -252,22 +314,7 @@
                                              (dispatch [:set-active-move move])
                                              (dispatch [:set-screen :move]))}]])
 
-(defn result-view [result]
-  "Component for viewing a specific result. Recurses through results in options or random event."
-  (let [w100 (atom nil)]
-    (fn [result]
-      (if (string? result)
-        [text result]
-        [view
-         [text (:description result)]
-         (when (:options result)
-           (for [option (:options result)]
-            ^{:key option}
-            [result-view option])) ;; this is needed for nested results, especially nested random tables in ask the oracle
-         (when (:random-event result)
-           [button {:title "Roll on Table" :on-press #(reset! w100 (rolls/roll-d100))}])
-         (when @w100
-           [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
+
 
 (defn challenge-dice-view [result-atom]
   "Component for viewing and rerolling challenge-dice. Takes an atom (!) as an argument, to enable rerolling." ;; TODO: rerolling, matches!
@@ -426,6 +473,14 @@
        ^{:key (:name move)}
        [move-link move])]))
 
+(defn asset-list []
+  "Component for viewing all assets (and picking one for adding to character)."
+  (let [assets (subscribe [:get-all-assets])]
+    [scroll-view {:style {:flex 7}}
+     (for [asset @assets]
+       ^{:key (:name asset)}
+       [asset-view asset])]))
+
 (defn move-view []
   "Returns component corresponding to :move-type."
   (let [move (subscribe [:get-active-move])]
@@ -445,6 +500,7 @@
       :chars [chars-view]
       :progress-tracks [progress-tracks-view]
       :move-list [moves-list]
+      :asset-list [asset-list]
       :move [move-view]
       :default [text "hi"])))
 
