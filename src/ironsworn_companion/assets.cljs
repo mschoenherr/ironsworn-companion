@@ -1,5 +1,9 @@
 (ns ironsworn-companion.assets)
 
+;; This work is based on Ironsworn (found at www.ironswornrpg.com), created by Shawn Tomkin,
+;; and licensed for our use under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license
+;; (creativecommons.org/licenses/by-nc-sa/4.0/).
+
 (def all-assets
   [
    {:name "Hawk"
@@ -134,11 +138,44 @@
              :result {:description "When you attempt to Heal using herbal remedies, and you have at least +1 supply, you may choose one (decide before rolling)."
                       :options ["Add +2."
                                 "On a hit, take or give an additional +1 health."]
-                      :random-events nil}}
+                      :random-event nil}}
             {:id :second
              :enabled false
              :result "When you Heal a companion, ally, or other character, and you score a hit, take +1 spirit or +1 momentum."}
             {:id :third
              :enabled false
              :result "When you Make Camp and choose the option to partake, you can use your supplies to create a restorative meal. If you do, you and your companions may take +1 health. Any allies who choose to partake may also take +1 health."}]}
+   {:name "Honorbound"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Turn the Tide, envision how your vows give you strength in this moment. Then, add +2 (instead of +1) when you make your move."}
+            {:id :second
+             :enabled false
+             :result "When you Secure an Advantage or Compel by telling a hard truth, add +1 and take +1 momentum on a hit. On a weak hit or miss, envision how this truth complicates your current situation."}
+            {:id :third
+             :enabled false
+             :result "When you Fullfill Your Vow and score a weak hit or miss, you may reroll any dice as you Swear an Iron Vow to set things right. On a hit, take +2 momentum."}]}
+   {:name "Loyalist"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Aid Your Ally, add +1 and take +1 momentum on a hit. This is in addition to the benefits taken by your ally."}
+            {:id :second
+             :enabled false
+             :result "When an ally makes the Endure Stress move in your company, they add +1 and you take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result {:description "When you stand with your ally as they make a progress move, envision how you support them."
+                      :options nil
+                      :random-event [[10 "Your ally may replace one of their challenge dice with a 1."]
+                                     [20 "Your ally may replace one of their challenge dice with a 2."]
+                                     [30 "Your ally may replace one of their challenge dice with a 3."]
+                                     [40 "Your ally may replace one of their challenge dice with a 4."]
+                                     [50 "Your ally may replace one of their challenge dice with a 5."]
+                                     [60 "Your ally may replace one of their challenge dice with a 6."]
+                                     [70 "Your ally may replace one of their challenge dice with a 7."]
+                                     [80 "Your ally may replace one of their challenge dice with a 8."]
+                                     [90 "Your ally may replace one of their challenge dice with a 9."]
+                                     [100 "Envision how you inadvertently undermine their action. Your ally must replace their lowest challenge die with a 10."]]}}]}
    ])
