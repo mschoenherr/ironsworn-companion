@@ -13,7 +13,7 @@
 
 (ns ironsworn-companion.events
   (:require
-   [re-frame.core :refer [reg-event-db after]]
+   [re-frame.core :refer [reg-event-db reg-event-fx after]]
    [clojure.spec.alpha :as s]
    [ironsworn-companion.db :as db]
    [ironsworn-companion.db :as db :refer [app-db]]))
@@ -168,13 +168,14 @@
               [:characters char-name :bonds]
               db/mod-bond-ticks value)))
 
-(reg-event-db
+(reg-event-fx
  :insert-new-char
  validate-spec
- (fn [db [_ char-name]]
-   (assoc-in db
-             [:characters char-name]
-             (assoc db/new-char :name char-name))))
+ (fn [cofx [_ char-name]]
+   {:db (assoc-in (:db cofx)
+                  [:characters char-name]
+                  (assoc db/new-char :name char-name))
+    :dispatch [:set-active-char char-name]}))
 
 (reg-event-db
  :delete-char
@@ -234,3 +235,22 @@
                (db/update-val-in-coll char-assets
                                       asset
                                       (db/mod-asset-res asset value))))))
+
+(reg-event-db
+ :add-ass-to-act-char
+ validate-spec
+ (fn [db [_ asset-name]]
+   (let [act-char (:active-char db)
+         asset (first (filter
+                       #(= asset-name (:name %))
+                       (:assets db)))]
+     (update-in db [:characters act-char :assets]
+                conj asset))))
+
+(reg-event-db
+ :rm-ass
+ validate-spec
+ (fn [db [_ char-name asset-name]]
+   (update-in db [:characters char-name :assets]
+              (partial remove 
+               #(= asset-name (:name %))))))

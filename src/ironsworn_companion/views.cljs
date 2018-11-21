@@ -226,6 +226,11 @@
                   :or {char-name nil}}]
       [view
        [text (:name asset)]
+       (if char-name
+         [button {:title "Remove" :on-press #(dispatch [:rm-ass char-name (:name asset)])}]
+         [button {:title "Add" :on-press #(do
+                                            (dispatch [:add-ass-to-act-char (:name asset)])
+                                            (dispatch [:set-screen :chars]))}])
        (when (and char-name (:custom-note asset))
          [text (get-in asset [:custom-note 0])]
          (if @edit-note
@@ -338,6 +343,17 @@
              [text (first challenges)]
              [text (second challenges)]])])
 
+(defn pick-active-char-view []
+  "Component for picking the active character, should use standard picker comp."
+  (let [active-char (subscribe [:get-active-char])
+        chars (subscribe [:get-chars])]
+    [picker {:selected-value (:name @active-char) 
+             :on-value-change (fn [val index]
+                                (dispatch [:set-active-char val]))}
+     (for [char-name (map #(:name (second %)) @chars)]
+       ^{:key char-name}
+       [picker-item {:label char-name :value char-name}])]))
+
 ;; normal-move-view is one of the complex components as of yet and should be broken up a little
 (defn normal-move-view []
   "Component for viewing the active move and rolling on it."
@@ -356,12 +372,7 @@
        [text (:description @move)]
        [view
         [text "Who's rolling?"]
-        [picker {:selected-value (:name @active-char) 
-                 :on-value-change (fn [val index]
-                                    (dispatch [:set-active-char val]))}
-         (for [char-name (map #(:name (second %)) @chars)]
-           ^{:key char-name}
-           [picker-item {:label char-name :value char-name}])]]
+        [pick-active-char-view]]
 ;;       [char-view (:name @active-char)]
        [view
         [button {:title "-" :on-press #(swap! use-val dec)}]
@@ -434,12 +445,7 @@
        (when-not @active-char
          (dispatch [:set-active-char
                     (:name (first (map second (sorted-hash-seq @chars))))]))
-       [picker {:selected-value (:name @active-char) 
-                :on-value-change (fn [val index]
-                                   (dispatch [:set-active-char val]))}
-        (for [char-name (map first (sorted-hash-seq @chars))]
-          ^{:key char-name}
-          [picker-item {:label char-name :value char-name}])]
+       [pick-active-char-view]
        [picker {:selected-value @selected-vow
                 :on-value-change (fn [val index]
                                    (reset! selected-vow val))}
@@ -462,12 +468,7 @@
        (when-not @active-char
          (dispatch [:set-active-char
                     (:name (first (map second (sorted-hash-seq @chars))))]))
-       [picker {:selected-value (:name @active-char) 
-                :on-value-change (fn [val index]
-                                   (dispatch [:set-active-char val]))}
-        (for [char-name (map first (sorted-hash-seq @chars))]
-          ^{:key char-name}
-          [picker-item {:label char-name :value char-name}])]
+       [pick-active-char-view]
        [bonds-view (:name @active-char) (:bonds @active-char)]
        [progress-roll-view ["Epic" (:bonds @active-char)] @move]])))
 
@@ -489,10 +490,13 @@
 (defn asset-list []
   "Component for viewing all assets (and picking one for adding to character)."
   (let [assets (subscribe [:get-all-assets])]
-    [scroll-view {:style {:flex 7}}
-     (for [asset @assets]
-       ^{:key (:name asset)}
-       [asset-view asset])]))
+    [view {:style {:flex 7}}
+     [text "Who wants some?"]
+     [pick-active-char-view]
+     [scroll-view 
+      (for [asset @assets]
+        ^{:key (:name asset)}
+        [asset-view asset])]]))
 
 (defn move-view []
   "Returns component corresponding to :move-type."
