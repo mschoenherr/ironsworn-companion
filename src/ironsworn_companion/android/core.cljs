@@ -21,24 +21,15 @@
 (def ReactNative (js/require "react-native"))
 (def app-registry (.-AppRegistry ReactNative))
 (def view (r/adapt-react-class (.-View ReactNative)))
-(def tool-bar (r/adapt-react-class (.-ToolbarAndroid ReactNative)))
+(def drawer (r/adapt-react-class (.-DrawerLayoutAndroid ReactNative)))
 
 ;; Set the entry point for app-root
 (defn app-root []
-  [view {:style {:flex 1}}
-   [tool-bar {:title "Ironsworn" :style {:height 64}
-              :actions [{:title "Journal"}
-                        {:title "Character"}
-                        {:title "Progress Tracks"}
-                        {:title "Moves"}
-                        {:title "Assets"}]
-              :on-action-selected #(case %
-                                         0 (dispatch [:set-screen :journal])
-                                         1 (dispatch [:set-screen :chars])
-                                         2 (dispatch [:set-screen :progress-tracks])
-                                         3 (dispatch [:set-screen :move-list])
-                                         4 (dispatch [:set-screen :asset-list]))}]
-   [views/choose-screen]])
+  [drawer {:flex 1
+           :drawer-width 180
+           :render-navigation-view (fn [_]
+                                     (r/as-element [views/nav-menu]))} ;; r/as-element needed to cast nav-menu as native react-native component
+   [views/main-screen]])
 
 (defn init []
       (dispatch-sync [:initialize-db])

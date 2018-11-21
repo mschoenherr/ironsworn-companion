@@ -30,6 +30,7 @@
 (def picker (r/adapt-react-class (.-Picker ReactNative)))
 (def picker-item (r/adapt-react-class (.. ReactNative -Picker -Item)))
 
+;; helper function for reliable order of output
 (defn- sorted-hash-seq [m]
   "Returns a (seq m) sorted by first."
   (sort-by first (seq m)))
@@ -509,7 +510,19 @@
       :no-roll [no-roll-view])))
 
 ;; Nav-views
-(defn choose-screen []
+(defn nav-menu []
+  "Component for picking the active screen."
+  [view {:style {:width 180}}
+   (for [screen-name [:chars
+                      :move-list
+                      :progress-tracks
+                      :asset-list
+                      :journal]]
+     ^{:key screen-name}
+     [button {:title screen-name
+              :on-press #(dispatch [:set-screen screen-name])}])])
+
+(defn main-screen []
   "High-level view that simply invokes the component corresponding to ::active-screen."
   (let [active-screen (subscribe [:get-active-screen])]
     (case @active-screen
