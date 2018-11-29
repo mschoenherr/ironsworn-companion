@@ -37,16 +37,18 @@
 
 ;; atomic views and constants
 
-  (def bg-color "#8ba4a8")
+(def ironsworn-color "#8ba4a8")
 
 (defn heading-view [heading-text]
   "Shows a heading for a screen."
   [text
    {:style {:font-weight "bold"
             :font-size 19
+            :color ironsworn-color
             :width "100%"
             :border-width 2
             :border-radius 2
+            :border-color ironsworn-color
             :padding 4}}
    heading-text])
 
@@ -57,7 +59,7 @@
    [react-button
     (merge
      style-map
-     {:color bg-color})]])
+     {:color ironsworn-color})]])
 
 ;; Views for the Journal
 (defn journal-view []
