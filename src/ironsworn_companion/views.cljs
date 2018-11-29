@@ -396,7 +396,6 @@
         chars (subscribe [:get-chars])]
     (fn []
       [scroll-view {:style {:flex 7}}
-       [text (:name @move)]
        [text (:description @move)]
        [view
         [text "Who's rolling?"]
@@ -526,12 +525,14 @@
 (defn move-view []
   "Returns component corresponding to :move-type."
   (let [move (subscribe [:get-active-move])]
-    (case (:move-type @move)
-      :normal [normal-move-view]
-      :progress-track [progress-move-view]
-      :vow-move [vow-move-view]
-      :bond-move [bond-move-view]
-      :no-roll [no-roll-view])))
+    [view {:style {:flex 7}}
+     [heading-view (:name @move)]
+     (case (:move-type @move)
+       :normal [normal-move-view]
+       :progress-track [progress-move-view]
+       :vow-move [vow-move-view]
+       :bond-move [bond-move-view]
+       :no-roll [no-roll-view])]))
 
 ;; Nav-views
 (defn nav-menu []
