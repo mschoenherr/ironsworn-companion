@@ -395,16 +395,13 @@
         active-char (subscribe [:get-active-char])
         chars (subscribe [:get-chars])]
     (fn []
-      (when-not @active-char
-        (dispatch [:set-active-char
-                   (:name (first (map second (sorted-hash-seq @chars))))])) ;; ensure there is an active char if there is any
       [scroll-view {:style {:flex 7}}
        [text (:name @move)]
        [text (:description @move)]
        [view
         [text "Who's rolling?"]
         [pick-active-char-view]]
-;;       [char-view (:name @active-char)]
+       [char-view (:name @active-char)]
        [view
         [button {:title "-" :on-press #(swap! use-val dec)}]
         [text "Use"]
@@ -473,9 +470,6 @@
       [scroll-view {:style {:flex 7}}
        [text (:description @move)]
        [text "Who rolls?"]
-       (when-not @active-char
-         (dispatch [:set-active-char
-                    (:name (first (map second (sorted-hash-seq @chars))))]))
        [pick-active-char-view]
        [picker {:selected-value @selected-vow
                 :on-value-change (fn [val index]
@@ -496,9 +490,6 @@
       [scroll-view {:style {:flex 7}}
        [text (:description @move)]
        [text "Who rolls?"]
-       (when-not @active-char
-         (dispatch [:set-active-char
-                    (:name (first (map second (sorted-hash-seq @chars))))]))
        [pick-active-char-view]
        [bonds-view (:name @active-char) (:bonds @active-char)]
        [progress-roll-view ["Epic" (:bonds @active-char)] @move]])))
