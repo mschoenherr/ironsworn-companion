@@ -25,7 +25,7 @@
 (def view (r/adapt-react-class (.-View ReactNative)))
 (def text-input (r/adapt-react-class (.-TextInput ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
-(def button (r/adapt-react-class (.-Button ReactNative)))
+(def react-button (r/adapt-react-class (.-Button ReactNative)))
 (def switch-comp (r/adapt-react-class (.-Switch ReactNative)))
 (def picker (r/adapt-react-class (.-Picker ReactNative)))
 (def picker-item (r/adapt-react-class (.. ReactNative -Picker -Item)))
@@ -35,11 +35,39 @@
   "Returns a (seq m) sorted by first."
   (sort-by first (seq m)))
 
+;; atomic views and constants
+
+  (def bg-color "#8ba4a8")
+
+(defn heading-view [heading-text]
+  "Shows a heading for a screen."
+  [text
+   {:style {:font-weight "bold"
+            :font-size 19
+            :width "100%"
+            :border-width 2
+            :border-radius 2
+            :padding 4}}
+   heading-text])
+
+(defn button [style-map & {:keys [enclosing-style]
+                           :or {enclosing-style {}}}]
+  "Default Button for the app, merges styles in style-map mit defaults. Defaults having precedence."
+  [view {:style (merge enclosing-style {:padding 2})}
+   [react-button
+    (merge
+     style-map
+     {:color bg-color})]])
+
 ;; Views for the Journal
 (defn journal-view []
   "View for reading journal and inserting new entries."
   (let [journal (subscribe [:get-journal])]
-    [view {:style {:flex-direction "column" :margin 40 :align-items "center"}}
+    [view {:style {:flex 7
+                   :width "100%"
+                   :flex-direction "column"
+                   :align-items "center"}}
+     [heading-view "Journal"]
      [text-input {:on-submit-editing #(dispatch [:insert-journal-entry (.. % -nativeEvent -text)]) :width 128 :placeholder "Adventure awaits!"}]
      [scroll-view
       (for [entry @journal]
@@ -290,23 +318,24 @@
         delete-char? (atom false)]
     (fn []
       [view {:style {:flex 7}}
-      [scroll-view 
-       (for [char-name (keys @chars)]
-         ^{:key char-name}
-         [char-view char-name])
-       (if @input-new-char?
-         [text-input {:on-submit-editing #(do
-                                            (dispatch [:insert-new-char (.. % -nativeEvent -text)])
-                                            (swap! input-new-char? not))
-                      :width 128 :placeholder "Character Name"}]
-         [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
-       (if @delete-char?
-         [text-input {:on-submit-editing #(do
-                                            (dispatch [:delete-char (.. % -nativeEvent -text)])
-                                            (swap! delete-char? not))
-                      :width 128
-                      :placeholder "Type name of character to delete"}]
-         [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
+       [heading-view "Characters"]
+       [scroll-view 
+        (for [char-name (keys @chars)]
+          ^{:key char-name}
+          [char-view char-name])
+        (if @input-new-char?
+          [text-input {:on-submit-editing #(do
+                                             (dispatch [:insert-new-char (.. % -nativeEvent -text)])
+                                             (swap! input-new-char? not))
+                       :width 128 :placeholder "Character Name"}]
+          [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
+        (if @delete-char?
+          [text-input {:on-submit-editing #(do
+                                             (dispatch [:delete-char (.. % -nativeEvent -text)])
+                                             (swap! delete-char? not))
+                       :width 128
+                       :placeholder "Type name of character to delete"}]
+          [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
 
 
@@ -316,6 +345,7 @@
         input-new-pt? (atom false)]
     (fn []
       [view {:style {:flex 7}}
+       [heading-view "Progress Tracks"]
        (for [pt (sorted-hash-seq @pts)]
          ^{:key pt}
          [progress-view pt])
@@ -483,15 +513,18 @@
 (defn moves-list []
   "Component for viewing all moves."
   (let [moves (subscribe [:get-moves])]
-    [scroll-view {:style {:flex 7}}
-     (for [move @moves]
-       ^{:key (:name move)}
-       [move-link move])]))
+    [view {:style {:flex 7}}
+     [heading-view "Moves"]
+     [scroll-view {:style {:flex 7}}
+      (for [move @moves]
+        ^{:key (:name move)}
+        [move-link move])]]))
 
 (defn asset-list []
   "Component for viewing all assets (and picking one for adding to character)."
   (let [assets (subscribe [:get-all-assets])]
     [view {:style {:flex 7}}
+     [heading-view "Assets"]
      [text "Who wants some?"]
      [pick-active-char-view]
      [scroll-view 
@@ -513,14 +546,14 @@
 (defn nav-menu []
   "Component for picking the active screen."
   [view {:style {:width 180}}
-   (for [screen-name [:chars
-                      :move-list
-                      :progress-tracks
-                      :asset-list
-                      :journal]]
+   (for [screen-name [["Characters" :chars]
+                      ["Moves" :move-list]
+                      ["Progress Tracks" :progress-tracks]
+                      ["Assets" :asset-list]
+                      ["Journal" :journal]]]
      ^{:key screen-name}
-     [button {:title screen-name
-              :on-press #(dispatch [:set-screen screen-name])}])])
+     [button {:title (first screen-name)
+              :on-press #(dispatch [:set-screen (second screen-name)])}])])
 
 (defn main-screen []
   "High-level view that simply invokes the component corresponding to ::active-screen."
