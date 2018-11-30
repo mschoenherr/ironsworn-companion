@@ -59,8 +59,9 @@
  :go-back
  validate-spec
  (fn [db _]
-   (assoc db :active-screen (first (:nav-history db)))
-   (update-in db [:nav-history] pop)))
+   (-> db
+       (assoc :active-screen (first (:nav-history db)))
+       (update-in [:nav-history] pop))))
 
 (reg-event-db
  :mod-stat

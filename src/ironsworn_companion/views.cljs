@@ -92,11 +92,13 @@
     [button {:title "-" :on-press #(dispatch [:mod-stat
                                               [char-name
                                                stat-name
-                                               -1]])}]
+                                               -1]])}
+     :enclosing-style {:width 48 :height 48}]
     [button {:title "+" :on-press #(dispatch [:mod-stat
                                               [char-name
                                                stat-name
-                                               1]])}]]])
+                                               1]])}
+     :enclosing-style {:width 48 :height 48}]]])
 
 (defn res-view [char-name [res-name res-value]]
   "Component for rendering and updating resources."
@@ -113,11 +115,13 @@
     [button {:title "-" :on-press #(dispatch [:mod-res
                                               [char-name
                                                res-name
-                                               -1]])}]
+                                               -1]])}
+     :enclosing-style {:width 48 :height 48}]
     [button {:title "+" :on-press #(dispatch [:mod-res
                                               [char-name
                                                res-name
-                                               1]])}]]])
+                                               1]])}
+     :enclosing-style {:width 48 :height 48}]]])
 
 (defn ini-view [char-name value]
   "Component for rendering initiative for given char."
@@ -128,14 +132,15 @@
 
 (defn debility-view [char-name [deb-name value]]
   "Component for rendering debility for given char."
-  [view
+  [view {:style {:margin 1}}
    [text deb-name]
    [switch-comp {:value value :on-value-change #(dispatch [:set-debility
                                                            [char-name deb-name %]])}]])
 
 (defn momentum-view [char-name value]
   "Component for rendering momentum for a given char."
-  [view
+  [view {:style {:border-width 1
+                 :margin 1}}
    [view {:style {:flex-direction "row"
                   :align-items "center"
                   :justify-content "space-evenly"
@@ -150,11 +155,13 @@
                   :justify-content "space-evenly"}}
     [button {:title "-" :on-press #(dispatch [:mod-momentum
                                               [char-name
-                                               -1]])}]
+                                               -1]])}
+     :enclosing-style {:width 48 :height 48}]
     [text value]
     [button {:title "+" :on-press #(dispatch [:mod-momentum
                                               [char-name
-                                               1]])}]]])
+                                               1]])}
+     :enclosing-style {:width 48 :height 48}]]])
 
 (defn progress-view [[name [lvl ticks]] & {:keys [location char-name]
                                            :or {location :progress-tracks
@@ -165,10 +172,12 @@
                                :or {location :progress-tracks
                                     char-name nil}}]
      [view
-      [text name]
-      (if @delete-prog?
-        [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name :location location :char-name char-name])}]
-        [button {:title "Delete" :on-press #(swap! delete-prog? not)}])
+      [view {:style {:flex-direction "row"
+                     :justify-content "space-evenly"}}
+       [text name]
+       (if @delete-prog?
+         [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name :location location :char-name char-name])}]
+         [button {:title "Delete" :on-press #(swap! delete-prog? not)}])]
       [picker {:selected-value lvl
                :on-value-change (fn [val index]
                                   (dispatch [:mod-progress-lvl [name val] :location location
@@ -176,13 +185,18 @@
        (for [level (sort db/levels)]
          ^{:key level}
          [picker-item {:label level :value level}])]
-      [button {:title "-" :on-press #(dispatch [:mod-progress
-                                                [name -1]
-                                                :location location :char-name char-name])}]
-      [text ticks]
-      [button {:title "+" :on-press #(dispatch [:mod-progress
-                                                [name 1]
-                                                :location location :char-name char-name])}]])))
+      [view {:style {:flex-direction "row"
+                     :flex-wrap "wrap"
+                     :justify-content "space-evenly"}}
+       [button {:title "-" :on-press #(dispatch [:mod-progress
+                                                 [name -1]
+                                                 :location location :char-name char-name])}
+        :enclosing-style {:width 48 :height 48}]
+       [text ticks]
+       [button {:title "+" :on-press #(dispatch [:mod-progress
+                                                 [name 1]
+                                                 :location location :char-name char-name])}
+        :enclosing-style {:width 48 :height 48}]]])))
 
 (defn vow-view [char-name [vow-name [lvl ticks]]]
   "Component for rendering vows."
@@ -202,28 +216,44 @@
 
 (defn stats-view [name stats]
   "Component for viewing and changing stats."
-  [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+  [view {:style {:flex-direction "row"
+                 :flex-wrap "wrap"
+                 :justify-content "space-evenly"
+                 :border-width 1
+                 :margin 1}}
    (for [stat (sorted-hash-seq stats)]
      ^{:key stat}
      [stat-view name stat])])
 
 (defn resources-view [name resources]
   "Component for viewing and changing resources."
-  [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+  [view {:style {:flex-direction "row"
+                 :flex-wrap "wrap"
+                 :justify-content "space-evenly"
+                 :border-width 1
+                 :margin 1}}
    (for [res (sorted-hash-seq resources)]
      ^{:key res}
      [res-view name res])])
 
 (defn debilities-view [name debilities]
   "Component for viewing all debilities."
-  [view {:style {:flex-direction "row" :justify-content "space-evenly" :flex-wrap "wrap"}}
+  [view {:style {:flex-direction "row"
+                 :justify-content "space-evenly"
+                 :flex-wrap "wrap"
+                 :border-width 1
+                 :margin 1}}
    (for [deb (sorted-hash-seq debilities)]
      ^{:key deb}
      [debility-view name deb])])
 
 (defn vows-view [name vows]
   "Component for viewing all vows."
-  [view {:style {:flex-direction "column" :justify-content "space-evenly"}}
+  [view {:style {:flex-direction "column"
+                 :justify-content "space-evenly"
+                 :border-width 1
+                 :margin 1}}
+   [text "Vows"]
    (for [vow (sorted-hash-seq vows)]
      ^{:key vow}
      [vow-view name vow])
@@ -540,6 +570,7 @@
 (defn nav-menu []
   "Component for picking the active screen."
   [view {:style {:width 180}}
+   [heading-view "Ironsworn"]
    (for [screen-name [["Characters" :chars]
                       ["Moves" :move-list]
                       ["Progress Tracks" :progress-tracks]
