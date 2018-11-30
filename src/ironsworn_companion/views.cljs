@@ -61,6 +61,15 @@
             :padding 4}}
    heading-text])
 
+(defn subheading-view [heading-text]
+  "Shows a subheading."
+  [text {:style {:font-weight "bold"
+                 :font-size 16
+                 :flex 1
+                 :text-align "center"
+                 :color ironsworn-color}}
+   heading-text])
+
 (defn button [style-map & {:keys [enclosing-style]
                            :or {enclosing-style {}}}]
   "Default Button for the app, merges styles in style-map mit defaults. Defaults having precedence."
@@ -241,7 +250,7 @@
                  :margin 1}}
    [view {:style {:flex-direction "row"
                   :justify-content "space-evenly"}}
-    [text {:style {:flex 1}} "Bonds"]
+    [subheading-view "Bonds"]
     [button {:title "-" :on-press #(dispatch [:mod-bonds
                                               [char-name
                                                -1]])}
@@ -254,36 +263,39 @@
 
 (defn stats-view [name stats]
   "Component for viewing and changing stats."
-  [view {:style {:flex-direction "row"
-                 :flex-wrap "wrap"
-                 :justify-content "space-evenly"
-                 :border-width 1
+  [view {:style {:border-width 1
                  :margin 1}}
-   (for [stat (sorted-hash-seq stats)]
-     ^{:key stat}
-     [stat-view name stat])])
+   [subheading-view "Stats"]
+   [view {:style {:flex-direction "row"
+                  :flex-wrap "wrap"
+                  :justify-content "space-evenly"}}
+    (for [stat (sorted-hash-seq stats)]
+      ^{:key stat}
+      [stat-view name stat])]])
 
 (defn resources-view [name resources]
   "Component for viewing and changing resources."
-  [view {:style {:flex-direction "row"
-                 :flex-wrap "wrap"
-                 :justify-content "space-evenly"
-                 :border-width 1
+  [view {:style {:border-width 1
                  :margin 1}}
-   (for [res (sorted-hash-seq resources)]
-     ^{:key res}
-     [res-view name res])])
+   [subheading-view "Resources"]
+   [view {:style {:flex-direction "row"
+                  :flex-wrap "wrap"
+                  :justify-content "space-evenly"}}
+    (for [res (sorted-hash-seq resources)]
+      ^{:key res}
+      [res-view name res])]])
 
 (defn debilities-view [name debilities]
   "Component for viewing all debilities."
-  [view {:style {:flex-direction "row"
-                 :justify-content "space-evenly"
-                 :flex-wrap "wrap"
-                 :border-width 1
+  [view {:style {:border-width 1
                  :margin 1}}
-   (for [deb (sorted-hash-seq debilities)]
-     ^{:key deb}
-     [debility-view name deb])])
+   [subheading-view "Debilities"]
+   [view {:style {:flex-direction "row"
+                  :justify-content "space-evenly"
+                  :flex-wrap "wrap"}}
+    (for [deb (sorted-hash-seq debilities)]
+      ^{:key deb}
+      [debility-view name deb])]])
 
 (defn vows-view [name vows]
   "Component for viewing all vows."
@@ -291,7 +303,7 @@
                  :justify-content "space-evenly"
                  :border-width 1
                  :margin 1}}
-   [text "Vows"]
+   [subheading-view "Vows"]
    (for [vow (sorted-hash-seq vows)]
      ^{:key vow}
      [vow-view name vow])
@@ -323,8 +335,10 @@
   (let [edit-note (atom false)]
     (fn [asset & {:keys [char-name]
                   :or {char-name nil}}]
-      [view
-       [text (:name asset)]
+      [view {:style {:border-width 1
+                     :margin 1
+                     :padding 2}}
+       [subheading-view (:name asset)]
        (if char-name
          [button {:title "Remove" :on-press #(dispatch [:rm-ass char-name (:name asset)])}]
          [button {:title "Add" :on-press #(do
@@ -361,7 +375,10 @@
 
 (defn assets-view [char-name assets]
   "Component for viewing all assets in list"
-  [view
+  [view {:style {:border-width 1
+                 :padding 2
+                 :margin 1}}
+   [subheading-view "Assets"]
    (for [asset assets]
      ^{:key (:name asset)}
      [asset-view asset :char-name char-name])])
@@ -370,7 +387,7 @@
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])]
     [view
-     [text (:name @char)]
+     [subheading-view (:name @char)]
      [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
       [ini-view name (:initiative @char)]
       [momentum-view name (:momentum @char)]]
