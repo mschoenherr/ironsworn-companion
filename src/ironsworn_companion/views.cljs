@@ -19,6 +19,7 @@
             [ironsworn-companion.events]
             [ironsworn-companion.subs]))
 
+;; react native imports for use in re-frame
 (def ReactNative (js/require "react-native"))
 
 (def text (r/adapt-react-class (.-Text ReactNative)))
@@ -29,6 +30,14 @@
 (def switch-comp (r/adapt-react-class (.-Switch ReactNative)))
 (def picker (r/adapt-react-class (.-Picker ReactNative)))
 (def picker-item (r/adapt-react-class (.. ReactNative -Picker -Item)))
+(def image (r/adapt-react-class (.-Image ReactNative)))
+
+;; static images go here
+(def zerotick (js/require "./images/zerotick.png"))
+(def onetick (js/require "./images/onetick.png"))
+(def twotick (js/require "./images/twotick.png"))
+(def threetick (js/require "./images/threetick.png"))
+(def fourtick (js/require "./images/fourtick.png"))
 
 ;; helper function for reliable order of output
 (defn- sorted-hash-seq [m]
@@ -163,6 +172,26 @@
                                                1]])}
      :enclosing-style {:width 48 :height 48}]]])
 
+(defn progress-bar-view [ticks]
+  "Component for viewing the ticks in a progress bar."
+  [view {:style {:flex-direction "row"}}
+   (for [ind (take 10 (range))]
+     ^{:key ind}
+     [image {:style (merge {:width 32
+                            :height 32
+                            :margin 1}
+                           (case ind
+                             4 {:margin-right 7}
+                             {}))
+             :source
+             (let [rem-ticks (- ticks (* 4 ind))]
+               (cond
+                 (<= rem-ticks 0) zerotick
+                 (= 1 rem-ticks) onetick
+                 (= 2 rem-ticks) twotick
+                 (= 3 rem-ticks) threetick
+                 :else fourtick))}])])
+
 (defn progress-view [[name [lvl ticks]] & {:keys [location char-name]
                                            :or {location :progress-tracks
                                                 char-name nil}}]
@@ -171,32 +200,36 @@
     (fn [[name [lvl ticks]] & {:keys [location char-name]
                                :or {location :progress-tracks
                                     char-name nil}}]
-     [view
-      [view {:style {:flex-direction "row"
-                     :justify-content "space-evenly"}}
-       [text name]
-       (if @delete-prog?
-         [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name :location location :char-name char-name])}]
-         [button {:title "Delete" :on-press #(swap! delete-prog? not)}])]
-      [picker {:selected-value lvl
-               :on-value-change (fn [val index]
-                                  (dispatch [:mod-progress-lvl [name val] :location location
-                                             :char-name char-name]))}
-       (for [level (sort db/levels)]
-         ^{:key level}
-         [picker-item {:label level :value level}])]
-      [view {:style {:flex-direction "row"
-                     :flex-wrap "wrap"
-                     :justify-content "space-evenly"}}
-       [button {:title "-" :on-press #(dispatch [:mod-progress
-                                                 [name -1]
-                                                 :location location :char-name char-name])}
-        :enclosing-style {:width 48 :height 48}]
-       [text ticks]
-       [button {:title "+" :on-press #(dispatch [:mod-progress
-                                                 [name 1]
-                                                 :location location :char-name char-name])}
-        :enclosing-style {:width 48 :height 48}]]])))
+      [view {:style {:border-width 1
+                     :margin 1
+                     :padding 2}}
+       [view {:style {:flex-direction "row"
+                      :justify-content "space-evenly"
+                      :border-bottom-width 1}}
+        [text name]
+        (if @delete-prog?
+          [button {:title "Really delete?" :on-press #(dispatch [:delete-prog name :location location :char-name char-name])}]
+          [button {:title "Delete" :on-press #(swap! delete-prog? not)}])]
+       [view {:style {:flex-direction "row"
+                      :flex-wrap "wrap"
+                      :justify-content "space-evenly"}}
+        [picker {:style {:flex 1}
+                 :selected-value lvl
+                 :on-value-change (fn [val index]
+                                    (dispatch [:mod-progress-lvl [name val] :location location
+                                               :char-name char-name]))}
+         (for [level (sort db/levels)]
+           ^{:key level}
+           [picker-item {:label level :value level}])]
+        [button {:title "-" :on-press #(dispatch [:mod-progress
+                                                  [name -1]
+                                                  :location location :char-name char-name])}
+         :enclosing-style {:width 48 :height 48}]
+        [button {:title "+" :on-press #(dispatch [:mod-progress
+                                                  [name 1]
+                                                  :location location :char-name char-name])}
+         :enclosing-style {:width 48 :height 48}]]
+       [progress-bar-view ticks]])))
 
 (defn vow-view [char-name [vow-name [lvl ticks]]]
   "Component for rendering vows."
@@ -204,15 +237,20 @@
 
 (defn bonds-view [char-name ticks]
   "Component for rendering bonds."
-  [view
-   [text "Bonds"]
-   [button {:title "-" :on-press #(dispatch [:mod-bonds
-                                             [char-name
-                                              -1]])}]
-   [text ticks]
-   [button {:title "+" :on-press #(dispatch [:mod-bonds
-                                             [char-name
-                                              1]])}]])
+  [view {:style {:border-width 1
+                 :margin 1}}
+   [view {:style {:flex-direction "row"
+                  :justify-content "space-evenly"}}
+    [text {:style {:flex 1}} "Bonds"]
+    [button {:title "-" :on-press #(dispatch [:mod-bonds
+                                              [char-name
+                                               -1]])}
+     :enclosing-style {:width 48 :height 48}]
+    [button {:title "+" :on-press #(dispatch [:mod-bonds
+                                              [char-name
+                                               1]])}
+     :enclosing-style {:width 48 :height 48}]]
+   [progress-bar-view ticks]])
 
 (defn stats-view [name stats]
   "Component for viewing and changing stats."
