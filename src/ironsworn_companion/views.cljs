@@ -329,49 +329,66 @@
          (when @w100
            [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
 
+(defn custom-note-view [asset & {:keys [char-name]
+                                 :or {char-name nil}}]
+  "Component for viewing custom notes on assets."
+  (let [edit-note? (atom false)]
+    (fn  [asset & {:keys [char-name]
+                   :or {char-name nil}}]
+      (when (and char-name (:custom-note asset))
+        [view {:style {:flex-direction "row"
+                       :align-items "center"
+                       :justify-content "space-evenly"}}
+         [text {:style {:margin-right 5}}
+          (str (get-in asset [:custom-note 0]) ":")]
+         
+         (if @edit-note?
+           [text-input {:style {:flex 1}
+                        :placeholder (get-in asset [:custom-note 1])
+                        :on-submit-editing #(do
+                                              (swap! edit-note? not)
+                                              (dispatch [:change-asset-note char-name asset (.. % -nativeEvent -text)]))}]
+           [button {:title (get-in asset [:custom-note 1]) :on-press #(swap! edit-note? not)}
+            :enclosing-style {:flex 1}])]))))
+
 (defn asset-view [asset & {:keys [char-name]
                            :or {char-name nil}}]
   "Component for viewing an asset."
-  (let [edit-note (atom false)]
+  (let [show-asset? (atom false)]
     (fn [asset & {:keys [char-name]
                   :or {char-name nil}}]
       [view {:style {:border-width 1
-                     :margin 1
-                     :padding 2}}
-       [subheading-view (:name asset)]
-       (if char-name
-         [button {:title "Remove" :on-press #(dispatch [:rm-ass char-name (:name asset)])}]
-         [button {:title "Add" :on-press #(do
-                                            (dispatch [:add-ass-to-act-char (:name asset)])
-                                            (dispatch [:set-screen :chars]))}])
-       (when (and char-name (:custom-note asset))
-         [text (get-in asset [:custom-note 0])]
-         (if @edit-note
-           [text-input {:placeholder (get-in asset [:custom-note 1])
-                        :on-submit-editing #(do
-                                              (swap! edit-note not)
-                                              (dispatch [:change-asset-note char-name asset (.. % -nativeEvent -text)]))}]
-           [view
-            [button {:title "Edit" :on-press #(swap! edit-note not)}]
-            [text (get-in asset [:custom-note 1])]]))
-       [text (:asset-type asset)]
-       (when (:description asset)
-         [text (:description asset)])
-       (for [perk (:perks asset)]
-         ^{:key perk}
-         [view
-          (if char-name
-            [switch-comp {:value (:enabled perk)
-                          :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
-            [switch-comp {:value (:enabled perk)}])
-          [result-view (:result perk)]])
-       (when (:res-counter asset)
-         [view
-          (when char-name
-            [button {:title "-" :on-press #(dispatch [:mod-asset-resource char-name asset -1])}])
-          [text (get-in asset [:res-counter :current])]
-          (when char-name
-            [button {:title "+" :on-press #(dispatch [:mod-asset-resource char-name asset 1])}])])])))
+                     :margin 1}}
+       [view {:style {:flex-direction "row"}}
+        [button {:title (:name asset)
+                 :on-press #(swap! show-asset? not)}
+         :enclosing-style {:flex 1}]
+        (if char-name
+          [button {:title "Remove" :on-press #(dispatch [:rm-ass char-name (:name asset)])}]
+          [button {:title "Add" :on-press #(do
+                                             (dispatch [:add-ass-to-act-char (:name asset)])
+                                             (dispatch [:set-screen :chars]))}])]
+       (when @show-asset?
+         [view {:style {:padding 2}}
+          [custom-note-view asset :char-name char-name]
+          [text (:asset-type asset)]
+          (when (:description asset)
+            [text (:description asset)])
+          (for [perk (:perks asset)]
+            ^{:key perk}
+            [view
+             (if char-name
+               [switch-comp {:value (:enabled perk)
+                             :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
+               [switch-comp {:value (:enabled perk)}])
+             [result-view (:result perk)]])
+          (when (:res-counter asset)
+            [view
+             (when char-name
+               [button {:title "-" :on-press #(dispatch [:mod-asset-resource char-name asset -1])}])
+             [text (get-in asset [:res-counter :current])]
+             (when char-name
+               [button {:title "+" :on-press #(dispatch [:mod-asset-resource char-name asset 1])}])])])])))
 
 (defn assets-view [char-name assets]
   "Component for viewing all assets in list"
@@ -385,18 +402,23 @@
 
 (defn char-view [name]
   "Component for viewing and editing a char identified by name."
-  (let [char (subscribe [:get-char name])]
-    [view
-     [subheading-view (:name @char)]
-     [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
-      [ini-view name (:initiative @char)]
-      [momentum-view name (:momentum @char)]]
-     [stats-view name (:stats @char)]
-     [resources-view name (:resources @char)]
-     [debilities-view name (:debilities @char)]
-     [vows-view name (:vows @char)]
-     [bonds-view name (:bonds @char)]
-     [assets-view name (:assets @char)]]))
+  (let [char (subscribe [:get-char name])
+        show-char? (atom true)]
+    (fn [name]
+      [view
+       [button {:title name 
+                :on-press #(swap! show-char? not)}]
+       (when @show-char?
+         [view
+          [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
+           [ini-view name (:initiative @char)]
+           [momentum-view name (:momentum @char)]]
+          [stats-view name (:stats @char)]
+          [resources-view name (:resources @char)]
+          [debilities-view name (:debilities @char)]
+          [vows-view name (:vows @char)]
+          [bonds-view name (:bonds @char)]
+          [assets-view name (:assets @char)]])])))
 
 (defn chars-view []
   "Component for viewing all chars in db."
