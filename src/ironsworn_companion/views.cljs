@@ -88,7 +88,9 @@
                    :flex-direction "column"
                    :align-items "center"}}
      [heading-view "Journal"]
-     [text-input {:on-submit-editing #(dispatch [:insert-journal-entry (.. % -nativeEvent -text)]) :width 128 :placeholder "Adventure awaits!"}]
+     [text-input {:on-submit-editing #(dispatch [:insert-journal-entry (.. % -nativeEvent -text)])
+                  :placeholder "What's up?"
+                  :style {:width "100%"}}]
      [scroll-view
       (for [entry @journal]
         ^{:key entry}
