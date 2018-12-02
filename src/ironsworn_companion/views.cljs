@@ -633,6 +633,7 @@
        [text (:description @move)]
        [text "Who rolls?"]
        [pick-active-char-view]
+       [text "Which vow?"]
        [picker {:selected-value @selected-vow
                 :on-value-change (fn [val index]
                                    (reset! selected-vow val))}
