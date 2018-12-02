@@ -525,7 +525,8 @@
        [view
         [text "Who's rolling?"]
         [pick-active-char-view]]
-       [char-view (:name @active-char)]
+       (when @active-char
+         [char-view (:name @active-char)])
        [view
         [button {:title "-" :on-press #(swap! use-val dec)}]
         [text "Use"]
