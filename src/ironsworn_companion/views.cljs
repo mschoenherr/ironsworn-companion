@@ -312,7 +312,8 @@
    [text-input {:on-submit-editing #(do
                                       (dispatch [:insert-new-pt (.. % -nativeEvent -text)
                                                  :location :vows :char-name name]))
-                :width 128 :placeholder "New vow name"}]])
+                :placeholder "New vow name"
+                :style {:width "100%"}}]])
 
 (defn result-view [result]
   "Component for viewing a specific result. Recurses through results in options or random event."
