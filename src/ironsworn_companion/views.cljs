@@ -504,12 +504,12 @@
        [text (first challenges)]
        [button {:title "Reroll"
                 :on-press #(swap! result-atom
-                                  rolls/reroll-die :challenge1)}]]
+                                  rolls/reroll-challenge-die :challenge1)}]]
       [view {:style {:align-items "center"}}
        [text (second challenges)]
        [button {:title "Reroll"
                 :on-press #(swap! result-atom
-                                  rolls/reroll-die :challenge2)}]]
+                                  rolls/reroll-challenge-die :challenge2)}]]
       (when (= (first challenges) (second challenges))
         [text {:style {:margin 5}} "It's a match!"])])])
 
@@ -570,7 +570,11 @@
                          :border-width 1
                          :padding 1}}
            [text "Action Die:"]
-           [text (rolls/get-action-rating @roll-result)]]
+           [view {:style {:align-items "center"}}
+            [text (rolls/get-action-rating @roll-result)]
+            [button {:title "Reroll"
+                     :on-press #(swap! roll-result
+                                       rolls/reroll-action-die @active-char)}]]]
           [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
        (when (and @roll-result
