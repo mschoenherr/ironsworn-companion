@@ -477,7 +477,8 @@
          [text-input {:on-submit-editing #(do
                                             (dispatch [:insert-new-pt (.. % -nativeEvent -text)])
                                             (swap! input-new-pt? not))
-                      :width 128 :placeholder "Insert Name"}]
+                      :placeholder "Insert Name"
+                      :style {:width "100%"}}]
          [button {:title "New" :on-press #(swap! input-new-pt? not)}])])))
 
 (defn move-link [move]
