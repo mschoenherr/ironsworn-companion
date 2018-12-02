@@ -39,6 +39,10 @@
    :challenge1 (roll-challenge-die)
    :challenge2 (roll-challenge-die)})
 
+(defn reroll-die [result key]
+  "Rerolls the die given by key and returns changed result."
+  (assoc result key (roll-challenge-die)))
+
 (defn get-action-rating [result]
   "Returns the rating of the action die or zero if it is disabled."
   (if (get-in result [:action-die 1])

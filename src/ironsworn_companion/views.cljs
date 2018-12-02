@@ -493,12 +493,25 @@
 
 (defn challenge-dice-view [result-atom]
   "Component for viewing and rerolling challenge-dice. Takes an atom (!) as an argument, to enable rerolling." ;; TODO: rerolling, matches!
-  [view
+  [view {:style {:align-items "center"
+                 :border-width 1
+                 :padding 5}}
    [text "Challenge Dice:"]
    (let [challenges (rolls/get-challenge-ratings @result-atom)]
-            [view
-             [text (first challenges)]
-             [text (second challenges)]])])
+     [view {:style {:flex-direction "row"
+                    :align-items "center"}}
+      [view {:style {:align-items "center"}}
+       [text (first challenges)]
+       [button {:title "Reroll"
+                :on-press #(swap! result-atom
+                                  rolls/reroll-die :challenge1)}]]
+      [view {:style {:align-items "center"}}
+       [text (second challenges)]
+       [button {:title "Reroll"
+                :on-press #(swap! result-atom
+                                  rolls/reroll-die :challenge2)}]]
+      (when (= (first challenges) (second challenges))
+        [text {:style {:margin 5}} "It's a match!"])])])
 
 (defn pick-active-char-view []
   "Component for picking the active character, should use standard picker comp."
@@ -550,9 +563,14 @@
          [button {:title "+" :on-press #(swap! add-val inc)}
           :enclosing-style {:width 48 :height 48}]]]
        (when @roll-result
-         [view
-          [text "Action Die:"]
-          [text (rolls/get-action-rating @roll-result)]
+         [view {:style {:flex-direction "row"
+                        :flex-wrap "wrap"
+                        :justify-content "space-evenly"}}
+          [view {:style {:align-items "center"
+                         :border-width 1
+                         :padding 1}}
+           [text "Action Die:"]
+           [text (rolls/get-action-rating @roll-result)]]
           [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
        [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
        (when (and @roll-result
@@ -562,7 +580,7 @@
                                                       (dispatch [:reset-momentum (:name @active-char)])
                                                       (swap! roll-result rolls/burn-momentum @active-char))}])
        (when @roll-result
-         (let [result-type (rolls/result-type @roll-result @use-val @add-val)] ;; here a dedicated view should be made
+         (let [result-type (rolls/result-type @roll-result @use-val @add-val)]
            [result-view (get-in @move [:results result-type])]))])))
 
 (defn progress-roll-view [p-track move]
