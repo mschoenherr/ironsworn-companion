@@ -450,14 +450,15 @@
           [text-input {:on-submit-editing #(do
                                              (dispatch [:insert-new-char (.. % -nativeEvent -text)])
                                              (swap! input-new-char? not))
-                       :width 128 :placeholder "Character Name"}]
+                       :placeholder "Character Name"
+                       :style {:flex 1}}]
           [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
         (if @delete-char?
           [text-input {:on-submit-editing #(do
                                              (dispatch [:delete-char (.. % -nativeEvent -text)])
                                              (swap! delete-char? not))
-                       :width 128
-                       :placeholder "Type name of character to delete"}]
+                       :placeholder "Type name of character to delete"
+                       :style {:flex 1}}]
           [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
 
