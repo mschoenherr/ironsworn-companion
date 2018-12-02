@@ -317,7 +317,7 @@
   (let [w100 (atom nil)]
     (fn [result]
       (if (string? result)
-        [text result]
+        [text {:style {:flex 1}} result]
         [view
          [text (:description result)]
          (when (:options result)
@@ -351,6 +351,31 @@
            [button {:title (get-in asset [:custom-note 1]) :on-press #(swap! edit-note? not)}
             :enclosing-style {:flex 1}])]))))
 
+(defn perk-view [asset perk & {:keys [char-name]
+                               :or {char-name nil}}]
+  "Component for viewing single perks on assets."
+  [view {:style {:flex-direction "row"}}
+   (if char-name
+     [switch-comp {:value (:enabled perk)
+                   :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
+     [switch-comp {:value (:enabled perk)}])
+   [result-view (:result perk)]])
+
+(defn res-counter-view [asset & {:keys [char-name]
+                                 :or {char-name nil}}]
+  "Component for viewing resource-counters on assets."
+  (when (:res-counter asset)
+    [view {:style {:flex-direction "row"
+                   :justify-content "space-evenly"
+                   :padding 2}}
+     (when char-name
+       [button {:title "-" :on-press #(dispatch [:mod-asset-resource char-name asset -1])}
+        :enclosing-style {:width 48 :height 48}])
+     [text {:style {:margin 5}} (get-in asset [:res-counter :current])]
+     (when char-name
+       [button {:title "+" :on-press #(dispatch [:mod-asset-resource char-name asset 1])}
+        :enclosing-style {:width 48 :height 48}])]))
+
 (defn asset-view [asset & {:keys [char-name]
                            :or {char-name nil}}]
   "Component for viewing an asset."
@@ -370,25 +395,14 @@
                                              (dispatch [:set-screen :chars]))}])]
        (when @show-asset?
          [view {:style {:padding 2}}
-          [custom-note-view asset :char-name char-name]
           [text (:asset-type asset)]
+          [custom-note-view asset :char-name char-name]
           (when (:description asset)
             [text (:description asset)])
           (for [perk (:perks asset)]
             ^{:key perk}
-            [view
-             (if char-name
-               [switch-comp {:value (:enabled perk)
-                             :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
-               [switch-comp {:value (:enabled perk)}])
-             [result-view (:result perk)]])
-          (when (:res-counter asset)
-            [view
-             (when char-name
-               [button {:title "-" :on-press #(dispatch [:mod-asset-resource char-name asset -1])}])
-             [text (get-in asset [:res-counter :current])]
-             (when char-name
-               [button {:title "+" :on-press #(dispatch [:mod-asset-resource char-name asset 1])}])])])])))
+            [perk-view asset perk :char-name char-name])
+          [res-counter-view asset :char-name char-name]])])))
 
 (defn assets-view [char-name assets]
   "Component for viewing all assets in list"
