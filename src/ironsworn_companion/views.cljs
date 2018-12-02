@@ -414,10 +414,11 @@
      ^{:key (:name asset)}
      [asset-view asset :char-name char-name])])
 
-(defn char-view [name]
+(defn char-view [name & {:keys [init-show-char?]
+                         :or {init-show-char? true}}]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])
-        show-char? (atom true)]
+        show-char? (atom init-show-char?)]
     (fn [name]
       [view
        [button {:title name 
@@ -526,17 +527,28 @@
         [text "Who's rolling?"]
         [pick-active-char-view]]
        (when @active-char
-         [char-view (:name @active-char)])
-       [view
-        [button {:title "-" :on-press #(swap! use-val dec)}]
-        [text "Use"]
-        [text @use-val]
-        [button {:title "+" :on-press #(swap! use-val inc)}]]
-       [view
-        [button {:title "-" :on-press #(swap! add-val dec)}]
-        [text "Add"]
-        [text @add-val]
-        [button {:title "+" :on-press #(swap! add-val inc)}]]
+         [char-view (:name @active-char) :init-show-char? false])
+       [view {:style {:flex-direction "row"
+                      :flex-wrap "wrap"
+                      :justify-content "space-evenly"}}
+        [view {:style {:flex-direction "row"
+                       :align-items "center"
+                       :margin 5}}
+         [button {:title "-" :on-press #(swap! use-val dec)}
+          :enclosing-style {:width 48 :height 48}]
+         [text {:style {:margin 5}} "Use:"]
+         [text {:style {:margin 5}} @use-val]
+         [button {:title "+" :on-press #(swap! use-val inc)}
+          :enclosing-style {:width 48 :height 48}]]
+        [view {:style {:flex-direction "row"
+                       :align-items "center"
+                       :margin 5}}
+         [button {:title "-" :on-press #(swap! add-val dec)}
+          :enclosing-style {:width 48 :height 48}]
+         [text {:style {:margin 5}} "Add"]
+         [text {:style {:margin 5}} @add-val]
+         [button {:title "+" :on-press #(swap! add-val inc)}
+          :enclosing-style {:width 48 :height 48}]]]
        (when @roll-result
          [view
           [text "Action Die:"]
