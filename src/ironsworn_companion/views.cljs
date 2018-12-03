@@ -16,7 +16,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
-            [ironsworn-companion.events]
+            [ironsworn-companion.events :refer [load-db]]
             [ironsworn-companion.subs]))
 
 ;; react native imports for use in re-frame

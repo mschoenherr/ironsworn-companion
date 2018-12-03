@@ -14,11 +14,13 @@
 (ns ironsworn-companion.android.core
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [ironsworn-companion.db :refer [app-db]]
             [ironsworn-companion.views :as views]
-            [ironsworn-companion.events]
+            [ironsworn-companion.events :refer [load-db save-db]]
             [ironsworn-companion.subs]))
 
 (def ReactNative (js/require "react-native"))
+(def app-state (.-AppState ReactNative))
 (def app-registry (.-AppRegistry ReactNative))
 (def view (r/adapt-react-class (.-View ReactNative)))
 (def drawer (r/adapt-react-class (.-DrawerLayoutAndroid ReactNative)))
@@ -32,5 +34,12 @@
    [views/main-screen]])
 
 (defn init []
-      (dispatch-sync [:initialize-db])
-      (.registerComponent app-registry "IronswornCompanion" #(r/reactify-component app-root)))
+  (dispatch-sync [:initialize-db])
+  (.addEventListener app-state "change"
+                     (fn [next-state]
+                       (case next-state
+                         "active" (load-db
+                                   (fn [db]
+                                     (dispatch-sync [:reload-db db])))
+                         (dispatch-sync [:save-db]))))
+  (.registerComponent app-registry "IronswornCompanion" #(r/reactify-component app-root)))

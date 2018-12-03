@@ -33,7 +33,7 @@
                             "Tormented" false
                             "Cursed" false}
                :initiative false
-               :assets [(first all-assets)]}) ;; for debugging, non-empty asset-list
+               :assets []})
 
 (def levels #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
 

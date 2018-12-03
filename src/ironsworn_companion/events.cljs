@@ -13,10 +13,27 @@
 
 (ns ironsworn-companion.events
   (:require
-   [re-frame.core :refer [reg-event-db reg-event-fx after]]
+   [cljs.reader]
+   [re-frame.core :refer [reg-event-db reg-event-fx after reg-fx]]
    [clojure.spec.alpha :as s]
    [ironsworn-companion.db :as db]
    [ironsworn-companion.db :as db :refer [app-db]]))
+
+;; Initializing the storage backend here
+(def ReactNative (js/require "react-native"))
+
+(def AsyncStorage (.-AsyncStorage ReactNative))
+
+;; functions for storage interaction, adapted from todo-mvc example app
+(defn load-db [callback]
+  "Gets db item from Storage, then parses it and feeds it into callback."
+  (-> (.getItem AsyncStorage "db")
+      (.then #(if % (cljs.reader/read-string %) app-db))
+      (.then callback)))
+
+(defn save-db [db]
+  "Saves db to Storage."
+  (.setItem AsyncStorage "db" db))
 
 ;; -- Interceptors ------------------------------------------------------------
 ;;
@@ -41,6 +58,22 @@
  validate-spec
  (fn [_ _]
    app-db))
+
+(reg-event-db
+ :reload-db
+ validate-spec
+ (fn [_ [_ db]]
+   db))
+
+(reg-fx ;;effect handler for saving to storage
+ :save-to-storage
+ (fn [db]
+   (save-db db)))
+
+(reg-event-fx
+ :save-db ;; only fires save-to-storage handler with current db
+ (fn [cofx [_]]
+   {:save-to-storage (pr-str (:db cofx))}))
 
 (reg-event-db
  :insert-journal-entry
@@ -255,3 +288,4 @@
    (update-in db [:characters char-name :assets]
               (partial remove 
                #(= asset-name (:name %))))))
+
