@@ -4,7 +4,24 @@ This is an unofficial Ironsworn companion app (WIP), written in ClojureScript, u
 
 ## Usage
 
-TODO
+Setup [re-natal](https://github.com/drapanjanas/re-natal) and run
+
+```
+re-natal init IronswornCompanion
+```
+
+change into `ironsworn-companion` and run
+
+```
+git init
+git remote add ironsworn-source https://github.com/mschoenherr/ironsworn-companion.git
+rm LICENSE README.md src/ironsworn-companion/db.cljs src/ironsworn-companion/subs.cljs src/ironsworn-companion/events.cljs
+rm src/ironsworn-companion/android/core.cljs
+git fetch ironsworn-source
+git merge --allow-unrelated-histories ironsworn-source/master
+```
+
+Then, you can work with re-natal as described on [re-natal](https://github.com/drapanjanas/re-natal).
 
 ## License
 
