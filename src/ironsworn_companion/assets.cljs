@@ -178,4 +178,82 @@
                                      [80 "Your ally may replace one of their challenge dice with a 8."]
                                      [90 "Your ally may replace one of their challenge dice with a 9."]
                                      [100 "Envision how you inadvertently undermine their action. Your ally must replace their lowest challenge die with a 10."]]}}]}
+   {:name "Masked"
+    :asset-type "Path"
+    :description "Once you mark a bond with elves, and are gifted with a mask of precious elderwood..."
+    :custom-note ["Mask" "X-wood: Stat / Resource"]
+    :perks [{:id :first
+             :enabled true
+             :result {:description "Choose your mask's material. When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addtion to any other outcome of the move)."
+                      :options ["Thunderwood: Edge / Health"
+                                "Bloodwood: Iron / Health"
+                                "Ghostwood: Shadow / Spirit"
+                                "Whisperwood: Wits /Spirit"]
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "As above, and you may instead add +2 and suffer -2 (decide before rolling)."}
+            {:id :third
+             :enabled false
+             :result "When you Face Death or Face Desolation while wearing the mask, you may roll +its stat (instead of +heard)."}]}
+   {:name "Ritualist"
+    :asset-type "Path"
+    :description "Once you Fullfill Your Vow (formidable or greater) in service to an elder mystic, and Forge a Bond to train with them..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage to ready yourself for a ritual, envision how you prepare. Then, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you perform a ritual, you may suffer -1 supply and add +1 (decide before rolling)."}
+            {:id :third
+             :enabled false
+             :result "When you tattoo the essence of a new ritual onto your skin, envision the mark you create. You may then purchase and upgrade that ritual asset for 1 less experience."}]}
+   {:name "Shadow-Kin"
+    :asset-type "Path"
+    :description "Once you become corrupted..."
+    :perks [{:id :first
+             :enabled false
+             :result "You harden your heart: Reduce your heart stat by 1 and add up to +2 to shadow (to a maximum of +4)."}
+            {:id :second
+             :enabled false
+             :result "You are attuned to the realms of shadow: When you perform a ritual, add +1."}
+            {:id :third
+             :enabled false
+             :result "You know the sly ways of death: When you Face Death, you may roll +shadow (instead of +heart). You may also suffer -1 momentum and add +1 (decide before rolling):"}]}
+   {:name "Sighted"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger or Gather Information to identify or detect mystic forces, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you Compel, Forge a Bond, or Test a Bond with a fellow mystic or mystical being, add +1 and take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Secure an Advantage by studying someone or something in a charged situation, add +1 and take +1 momentum on a hit. When you also pierce the veil to explore deeper truths (decide before rolling), you may reroll any dice. If you do, count a weak hit as a miss."}]}
+   {:name "Slayer"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Gather Information by tracking a beast or horror, or when you Secure an Advantage by readying yourself to fight against them, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you Swear an Iron Vow to slay a beast or horror, you may reroll any dice. When you Fulfill Your Vow and mark experience, take +1 experience."}
+            {:id :third
+             :enabled false
+             :result {:description "When you slay a beast or horror (at least formidable), you may take a trophy and choose one."
+                      :options ["Power a ritual: When you or an ally make a ritual move, reroll any dice (one time only)."
+                                "Prove your worth: When you Sojourn, reroll any dice (one time only)."]
+                      :random-event nil}}]}
+   {:name "Storyweaver"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage, Compel or Forge a Bond by sharing an inspiring or enlightening song, poem, or tale, envision the story you tell. Then, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you Make Camp and choose the option to relax, you may share a story with your allies or compose a new story if alone. If you do, envision the story you tell and take +1 spirit or +1 momentum. Any allies who choose to relax in your company may also take +1 spirit or +1 momentum."}
+            {:id :third
+             :enabled false
+             :result "When you Sojourn within a community with which you share a bond, add +2 (instead of +1)."}]}
    ])
