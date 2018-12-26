@@ -1,0 +1,5 @@
+* implement Android Backbutton (with history)
+* nice images for ticks and dices
+* complete asset list
+* multiple savegames
+* separate oracle screen
