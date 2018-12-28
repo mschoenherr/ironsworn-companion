@@ -24,7 +24,7 @@
 
 (def text (r/adapt-react-class (.-Text ReactNative)))
 (def view (r/adapt-react-class (.-View ReactNative)))
-(def text-input (r/adapt-react-class (.-TextInput ReactNative)))
+(def react-text-input (r/adapt-react-class (.-TextInput ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
 (def react-button (r/adapt-react-class (.-Button ReactNative)))
 (def switch-comp (r/adapt-react-class (.-Switch ReactNative)))
@@ -79,6 +79,14 @@
      style-map
      {:color ironsworn-color})]])
 
+(defn text-input [{:keys [:on-submit-editing :placeholder :style]
+                   :or {style {:width "100%"}}}]
+  "Default text-input for the app."
+  [react-text-input {:on-submit-editing #(on-submit-editing (.. % -nativeEvent -text))
+                     :select-text-on-focus true
+                     :placeholder placeholder
+                     :style style}])
+
 ;; Views for the Journal
 (defn journal-view []
   "View for reading journal and inserting new entries."
@@ -88,9 +96,8 @@
                    :flex-direction "column"
                    :align-items "center"}}
      [heading-view "Journal"]
-     [text-input {:on-submit-editing #(dispatch [:insert-journal-entry (.. % -nativeEvent -text)])
-                  :placeholder "What's up?"
-                  :style {:width "100%"}}]
+     [text-input {:on-submit-editing #(dispatch [:insert-journal-entry %])
+                  :placeholder "What's up?"}]
      [scroll-view
       (for [entry @journal]
         ^{:key entry}
@@ -310,10 +317,9 @@
      ^{:key vow}
      [vow-view name vow])
    [text-input {:on-submit-editing #(do
-                                      (dispatch [:insert-new-pt (.. % -nativeEvent -text)
+                                      (dispatch [:insert-new-pt %
                                                  :location :vows :char-name name]))
-                :placeholder "New vow name"
-                :style {:width "100%"}}]])
+                :placeholder "New vow name"}]])
 
 (defn result-view [result]
   "Component for viewing a specific result. Recurses through results in options or random event."
@@ -350,7 +356,7 @@
                         :placeholder (get-in asset [:custom-note 1])
                         :on-submit-editing #(do
                                               (swap! edit-note? not)
-                                              (dispatch [:change-asset-note char-name asset (.. % -nativeEvent -text)]))}]
+                                              (dispatch [:change-asset-note char-name asset %]))}]
            [button {:title (get-in asset [:custom-note 1]) :on-press #(swap! edit-note? not)}
             :enclosing-style {:flex 1}])]))))
 
@@ -452,17 +458,15 @@
           [char-view char-name])
         (if @input-new-char?
           [text-input {:on-submit-editing #(do
-                                             (dispatch [:insert-new-char (.. % -nativeEvent -text)])
+                                             (dispatch [:insert-new-char %])
                                              (swap! input-new-char? not))
-                       :placeholder "Character Name"
-                       :style {:flex 1}}]
+                       :placeholder "Character Name"}]
           [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
         (if @delete-char?
           [text-input {:on-submit-editing #(do
-                                             (dispatch [:delete-char (.. % -nativeEvent -text)])
+                                             (dispatch [:delete-char %])
                                              (swap! delete-char? not))
-                       :placeholder "Type name of character to delete"
-                       :style {:flex 1}}]
+                       :placeholder "Type name of character to delete"}]
           [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
 
 
@@ -479,10 +483,9 @@
          [progress-view pt])
        (if @input-new-pt?
          [text-input {:on-submit-editing #(do
-                                            (dispatch [:insert-new-pt (.. % -nativeEvent -text)])
+                                            (dispatch [:insert-new-pt %])
                                             (swap! input-new-pt? not))
-                      :placeholder "Insert Name"
-                      :style {:width "100%"}}]
+                      :placeholder "Insert Name"}]
          [button {:title "New" :on-press #(swap! input-new-pt? not)}])])))
 
 (defn move-link [move]
