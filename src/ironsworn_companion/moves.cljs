@@ -672,6 +672,18 @@
                                                          [97 "Wealth"]
                                                          [98 "Home"]
                                                          [99 "Strategy"]
-                                                         [100 "Supply"]]}} 
+                                                         [100 "Supply"]]}
+                                 "Region" {:description "Divine the region"
+                                           :options nil
+                                           :random-event [[1 "Barrier Islands"]
+                                                          [13 "Ragged Coast"]
+                                                          [25 "Deep Wilds"]
+                                                          [35 "Flooded Lands"]
+                                                          [47 "Havens"]
+                                                          [61 "Hinterlands"]
+                                                          [73 "Tempest Hills"]
+                                                          [85 "Veiled Mountains"]
+                                                          [95 "Shattered Wastes"]
+                                                          [100 "Elsewhere"]]}} 
                        :random-event nil}}}
    ])
