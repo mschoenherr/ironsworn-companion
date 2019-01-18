@@ -737,6 +737,25 @@
                                                             [84 "Hill"]
                                                             [89 "Mountain"]
                                                             [94 "Woods"]
-                                                            [100 "Anomaly"]]}} 
+                                                            [100 "Anomaly"]]}
+                                 "Coastal Waters Location" {:description "Divine a coastal waters location"
+                                                            :options nil
+                                                            :random-event [[1 "Fleet"]
+                                                                           [2 "Sargassum"]
+                                                                           [3 "Flotsam"]
+                                                                           [4 "Mystical Site"]
+                                                                           [5 "Lair"]
+                                                                           [6 "Wreck"]
+                                                                           [11 "Harbour"]
+                                                                           [16 "Ship"]
+                                                                           [24 "Rocks"]
+                                                                           [31 "Fjord"]
+                                                                           [39 "Estuary"]
+                                                                           [47 "Cove"]
+                                                                           [55 "Bay"]
+                                                                           [63 "Ice"]
+                                                                           [71 "Island"]
+                                                                           [86 "Open Water"]
+                                                                           [100 "Anomaly"]]}} 
                        :random-event nil}}}
    ])
