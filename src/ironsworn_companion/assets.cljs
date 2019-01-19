@@ -136,8 +136,8 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you attempt to Heal using herbal remedies, and you have at least +1 supply, you may choose one (decide before rolling)."
-                      :options ["Add +2."
-                                "On a hit, take or give an additional +1 health."]
+                      :options {"Prepare" "Add +2."
+                                "Expend" "On a hit, take or give an additional +1 health."}
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -185,10 +185,10 @@
     :perks [{:id :first
              :enabled true
              :result {:description "Choose your mask's material. When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addtion to any other outcome of the move)."
-                      :options ["Thunderwood: Edge / Health"
-                                "Bloodwood: Iron / Health"
-                                "Ghostwood: Shadow / Spirit"
-                                "Whisperwood: Wits /Spirit"]
+                      :options {"Thunderwood" "Edge / Health"
+                                "Bloodwood" "Iron / Health"
+                                "Ghostwood" "Shadow / Spirit"
+                                "Whisperwood" "Wits /Spirit"}
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -242,8 +242,8 @@
             {:id :third
              :enabled false
              :result {:description "When you slay a beast or horror (at least formidable), you may take a trophy and choose one."
-                      :options ["Power a ritual: When you or an ally make a ritual move, reroll any dice (one time only)."
-                                "Prove your worth: When you Sojourn, reroll any dice (one time only)."]
+                      :options {"Power a ritual" "When you or an ally make a ritual move, reroll any dice (one time only)."
+                                "Prove your worth" "When you Sojourn, reroll any dice (one time only)."}
                       :random-event nil}}]}
    {:name "Storyweaver"
     :asset-type "Path"
