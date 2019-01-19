@@ -101,7 +101,10 @@
      [scroll-view
       (for [entry @journal]
         ^{:key entry}
-        [text entry])]]))
+        [text {:style {:font-size 16
+                       :padding 2
+                       :border-bottom-width 1}}
+         entry])]]))
 
 ;; Views for Char
 (defn stat-view [char-name [stat-name stat-value]]
