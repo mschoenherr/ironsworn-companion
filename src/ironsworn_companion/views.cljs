@@ -634,15 +634,18 @@
         move (subscribe [:get-active-move])]
     (fn []
       [scroll-view {:style {:flex 7}}
+       [text {:style {:text-align "center"}}
+        (:description @move)]
        [picker {:selected-value @selected-p-track 
                 :on-value-change (fn [val index]
                                    (reset! selected-p-track val))}
         (for [pt-name (map first (seq @p-tracks))]
           ^{:key pt-name}
           [picker-item {:label pt-name :value pt-name}])]
-       [progress-view (first (filter #(= (first %) @selected-p-track)
-                                     (sorted-hash-seq @p-tracks)))]
-       [progress-roll-view (get @p-tracks @selected-p-track) @move]])))
+       (when @selected-p-track
+         [progress-view (first (filter #(= (first %) @selected-p-track)
+                                       (sorted-hash-seq @p-tracks)))]
+         [progress-roll-view (get @p-tracks @selected-p-track) @move])])))
 
 (defn vow-move-view []
   "Component for resolving vow moves."
@@ -654,19 +657,26 @@
         roll-result (atom nil)]
     (fn []
       [scroll-view {:style {:flex 7}}
-       [text (:description @move)]
-       [text "Who rolls?"]
+       [text {:style {:text-align "center"}}
+        (:description @move)]
+       [text {:style {:text-align "center"}}
+        "Who rolls?"]
        [pick-active-char-view]
-       [text "Which vow?"]
-       [picker {:selected-value @selected-vow
-                :on-value-change (fn [val index]
-                                   (reset! selected-vow val))}
-        (for [vow-name (map first (sorted-hash-seq @active-vows))]
-          ^{:key vow-name}
-          [picker-item {:label vow-name :value vow-name}])]
-       [vow-view (:name @active-char)
-        [@selected-vow (get @active-vows @selected-vow)]]
-       [progress-roll-view (get @active-vows @selected-vow) @move]])))
+       (when @active-char
+         [view
+          [text {:style {:text-align "center"}}
+           "Which vow?"]
+          [picker {:selected-value @selected-vow
+                   :on-value-change (fn [val index]
+                                      (reset! selected-vow val))}
+           (for [vow-name (map first (sorted-hash-seq @active-vows))]
+             ^{:key vow-name}
+             [picker-item {:label vow-name :value vow-name}])]
+          (when @selected-vow
+            [view
+             [vow-view (:name @active-char)
+              [@selected-vow (get @active-vows @selected-vow)]]
+             [progress-roll-view (get @active-vows @selected-vow) @move]])])])))
 
 (defn bond-move-view []
   "Component for resolving moves concerning the bonds track."
