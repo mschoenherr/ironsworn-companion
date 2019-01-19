@@ -327,9 +327,15 @@
         cur-option (atom nil)]
     (fn [result]
       (if (string? result)
-        [text {:style {:flex 1}} result]
+        [text {:style {:flex 1
+                       :margin 2
+                       :text-align "center"
+                       :font-size 16}} result]
         [view
-         [text (:description result)]
+         [text {:style {:text-align "center"
+                        :font-size 16
+                        :margin 2}}
+          (:description result)]
          (when (:options result)
            [view
             [picker {:selected-value @cur-option 
@@ -342,7 +348,8 @@
             (when @cur-option
               [result-view (get (:options result) @cur-option)])]) ;; this is needed for nested results, especially nested random tables in ask the oracle
          (when (:random-event result)
-           [button {:title "Roll on Table" :on-press #(reset! w100 (rolls/roll-d100))}])
+           [button {:title "Roll" :on-press #(reset! w100 (rolls/roll-d100))}
+            :enclosing-style {:margin 2}])
          (when @w100
            [result-view (rolls/get-random-result @w100 (:random-event result))])]))))
 
@@ -549,9 +556,11 @@
         chars (subscribe [:get-chars])]
     (fn []
       [scroll-view {:style {:flex 7}}
-       [text (:description @move)]
+       [text {:style {:text-align "center"}}
+        (:description @move)]
        [view
-        [text "Who's rolling?"]
+        [text {:style {:text-align "center"}}
+         "Who's rolling?"]
         [pick-active-char-view]]
        (when @active-char
          [char-view (:name @active-char) :init-show-char? false])
@@ -672,7 +681,8 @@
   "Component for resolving moves without rolling the challenge dice."
   (let [move (subscribe [:get-active-move])]
     [scroll-view {:style {:flex 7}}
-     [text (:description @move)]
+     [text {:style {:text-align "center"}}
+      (:description @move)]
      [result-view (get-in @move [:results "Other"])]]))
 
 (defn moves-list []
