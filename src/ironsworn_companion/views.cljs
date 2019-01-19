@@ -566,52 +566,53 @@
          "Who's rolling?"]
         [pick-active-char-view]]
        (when @active-char
-         [char-view (:name @active-char) :init-show-char? false])
-       [view {:style {:flex-direction "row"
-                      :flex-wrap "wrap"
-                      :justify-content "space-evenly"}}
-        [view {:style {:flex-direction "row"
-                       :align-items "center"
-                       :margin 5}}
-         [button {:title "-" :on-press #(swap! use-val dec)}
-          :enclosing-style {:width 48 :height 48}]
-         [text {:style {:margin 5}} "Use:"]
-         [text {:style {:margin 5}} @use-val]
-         [button {:title "+" :on-press #(swap! use-val inc)}
-          :enclosing-style {:width 48 :height 48}]]
-        [view {:style {:flex-direction "row"
-                       :align-items "center"
-                       :margin 5}}
-         [button {:title "-" :on-press #(swap! add-val dec)}
-          :enclosing-style {:width 48 :height 48}]
-         [text {:style {:margin 5}} "Add"]
-         [text {:style {:margin 5}} @add-val]
-         [button {:title "+" :on-press #(swap! add-val inc)}
-          :enclosing-style {:width 48 :height 48}]]]
-       (when @roll-result
-         [view {:style {:flex-direction "row"
-                        :flex-wrap "wrap"
-                        :justify-content "space-evenly"}}
-          [view {:style {:align-items "center"
-                         :border-width 1
-                         :padding 1}}
-           [text "Action Die:"]
-           [view {:style {:align-items "center"}}
-            [text (rolls/get-action-rating @roll-result)]
-            [button {:title "Reroll"
-                     :on-press #(swap! roll-result
-                                       rolls/reroll-action-die @active-char)}]]]
-          [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
-       [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
-       (when (and @roll-result
-                  @active-char
-                  (rolls/burn-possible? @roll-result @active-char))
-         [button {:title "Burn momentum" :on-press #(do
-                                                      (dispatch [:reset-momentum (:name @active-char)])
-                                                      (swap! roll-result rolls/burn-momentum @active-char))}])
-       (when @roll-result
-         (let [result-type (rolls/result-type @roll-result @use-val @add-val)]
-           [result-view (get-in @move [:results result-type])]))])))
+         [view
+          [char-view (:name @active-char) :init-show-char? false]
+          [view {:style {:flex-direction "row"
+                         :flex-wrap "wrap"
+                         :justify-content "space-evenly"}}
+           [view {:style {:flex-direction "row"
+                          :align-items "center"
+                          :margin 5}}
+            [button {:title "-" :on-press #(swap! use-val dec)}
+             :enclosing-style {:width 48 :height 48}]
+            [text {:style {:margin 5}} "Use:"]
+            [text {:style {:margin 5}} @use-val]
+            [button {:title "+" :on-press #(swap! use-val inc)}
+             :enclosing-style {:width 48 :height 48}]]
+           [view {:style {:flex-direction "row"
+                          :align-items "center"
+                          :margin 5}}
+            [button {:title "-" :on-press #(swap! add-val dec)}
+             :enclosing-style {:width 48 :height 48}]
+            [text {:style {:margin 5}} "Add"]
+            [text {:style {:margin 5}} @add-val]
+            [button {:title "+" :on-press #(swap! add-val inc)}
+             :enclosing-style {:width 48 :height 48}]]]
+          (when @roll-result
+            [view {:style {:flex-direction "row"
+                           :flex-wrap "wrap"
+                           :justify-content "space-evenly"}}
+             [view {:style {:align-items "center"
+                            :border-width 1
+                            :padding 1}}
+              [text "Action Die:"]
+              [view {:style {:align-items "center"}}
+               [text (rolls/get-action-rating @roll-result)]
+               [button {:title "Reroll"
+                        :on-press #(swap! roll-result
+                                          rolls/reroll-action-die @active-char)}]]]
+             [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
+          [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
+          (when (and @roll-result
+                     @active-char
+                     (rolls/burn-possible? @roll-result @active-char))
+            [button {:title "Burn momentum" :on-press #(do
+                                                         (dispatch [:reset-momentum (:name @active-char)])
+                                                         (swap! roll-result rolls/burn-momentum @active-char))}])
+          (when @roll-result
+            (let [result-type (rolls/result-type @roll-result @use-val @add-val)]
+              [result-view (get-in @move [:results result-type])]))])])))
 
 (defn progress-roll-view [p-track move]
   "Component for rolling on progress tracks."

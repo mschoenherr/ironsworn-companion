@@ -13,10 +13,10 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "You succed but face a troublesome cost. Choose one."
-                          :options ["You are delayed, lose advantage or face a new danger: Suffer -1 momentum."
-                                    "You are tired or hurt. Endure Harm (1 Harm)."
-                                    "You are dispirited or afraid. Endure Stress (1 Stress)."
-                                    "You sacrifice resources. Suffer -1 supply."]
+                          :options {"You are delayed..." "... , lose advantage or face a new danger: Suffer -1 momentum."
+                                    "You are tired or hurt." "Endure Harm (1 Harm)."
+                                    "You are dispirited or afraid" "Endure Stress (1 Stress)."
+                                    "You sacrifice resources" "Suffer -1 supply."}
                           :random-event nil}
               "Miss" {:description "You fail or your progress is undermined by a dramatic and costly turn of events. Pay the Price."
                       :options nil
