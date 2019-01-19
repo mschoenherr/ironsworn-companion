@@ -643,9 +643,10 @@
           ^{:key pt-name}
           [picker-item {:label pt-name :value pt-name}])]
        (when @selected-p-track
-         [progress-view (first (filter #(= (first %) @selected-p-track)
-                                       (sorted-hash-seq @p-tracks)))]
-         [progress-roll-view (get @p-tracks @selected-p-track) @move])])))
+         [view
+          [progress-view (first (filter #(= (first %) @selected-p-track)
+                                        (sorted-hash-seq @p-tracks)))]
+          [progress-roll-view (get @p-tracks @selected-p-track) @move]])])))
 
 (defn vow-move-view []
   "Component for resolving vow moves."
@@ -671,7 +672,7 @@
                                       (reset! selected-vow val))}
            (for [vow-name (map first (sorted-hash-seq @active-vows))]
              ^{:key vow-name}
-             [picker-item {:label vow-name :value vow-name}])]
+             [picker-item {:label vow-name :value vow-name}])] ;;this could be untangled by using full vow as value
           (when @selected-vow
             [view
              [vow-view (:name @active-char)
