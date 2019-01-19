@@ -211,13 +211,14 @@
                   (assoc db/new-char :name char-name))
     :dispatch [:set-active-char char-name]}))
 
-(reg-event-db
+(reg-event-fx
  :delete-char
  validate-spec
- (fn [db [_ char-name]]
-   (update db
-           :characters
-           #(dissoc % char-name))))
+ (fn [cofx [_ char-name]]
+   {:db (update (:db cofx) 
+                :characters
+                #(dissoc % char-name))
+    :dispatch [:cleanup-active-char char-name]}))
 
 (reg-event-db
  :set-active-move
@@ -226,6 +227,16 @@
    (assoc db
            :active-move
            move)))
+
+(reg-event-db
+ :cleanup-active-char
+ validate-spec
+ (fn [db [_ char-name]]
+   (if (= char-name (:active-char db))
+     (assoc db
+            :active-char
+            (first (keys (:characters db))))
+     db)))
 
 (reg-event-db
  :set-active-char

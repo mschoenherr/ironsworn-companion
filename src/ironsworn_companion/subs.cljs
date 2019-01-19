@@ -23,7 +23,7 @@
  :get-active-char
  (fn [db _]
    (let [active-char-key (:active-char db)]
-     (get-in db [:characters active-char-key ]))))
+     (get-in db [:characters active-char-key]))))
 
 (reg-sub
  :get-chars
