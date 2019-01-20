@@ -16,7 +16,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
-            [ironsworn-companion.events :refer [load-db]]
+            [ironsworn-companion.events :refer [load-db all-savegames]]
             [ironsworn-companion.subs]))
 
 ;; react native imports for use in re-frame
@@ -734,6 +734,13 @@
        :bond-move [bond-move-view]
        :no-roll [no-roll-view])]))
 
+(defn savegame-menu []
+  "Component for loading and saving games"
+  [view
+   (for [save @all-savegames]
+     ^{:key save}
+     [text save])])
+
 ;; Nav-views
 (defn nav-menu []
   "Component for picking the active screen."
@@ -743,7 +750,8 @@
                       ["Moves" :move-list]
                       ["Progress Tracks" :progress-tracks]
                       ["Assets" :asset-list]
-                      ["Journal" :journal]]]
+                      ["Journal" :journal]
+                      ["Load/Save" :savegames]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
               :on-press #(dispatch [:set-screen (second screen-name)])}])])
@@ -757,7 +765,7 @@
       :progress-tracks [progress-tracks-view]
       :move-list [moves-list]
       :asset-list [asset-list]
-      :move [move-view]
-      :default [text "hi"])))
+      :savegames [savegame-menu]
+      :move [move-view])))
 
 

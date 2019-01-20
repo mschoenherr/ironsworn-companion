@@ -16,7 +16,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [ironsworn-companion.db :refer [app-db]]
             [ironsworn-companion.views :as views]
-            [ironsworn-companion.events :refer [load-db save-db]]
+            [ironsworn-companion.events :refer [load-db save-db load-all-savegames]]
             [ironsworn-companion.subs]))
 
 (def ReactNative (js/require "react-native"))
@@ -35,6 +35,7 @@
 
 (defn init []
   (dispatch-sync [:initialize-db])
+  (load-all-savegames)
   (.addEventListener app-state "change"
                      (fn [next-state]
                        (case next-state

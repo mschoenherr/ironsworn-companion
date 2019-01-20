@@ -14,6 +14,7 @@
 (ns ironsworn-companion.events
   (:require
    [cljs.reader]
+   [reagent.core :refer [atom]]
    [re-frame.core :refer [reg-event-db reg-event-fx after reg-fx]]
    [clojure.spec.alpha :as s]
    [ironsworn-companion.db :as db]
@@ -25,15 +26,48 @@
 (def AsyncStorage (.-AsyncStorage ReactNative))
 
 ;; functions for storage interaction, adapted from todo-mvc example app
-(defn load-db [callback]
-  "Gets db item from Storage, then parses it and feeds it into callback."
-  (-> (.getItem AsyncStorage "db")
-      (.then #(if % (cljs.reader/read-string %) app-db))
-      (.then callback)))
 
-(defn save-db [db]
-  "Saves db to Storage."
-  (.setItem AsyncStorage "db" db))
+(def cur-db-id-key "ironsworn-db-id")
+(def default-db-id "ironsworn-savegame")
+
+(def all-savegames (atom (sorted-set))) ;; keeping track of the savegames here
+
+(defn load-db
+  ([callback]
+   "Gets default db, parses it and feeds it back to caller."
+   (-> (.getItem AsyncStorage cur-db-id-key)
+       (.then #(if %
+                 (load-db callback %)
+                 (callback app-db)))))
+  ([callback db-id]
+   "Gets db item from Storage by id, then parses it and feeds it into callback."
+   (-> (.getItem AsyncStorage db-id)
+       (.then #(if % (cljs.reader/read-string %) app-db))
+       (.then #(do
+                 (swap! all-savegames conj db-id)
+                 %))
+       (.then callback))))
+
+(defn save-db
+  ([db]
+   "Save db to Storage under default db-id."
+   (-> (.getItem AsyncStorage cur-db-id-key)
+       (.then #(if %
+                 (save-db db %)
+                 (-> (.setItem AsyncStorage cur-db-id-key default-db-id)
+                     (.then (fn [_]
+                              (save-db db default-db-id))))))))
+  ([db db-id]
+   "Saves db to Storage."
+   (-> (.setItem AsyncStorage db-id db)
+       (.then (fn [_]
+                (swap! all-savegames conj db-id))))))
+
+(defn load-all-savegames []
+  (let [aux-key-pred (fn [key] (= cur-db-id-key key))]
+      (-> (.getAllKeys AsyncStorage)
+          (.then #(reset! all-savegames (into (sorted-set)
+                                              (remove aux-key-pred %)))))))
 
 ;; -- Interceptors ------------------------------------------------------------
 ;;

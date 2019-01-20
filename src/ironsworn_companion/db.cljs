@@ -102,7 +102,7 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :oracle :progress-tracks})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
@@ -130,7 +130,6 @@
                    ::progress-tracks
                    ::active-char
                    ::roll-result
-                   ::oracle
                    ::active-screen
                    ::nav-history
                    ::moves
@@ -145,7 +144,6 @@
              :nav-history (list)
              :roll-result nil
              :active-screen :chars
-             :oracle "Unclear Future"
              :moves all-moves
              :assets all-assets
              :active-move nil})
