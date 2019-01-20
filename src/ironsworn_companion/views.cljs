@@ -736,10 +736,15 @@
 
 (defn savegame-menu []
   "Component for loading and saving games"
-  [view
-   (for [save @all-savegames]
-     ^{:key save}
-     [text save])])
+  [view {:style {:flex 7}}
+   [heading-view "Load/Save"]
+   (let [reload-dispatch #(dispatch [:reload-db %])]
+     (for [save @all-savegames]
+      ^{:key save}
+      [button {:title save
+               :on-press #(load-db
+                           reload-dispatch
+                           save)}]))])
 
 ;; Nav-views
 (defn nav-menu []
