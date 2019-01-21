@@ -15,6 +15,7 @@
   (:require
    [cljs.reader]
    [reagent.core :refer [atom]]
+   [re-frame.core :refer [dispatch]]
    [re-frame.core :refer [reg-event-db reg-event-fx after reg-fx]]
    [clojure.spec.alpha :as s]
    [ironsworn-companion.db :as db]
@@ -67,6 +68,11 @@
    (-> (.setItem AsyncStorage db-id db)
        (.then (fn [_]
                 (swap! all-savegames conj db-id))))))
+
+(defn switch-to-save [db callback db-id]
+  "Saves current db and reloads new one."
+  (-> (save-db db)
+      (.then #(load-db callback db-id))))
 
 (defn del-savegame [db-id]
   "Delete savegame with given id from storage."
@@ -135,6 +141,53 @@
  validate-spec
  (fn [_ [_ db]]
    db))
+
+(reg-fx
+ :new-game-in-storage
+ (fn [_]
+   (new-game #(dispatch [:reload-db %]))))
+
+(reg-event-fx
+ :new-game
+ validate-spec
+ (fn [_ [_]]
+   {:new-game-in-storage nil}))
+
+(reg-fx
+ :load-db-from-storage
+ (fn [[db db-id]]
+   (switch-to-save (pr-str db)
+                   #(dispatch [:reload-db %])
+                   db-id)))
+
+(reg-event-fx
+ :load-db
+ validate-spec
+ (fn [cofx [_ db-id]]
+   {:load-db-from-storage [(:db cofx) db-id]}))
+
+(reg-fx
+ :del-save-from-storage
+ (fn [db-id]
+   (del-savegame db-id)))
+
+(reg-event-fx
+ :del-save
+ validate-spec
+ (fn [_ [_ db-id]]
+   {:del-save-from-storage db-id}))
+
+(reg-fx
+ :rename-save-storage
+ (fn [[old-name new-name]]
+   (rename-save old-name new-name
+                #(dispatch [:reload-db %]))))
+
+(reg-event-fx
+ :rename-save
+ validate-spec
+ (fn [_ [_ old-name new-name]]
+   {:rename-save-storage [old-name new-name]}))
 
 (reg-fx ;;effect handler for saving to storage
  :save-to-storage

@@ -16,7 +16,7 @@
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
             [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
-            [ironsworn-companion.events :refer [load-db all-savegames del-savegame new-game rename-save]]
+            [ironsworn-companion.events :refer [all-savegames]]
             [ironsworn-companion.subs]))
 
 ;; react native imports for use in re-frame
@@ -734,22 +734,16 @@
        :bond-move [bond-move-view]
        :no-roll [no-roll-view])]))
 
-(defn- reload-dispatch [db]
-  "Aux function to pass into lambdas."
-  (dispatch [:reload-db db]))
-
 (defn savegame-view [save]
   "Component for rendering all buttons for working on given savefile."
   [view {:style {:flex-direction "row"
                  :margin 2
                  :border-width 1}}
    [button {:title save
-            :on-press #(load-db
-                        reload-dispatch
-                        save)}]
+            :on-press #(dispatch [:load-db save])}]
    [button {:title "Delete"
-            :on-press #(del-savegame save)}]
-   [text-input {:on-submit-editing #(rename-save save % reload-dispatch)
+            :on-press #(dispatch [:del-save save])}]
+   [text-input {:on-submit-editing #(dispatch [:rename-save save %])
                 :placeholder "New name"}]])
 
 (defn savegame-menu []
@@ -760,7 +754,7 @@
      ^{:key save}
      [savegame-view save])
    [button {:title "New Game"
-            :on-press #(new-game reload-dispatch)}]])
+            :on-press #(dispatch [:new-game])}]])
 
 ;; Nav-views
 (defn nav-menu []
