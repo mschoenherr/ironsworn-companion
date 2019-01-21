@@ -143,7 +143,7 @@
              :active-char nil
              :nav-history (list)
              :roll-result nil
-             :active-screen :chars
+             :active-screen :savegames
              :moves all-moves
              :assets all-assets
              :active-move nil})
