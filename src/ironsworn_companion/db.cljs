@@ -19,6 +19,7 @@
 ;; default values
 
 (def new-char {:name "New Char"
+               :xp 0
                :momentum 2
                :stats {"Edge" 1 "Heart" 1 "Iron" 1 "Shadow" 1 "Wits" 1}
                :vows {}
@@ -89,7 +90,8 @@
                        :opt-un [::description ::custom-note ::res-counter]))
 (s/def ::assets (s/coll-of ::asset))
 
-(s/def ::character (s/keys :req-un [::name ::momentum ::stats ::vows ::bonds ::resources ::debilities ::initiative ::assets]))
+(s/def ::xp (s/and integer? #(>= % 0)))
+(s/def ::character (s/keys :req-un [::name ::xp ::momentum ::stats ::vows ::bonds ::resources ::debilities ::initiative ::assets]))
 (s/def ::characters (s/map-of ::name ::character))
 
 (s/def ::active-char (s/or :empty nil?

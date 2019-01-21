@@ -441,6 +441,23 @@
      ^{:key (:name asset)}
      [asset-view asset :char-name char-name])])
 
+(defn xp-view [char]
+  "Component for viewing and modifying xp."
+  [view
+   [text "XP"]
+   [view {:style {:flex-direction "row"
+                  :align-items "center"
+                  :justify-content "space-evenly"
+                  :margin 5}}
+    [button {:title "-"
+             :on-press #(dispatch [:mod-xp (:name char) -1])}
+     :enclosing-style {:width 48 :height 48}]
+    [text {:style {:padding 5}}
+     (:xp char)]
+    [button {:title "+"
+             :on-press #(dispatch [:mod-xp (:name char) 1])}
+     :enclosing-style {:width 48 :height 48}]]])
+
 (defn char-view [name & {:keys [init-show-char?]
                          :or {init-show-char? true}}]
   "Component for viewing and editing a char identified by name."
@@ -453,7 +470,9 @@
        (when @show-char?
          [view
           [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
-           [ini-view name (:initiative @char)]
+           [view
+            [ini-view name (:initiative @char)]
+            [xp-view @char]]
            [momentum-view name (:momentum @char)]]
           [stats-view name (:stats @char)]
           [resources-view name (:resources @char)]

@@ -424,3 +424,10 @@
               (partial remove 
                #(= asset-name (:name %))))))
 
+(reg-event-db
+ :mod-xp
+ validate-spec
+ (fn [db [_ char-name value]]
+   (update-in db [:characters char-name :xp]
+              #(max 0 (+ % value)))))
+
