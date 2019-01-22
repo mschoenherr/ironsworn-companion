@@ -256,4 +256,334 @@
             {:id :third
              :enabled false
              :result "When you Sojourn within a community with which you share a bond, add +2 (instead of +1)."}]}
+   {:name "Trickster"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger, Secure an Advantage, or Compel by lying, bluffing, stealing, or cheating, add +1."}
+            {:id :second
+             :enabled false
+             :result "When you Gather Information by investigating a devious scheme, you may roll +shadow (instead of +wits). If you do, take +2 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you confess a lie as you Forge a Bond, you risk rejection for the chance of a stronger bond. On a strong hit, take +2 momentum and mark one more tick. A weak hit counts as a miss."}]}
+   {:name "Veteran"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you burn momentum to improve your result in combat, envision how your hard-won fighting experience gives you the upper hand. Then, take +1 momentum after you reset."}
+            {:id :second
+             :enabled false
+             :result "When you Swear an Iron Vow to someone who fought beside you, or Forge a Bond with them, add +2 and take +2 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Resupply by looting the dead on a field of battle, add +1 and take +1 momentum on a hit."}]}
+   {:name "Wayfinder"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Untertake a Journey and burn momentum to improve your result, envision how you reorient yourself. Then, take +2 momentum after you reset."}
+            {:id :second
+             :enabled false
+             :result "When you Secure an Advantage or Gather Information by carefully surveying the landscape or scouting ahead, add +1 and take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Swear an Iron Vow to safely guide someone on a perilous journey, you may reroll any dice. When you Fullfill Your Vow and mark experience take +1 experience."}]}
+   {:name "Wildblood"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger, Secure an Advantage, or Gather Information using your knowledge of tracking, woodcraft, or woodland creatures, add+1."}
+            {:id :second
+             :enabled false
+             :result "When you Face Danger or Secure an Advantage  by hiding or sneaking in the woodlands, add +1 and take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Make Camp in the woodlands, you may roll +wits (instead of +supply). If you do, you and your allies may each choose 1 more option on a hit."}]}
+   {:name "Weaponmaster"
+    :asset-type "Path"
+    :description "Once you Fullfill Your Vow (formidable or greater in service to a seasoned warrior, and Forge a Bond to train with them..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage by sizing up you foe in a fight, or in a charged situation which may lead to a fight, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you study or train in a new weapon or technique, you may obtain and upgrade that combat talent for 1 less experience."}
+            {:id :third
+             :enabled false
+             :result "When you Turn the Tide with a sudden change of weapon or technique, and your next move is a Strike, you may add +1 and inflict +2 harm on a strong hit."}]}
+   {:name "Wright"
+    :asset-type "Path"
+    :custom-note ["Speciality" "Choose one"]
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage by crafting a useful item using your speciality, or when you Face Danger to create or repair an item in a perilous situation, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may suffer -1 supply (after you roll) to add an additional +1."}
+            {:id :third
+             :enabled false
+             :result "When you give the item you create as a gift to commemorate an important event or relationship, you may (one time only) reroll any dice when you Compel, Forge a Bond, or Test a Bond."}]}
+   {:name "Archer"
+    :asset-type "Combat Talent"
+    :description "If you wield a bow..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage +wits by taking a moment to aim, envision where you intend to land your shot. Then, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "Once per fight, when you Strike or Clash, you may take extra shots and suffer -1 supply. If you do, reroll any dice. On a hit, inflict +2 harm and take +1 momentum."}
+            {:id :third
+             :enabled false
+             :result "When you Resupply by hunting, add +1 and take +1 momentum on a hit."}]}
+   {:name "Brawler"
+    :asset-type "Combat Talent"
+    :description "If you are unarmed or fighting with a non-deadly weapon..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Secure an Advantage +iron by engagin in close-quarters brawling (such as hitting, tripping, or smashing), add +1. If you score a hit, you may also inflict 1 harm."}
+            {:id :second
+             :enabled false
+             :result "When you Strike or Clash with brutal intent, you may inflict 2 harm (instead of 1)."}
+            {:id :third
+             :enabled false
+             :result "When you Face Danger or Clash against a brawling attack (such as punches, kicks, slams, trips, or grapples), add +1."}]}
+   {:name "Cutthroat"
+    :asset-type "Combat Talent"
+    :description "If you wirld a dagger or knife..."
+    :perks [{:id :first
+             :enabled true
+             :result {:description "When you are in postion to Strike at an unsuspecting foe, choose one (before rolling)."
+                      :options {"Strike quickly" "Add +2 and take +1 momentum on a hit."
+                                "Take aim" "Inflict +2 harm on a hit."}
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "When you Compel someone at the point of your blade, or when you rely on your blade to Face Danger, add +1."}
+            {:id :third
+             :enabled false
+             :result "Once per fight, when you Secure an Advantage +shadow by performing a feint or misdirection, reroll any dice and +1 momentum on a hit."}]}
+   {:name "Duelist"
+    :asset-type "Combat Talent"
+    :description "If you wield a bladed weapon in each hand..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Clash or Strike, you may add +2. If you do (decide before rolling), inflict +1 harm on a strong hit and count a weak hit as a miss."}
+            {:id :second
+             :enabled false
+             :result "Once per fight, when you Secure an Advantage +edge by making a bold display of your combat prowess, you may reroll any dice."}
+            {:id :third
+             :enabled false
+             :result {:description "When you Draw the Circle, choose one (before rolling)"
+                      :options {"Add..." "... +2"
+                                "Take..." "... +2 momentum on a hit."}
+                      :random-event nil}}]}
+   {:name "Ironclad"
+    :asset-type "Combat Talent"
+    :description "If you wear armor"
+    :perks [{:id :first
+             :enabled true
+             :result {:description "When you equip or adjust your armor, choose one."
+                      :options {"Lightly armored" "When you Endure Harm in a fight, add +1 and take +1 momentum on a hit."
+                                "Geared for war:" "Mark encumbered. When you Endure Harm in a fight, add +2 and take +1 momenutm on a hit."}
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "When you Clash while you are geared for war, add +1."}
+            {:id :third
+             :enabled false
+             :result "When you Compel in a situation where strength of arms is a factor, add +2."}]}
+   {:name "Long-Arm"
+    :asset-type "Combat Talent"
+    :description "If you wield a staff..."
+    :perks [{:id :first
+             :enabled true
+             :result "In your hands, a humble staff is a deadly weapon. You may inflict 2 harm (instead of 1)."}
+            {:id :second
+             :enabled false
+             :result "When you Strike or Clash, you may roll +edge (instead of +iron). If you do, inflict 1 less harm in exchange for +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Secure an Advantage using your staff to disarm, trip, shove or stun your foe, you may roll +edge (instead of +iron) and take +1 momentum on a hit."}]}
+   {:name "Shield-Bearer"
+    :asset-tpye "Combat Talent"
+    :description "If you wield a shield..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger using your shield as a cover, add +1. When you Clash in close quarters, take +1 momentum on a strong hit."}
+            {:id :second
+             :enabled false
+             :result "When you bear a shield painted with a meaningful symbol, and you Endure Stress as you face off against a fearsome foe, add +1 and take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When forced to Endure Harm in a fight, you may instead sacrifice your shield and ignore all harm. If you do, your shield is detroyed or will require extensive repair; suffer -2 momentum."}]}
+   {:name "Skirmisher"
+    :asset-type "Combat Talent"
+    :description "If you wield a spear..."
+    :perks [{:id :first
+             :enabled true
+             :result {:description "When you Face Danger by holding a foe at bay using your spear's reach, roll +iron or +edge (your choice). If you score a strong hit, choose one."
+                      :options {"Iron" "Strike now, and add +1."
+                                "Edge" "Take +1 momentum"}
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "When you Strike or Clash in close combat and score a strong hit, you may drive your spear home and inflict +2 harm. If the fight continues, Face Danger +iron to retrieve your spear before using it again."}
+            {:id :third
+             :enabled false
+             :result "When you Secure an Advantage by bracing your spear against a charging foe, add +1 and take +1 momentum on a hit."}]}
+   {:name "Sunderer"
+    :asset-type "Combat Talent"
+    :description "If you wield an axe..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Strike or Clash in close quarters, you may suffer -1 momentum and inflict +1 harm on a hit (decide before rolling)."}
+            {:id :second
+             :enabled false
+             :result "When you have your axe in a hand, and use the promise of violence to Compel or Secure an Advantage, add +1 and take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you make a tribute to a fallen foe (formidable or greater) by carving a rune in the haft of your axe, roll +heart. On a strong hit, inflict +1d6 harm (one time only) when you Strike or Clash. On a weak hit, as above, but this death weighs on you; Endure Stress (2 stress)."}]} ;; need to implement a no-move-roll-screen
+   {:name "Swordmaster"
+    :asset-type "Combat Talent"
+    :description "If you wield a sword..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Strike or Clash and burn momentum to improve your result, inflict +2 harm."}
+            {:id :second
+             :enabled false
+             :result "When you Clash and score a strong hit, you may add +1 if you immediately follow with a Strike."}
+            {:id :third
+             :enabled false
+             :result "When you Swear an Iron Vow by kneeling and grasping your sword's blade, add +1 and take +1 momentum on a hit. If you let the edge draw blood from your hands, Endure Harm (1 harm) in exchange for an additional +1 momentum on a hit."}]}
+   {:name "Augur"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you summon a flock of crows and ask a single question, roll +wits. On a strong hit, you interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum. On a weak hit, the crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum."}
+            {:id :second
+             :enabled false
+             :result "As above, and the crows will also help guide you on the proper path. On a hit, add +1 on the next segment when you Undertake a Journey."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Bind"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you wear an animal pelt and dance in moonlight, roll +wits. On a strong hit, you or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent. On a weak hit, as above, but the wilds call as you dance; Endure Stress (2 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may instead perform this ritual wearing the pelt of a beast. If you do, name the related stat and add +2 instead of +1."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Communion"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you surround the remains of a recentyl deceased intelligent creature with lit candles, and summon its spirit, roll +heart. Add +1 if you share a bond. On a strong hit, the spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1). On a weak hit, as above, but the spirit delivers troubling news unrelated to your purpose. Envision what it tells you (Ask the Oracle if unsure) and Endure Stress (1 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may also commune with the long-dead."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Divination"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. On a strong hit, you may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1. On a weak hit, as above, but the answers are revealed only with extra time and focus; suffer -2 momentum."}
+            {:id :second
+             :enabled false
+             :result "As above, and your divination can also reveal information about this person's future."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}
+            ]}
+   {:name "Keen"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you hold a weapon and sing a keen for those it has killed, roll +heart. On a strong hit, the wielder inflicts +1 harm when they Strike or Clash. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent. On a weak hit, as above, but the voices of those who were slain join in your song; Endure Stress (2 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and the wielder may also (one time only) add +1 and take +2 momentum on a hit when they Draw the Circle, Enter the Fray, or Batle."}
+            {:it :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Scry"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result {:description "When you look into flames to study a remote person or location, roll +shadow. You or someone with you must have knowledge of the target. On a strong hit, you may Gather Information through observation using +shadow or +wits. On a weak hit, as above but the flames are hungry; choose one to sacrifice."
+                      :options {"Your blood" "Endure Harm (2 harm)."
+                                "A precious thing" "Endure Stress (2 stress)."
+                                "Provisions" "Suffer -2 supply."}
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "As above, and you may study a past event."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Shadow-Walk"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow. On a strong hit, take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first Face Danger to find your way."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may also travel along the hidden paths of the shadow realms to Undertake a Journey using +shadow (instead of +wits). If you do, Endure Stress (1 stress) and mark one extra unit of progress on a strong hit."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Sway"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you speak a person's name three times to the wind, roll +wits. On a strong hit, the wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). On a weak hit, as above, but this person's need creates a troubling dilemma or complication; Endure Stress (1 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and if you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Totem"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you hold a totem of your animal companion and focus on it, roll +heart. On a strong hit, you are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. On a weak hit, as above, but creating this connection is unsettling; Endure Stress (1 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart)."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Visage"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you paint yourself in blood and ash, roll +wits. On a strong hit, you may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent. On a weak hit, as above, but the blood must be your own; Endure Harm (2 stress)."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may also add +1 when you Strike, Clash, or Battle."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Ward"
+    :asset-tpye "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result {:description "When you walk a wide circle, sprinkling the ground with salt, roll +wits. On a strong hit, choose two. On a weak hit, choose one."
+                     :options {"Alert" "When a foe first crosses the boundary, take +1 momentum."
+                                "Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."
+                                "Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."}
+                      :random-event nil}}
+            {:id :second
+             :enabled false
+             :result "As above, and improve the effect of your ward (+2 momentum, +2 harm, and 'almost certain')."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
    ])
