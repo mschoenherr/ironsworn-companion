@@ -38,14 +38,16 @@
 (def twotick (js/require "./images/twotick.png"))
 (def threetick (js/require "./images/threetick.png"))
 (def fourtick (js/require "./images/fourtick.png"))
-(def d6-pics {1 (js/require "./images/d6-1.png")
+(def d6-pics {0 (js/require "./images/d6-0.png")
+              1 (js/require "./images/d6-1.png")
               2 (js/require "./images/d6-2.png")
               3 (js/require "./images/d6-3.png")
               4 (js/require "./images/d6-4.png")
               5 (js/require "./images/d6-5.png")
               6 (js/require "./images/d6-6.png")})
 
-(def d10-pics {1 (js/require "./images/d10-1.png")
+(def d10-pics {0 (js/require "./images/d10-0.png")
+               1 (js/require "./images/d10-1.png")
                2 (js/require "./images/d10-2.png")
                3 (js/require "./images/d10-3.png")
                4 (js/require "./images/d10-4.png")
@@ -561,16 +563,16 @@
      [view {:style {:flex-direction "row"
                     :align-items "center"}}
       [view {:style {:align-items "center"}}
-       [image {:style {:width 48
-                       :height 48
+       [image {:style {:width 64 
+                       :height 64 
                        :margin 1}
                :source (get d10-pics (first challenges))} ]
        [button {:title "Reroll"
                 :on-press #(swap! result-atom
                                   rolls/reroll-challenge-die :challenge1)}]]
       [view {:style {:align-items "center"}}
-       [image {:style {:width 48
-                       :height 48
+       [image {:style {:width 64
+                       :height 64
                        :margin 1}
                :source (get d10-pics (second challenges))} ]
        [button {:title "Reroll"
@@ -586,8 +588,8 @@
       [view {:style {:align-items "center"
                      :border-width 1
                      :padding 1}}
-       [image {:style {:width 48
-                       :height 48
+       [image {:style {:width 64
+                       :height 64
                        :margin 1}
                :source (get d6-pics
                             (rolls/get-action-rating @result-atom))}]

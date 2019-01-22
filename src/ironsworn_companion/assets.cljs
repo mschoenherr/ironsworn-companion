@@ -406,7 +406,7 @@
              :enabled false
              :result "When you Secure an Advantage using your staff to disarm, trip, shove or stun your foe, you may roll +edge (instead of +iron) and take +1 momentum on a hit."}]}
    {:name "Shield-Bearer"
-    :asset-tpye "Combat Talent"
+    :asset-type "Combat Talent"
     :description "If you wield a shield..."
     :perks [{:id :first
              :enabled true
@@ -509,7 +509,7 @@
             {:id :second
              :enabled false
              :result "As above, and the wielder may also (one time only) add +1 and take +2 momentum on a hit when they Draw the Circle, Enter the Fray, or Batle."}
-            {:it :third
+            {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
    {:name "Scry"
@@ -572,7 +572,7 @@
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
    {:name "Ward"
-    :asset-tpye "Ritual"
+    :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
              :result {:description "When you walk a wide circle, sprinkling the ground with salt, roll +wits. On a strong hit, choose two. On a weak hit, choose one."
