@@ -258,7 +258,7 @@
                  :on-value-change (fn [val index]
                                     (dispatch [:mod-progress-lvl [name val] :location location
                                                :char-name char-name]))}
-         (for [level (sort db/levels)]
+         (for [level db/levels]
            ^{:key level}
            [picker-item {:label level :value level}])]
         [button {:title "-" :on-press #(dispatch [:mod-progress

@@ -36,7 +36,7 @@
                :initiative false
                :assets []})
 
-(def levels #{"Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"})
+(def levels ["Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"])
 
 ;; spec of app-db
 
@@ -60,7 +60,7 @@
 (s/def ::stats (s/map-of ::stat-name ::stat))
 
 (s/def ::progress-track (s/and integer? #(<= % 40) #(>= % 0)))
-(s/def ::lvl levels)
+(s/def ::lvl #(some #{%} levels))
 (s/def ::progress (s/tuple ::lvl ::progress-track))
 
 (s/def ::progress-tracks (s/map-of ::name ::progress))
