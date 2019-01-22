@@ -38,6 +38,23 @@
 (def twotick (js/require "./images/twotick.png"))
 (def threetick (js/require "./images/threetick.png"))
 (def fourtick (js/require "./images/fourtick.png"))
+(def d6-pics {1 (js/require "./images/d6-1.png")
+              2 (js/require "./images/d6-2.png")
+              3 (js/require "./images/d6-3.png")
+              4 (js/require "./images/d6-4.png")
+              5 (js/require "./images/d6-5.png")
+              6 (js/require "./images/d6-6.png")})
+
+(def d10-pics {1 (js/require "./images/d10-1.png")
+               2 (js/require "./images/d10-2.png")
+               3 (js/require "./images/d10-3.png")
+               4 (js/require "./images/d10-4.png")
+               5 (js/require "./images/d10-5.png")
+               6 (js/require "./images/d10-6.png")
+               7 (js/require "./images/d10-7.png")
+               8 (js/require "./images/d10-8.png")
+               9 (js/require "./images/d10-9.png")
+               10 (js/require "./images/d10-10.png")})
 
 ;; helper function for reliable order of output
 (defn- sorted-hash-seq [m]
@@ -544,17 +561,39 @@
      [view {:style {:flex-direction "row"
                     :align-items "center"}}
       [view {:style {:align-items "center"}}
-       [text (first challenges)]
+       [image {:style {:width 48
+                       :height 48
+                       :margin 1}
+               :source (get d10-pics (first challenges))} ]
        [button {:title "Reroll"
                 :on-press #(swap! result-atom
                                   rolls/reroll-challenge-die :challenge1)}]]
       [view {:style {:align-items "center"}}
-       [text (second challenges)]
+       [image {:style {:width 48
+                       :height 48
+                       :margin 1}
+               :source (get d10-pics (second challenges))} ]
        [button {:title "Reroll"
                 :on-press #(swap! result-atom
                                   rolls/reroll-challenge-die :challenge2)}]]
       (when (= (first challenges) (second challenges))
         [text {:style {:margin 5}} "It's a match!"])])])
+
+(defn action-die-view [result-atom]
+  "Component for viewing and rerolling the action die. Takes an atom(!) as an arg, to enable rerolling."
+  (let [active-char (subscribe [:get-active-char])]
+    (fn [result-atom]
+      [view {:style {:align-items "center"
+                     :border-width 1
+                     :padding 1}}
+       [image {:style {:width 48
+                       :height 48
+                       :margin 1}
+               :source (get d6-pics
+                            (rolls/get-action-rating @result-atom))}]
+       [button {:title "Reroll"
+                :on-press #(swap! result-atom
+                                  rolls/reroll-action-die @active-char)}]])))
 
 (defn pick-active-char-view []
   "Component for picking the active character, should use standard picker comp."
@@ -612,15 +651,7 @@
             [view {:style {:flex-direction "row"
                            :flex-wrap "wrap"
                            :justify-content "space-evenly"}}
-             [view {:style {:align-items "center"
-                            :border-width 1
-                            :padding 1}}
-              [text "Action Die:"]
-              [view {:style {:align-items "center"}}
-               [text (rolls/get-action-rating @roll-result)]
-               [button {:title "Reroll"
-                        :on-press #(swap! roll-result
-                                          rolls/reroll-action-die @active-char)}]]]
+             [action-die-view roll-result] ;; should be factored out
              [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
           [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
           (when (and @roll-result
