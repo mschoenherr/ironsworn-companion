@@ -586,4 +586,115 @@
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   ;; now adding expansion assets
+   {:name "Kindred"
+    :asset-type "Companion"
+    :description "Your friend stands by you."
+    :perks [{:id "Skilled"
+             :enabled false
+             :result "When you make a move outside of combat (not a progress move) aided by your companion's expertise, add +1."}
+            {:id "Shield-Kin"
+             :enabled false
+             :result "When you Clash or Battle alongside your companion, or when you Face Danger against an attack by standing together, add +1."}
+            {:id "Bonded"
+             :enabled false
+             :result "Once you mark a bond with your companion, add +1 when you Face Desolation in their presence."}]
+    :res-counter {:current 4
+                  :max 4}
+    :custom-note ["Name/Expertise:" "Some dood/stuff"]}
+   {:name "Outcast"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When your supply is reduced to 0, suffer any remaining -supply as -momentum. THen, roll +wits. On a strong hit, you manage to scrape by and take +1 supply. On a weak hit, you may suffer -2 momentum in exchange for +1 supply. On a miss, you are Out of Supply."}
+            {:id :second
+             :enabled false
+             :result "When you Sojourn, you may reroll any dice. If you do (decide before your first roll), your needs are few, but your isolation sets you apart from others. A strong hit counts as a weak hit."}
+            {:id :third
+             :enabled false
+             :result "When you Reach Your Destination and roll a strong hit, you recall or recognize something helpful about this place. Envision what it is, and take +2 momentum."}]}
+   {:name "Pretender"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you establish a false identity, roll +shadow. On a strong hit, you may add +2 when you make moves using this identity to deceive or influence others. If you roll a 1 on your action die when using your false identity, someone doubts you. Make appropriate moves to reassure them or prevent them from revealing the truth. On a weak hit, as above, but add +1 instead of +2."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may roll +shadow (instead of +heart) when you Sojourn under your false identity. If you do, take +1 momentum on a hit."}
+            {:id :third
+             :enabled false
+             :result "When you Secure an Advantage by revealing your true identity in a dramatic moment, reroll any dice."}]}
+   {:name "Revenant"
+    :asset-type "Path"
+    :description "Once you Face Death and return to the world of the living."
+    :perks [{:id :first
+             :enabled true
+             :result "When you are at 0 health, and Endure Harm or Face Death, add +1. If you then burn momentum to improve your result, envision what bond or vow binds you to this world, and take +2 momentum after you reset."}
+            {:id :second
+             :enabled false
+             :result "When you make a move to investigate, oppose, or interact with a horror, spirit, or other undead being, add +1."}
+            {:id :third
+             :enabled false
+             :result "When you bring death to your foe to End the Fight, you may burn momentum to cancel one (not both) of the challenge dice if your momentum is greater than the value of that die. If you do, Endure Stress (2 stress)."}]}
+   {:name "Rider"
+    :asset-type "Path"
+    :description "If you are with your horse companion..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Heal your horse, or when you Face Danger to calm or encourage it, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you Undertake a Journey, and your action score is equal to one or both challenge dice, you may push your horse harder and add +1. If you do, make the Companion Endure Harm move (1 harm)."}
+            {:id :third
+             :enabled false
+             :result "When you Reach Your Destination and roll a strong hit, you recall or recognize something helpful about this place. Envision what it is, and take +2 momentum."}]}
+   {:name "Waterborn"
+    :asset-type "Path"
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger, Gather Information, or Secure an Advantage related to your knowledge of watercraft, water travel, or aquatic environments or creatures, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result {:description "When you Undertake a Journey by boat or ship, add +1. On a strong hit, also choose one."
+                      :options {"The wind is at your back" "Mark one extra unit of progress."
+                                "Find safe anchor" "Make Camp now and reroll any dice."
+                                "Reap bounty" "Resupply now and reroll any dice."}
+                      :random-event nil}}
+            {:id :third
+             :enabled false
+             :result "When you Enter the Fray aboard a boat or ship, reroll any dice."}]}
+   {:name "Thunderbringer"
+    :asset-type "Combat Talent"
+    :description "If you wield a mighty hammer..."
+    :perks [{:id :first
+             :enabled true
+             :result "When you Face Danger, Secure an Advantage, or Compel by hitting or breaking an inanimate object, add +1 and take +1 momentum on a hit."}
+            {:id :second
+             :enabled false
+             :result "When you Strike a foe and score a strong hit, take +1 momentum as you also knock them back, stun them, or put them off-balance."}
+            {:id :third
+             :enabled false
+             :result "When you Turn the Tide, you may Strike with all the fury and power you can muster. If you do (decide before rolling), you may reroll any dice and inflict +1 harm on a strong hit, but count a weak hit as a miss."}]}
+   {:name "Awakening"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you create a simulacrum, envision your process and materials. Then, roll +heart. On a strong hit, your creation is given unnatural life. If you make a move using the simulacrum to assault or overcome an obstacle through strength or intimidation, add +2. It has 3 health and suffers harm as appropriate, but is not a companion and may not be healed. At 0 health, it is dead. On a weak hit, as above, but if you roll a 1 on your action die when aided by your simulacrum, it will betray you or turn on you (as at least a formidable foe)."}
+            {:id :second
+             :enabled false
+             :result "Your simulacrum has 6 health."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
+   {:name "Talisman"
+    :asset-type "Ritual"
+    :perks [{:id :first
+             :enabled true
+             :result "When you fashion a charm, envision it and name the specific person or creature it protects against. Then roll +wits. On a strong hit, when the wearer opposes the target through a move, add +2. If a 1 is rolled on the action die while making a move using the charm, the magic is spent. Ona a weak hit, as above, but the wearer adds +1 instead of +2."}
+            {:id :second
+             :enabled false
+             :result "As above, and you may instead fashion a charm which aids the wearer against all supernatural threats, such as mystic rituals or horrors."}
+            {:id :third
+             :enabled false
+             :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
    ])
