@@ -29,7 +29,7 @@
 ;; functions for storage interaction
 
 (def cur-db-id-key "ironsworn-db-id")
-(def default-db-id "New game")
+(def default-db-id "Unnamed Campaign")
 
 (def all-savegames (atom (sorted-set))) ;; keeping track of the savegames here
 
