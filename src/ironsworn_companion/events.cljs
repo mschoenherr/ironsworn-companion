@@ -37,13 +37,15 @@
   "Sets the default id to db-id."
   (.setItem AsyncStorage cur-db-id-key db-id))
 
+(declare new-game)
+
 (defn load-db
   ([callback]
    "Gets default db, parses it and feeds it back to caller."
    (-> (.getItem AsyncStorage cur-db-id-key)
        (.then #(if %
                  (load-db callback %)
-                 (callback app-db)))))
+                 (new-game callback)))))
   ([callback db-id]
    "Gets db item from Storage by id, then parses it and feeds it into callback."
    (-> (.getItem AsyncStorage db-id)
@@ -96,21 +98,25 @@
         (.then (fn [_]
                  (load-db callback new-id))))))
 
+(defn load-all-savegames []
+  (let [aux-key-pred (fn [key] (= cur-db-id-key key))]
+      (-> (.getAllKeys AsyncStorage)
+          (.then #(reset! all-savegames ;; a bit brutal, but works
+                          (into (sorted-set)
+                                (remove aux-key-pred %)))))))
+
 (defn new-game [callback]
   "Creates a new savegame with a default name, loads it and calls callback on the new db."
   (when-not (contains? @all-savegames default-db-id)
     (-> (.setItem AsyncStorage default-db-id (pr-str app-db))
         (.then (fn [_]
+                 (load-all-savegames)))
+        (.then (fn [_]
                  (do
                    (set-cur-id default-db-id)
                    (load-db callback default-db-id)))))))
 
-(defn load-all-savegames []
-  (let [aux-key-pred (fn [key] (= cur-db-id-key key))]
-      (-> (.getAllKeys AsyncStorage)
-          (.then #(reset! all-savegames
-                          (into (sorted-set)
-                                (remove aux-key-pred %)))))))
+
 
 ;; -- Interceptors ------------------------------------------------------------
 ;;

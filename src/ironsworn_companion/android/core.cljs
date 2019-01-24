@@ -35,7 +35,6 @@
 
 (defn init []
   (dispatch-sync [:initialize-db])
-  (load-all-savegames)
   (.addEventListener app-state "change"
                      (fn [next-state]
                        (case next-state
