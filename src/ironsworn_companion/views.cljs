@@ -588,6 +588,7 @@
       [view {:style {:align-items "center"
                      :border-width 1
                      :padding 1}}
+       [text "Action Die"]
        [image {:style {:width 64
                        :height 64
                        :margin 1}
@@ -653,7 +654,7 @@
             [view {:style {:flex-direction "row"
                            :flex-wrap "wrap"
                            :justify-content "space-evenly"}}
-             [action-die-view roll-result] ;; should be factored out
+             [action-die-view roll-result] 
              [challenge-dice-view roll-result]]) ;; passing atom here, to allow child view to reroll dice
           [button {:title "Roll" :on-press #(reset! roll-result (rolls/roll-result @active-char))}]
           (when (and @roll-result
@@ -665,6 +666,8 @@
           (when @roll-result
             (let [result-type (rolls/result-type @roll-result @use-val @add-val)]
               [result-view (get-in @move [:results result-type])]))])])))
+
+
 
 (defn progress-roll-view [p-track move]
   "Component for rolling on progress tracks."

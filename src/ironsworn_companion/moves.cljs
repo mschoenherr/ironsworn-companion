@@ -6,6 +6,12 @@
 
 (def all-moves
   [
+   {:name "Asset Move"
+    :move-type :normal
+    :description "Use this move for any rolls triggered by assets."
+    :results {"Strong Hit" "Strong Hit"
+              "Weak Hit" "Weak Hit"
+              "Miss" "Miss"}}
    {:name "Face Danger"
     :move-type :normal
     :description "When you attempt something risky or react to an imminent threat, envision your action and roll on any stat."
