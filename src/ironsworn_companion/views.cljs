@@ -405,7 +405,8 @@
      [switch-comp {:value (:enabled perk)
                    :on-value-change #(dispatch-sync [:toggle-perk char-name asset perk])}]
      [switch-comp {:value (:enabled perk)}])
-   [result-view (:result perk)]])
+   [view {:style {:flex 1}}
+    [result-view (:result perk)]]])
 
 (defn res-counter-view [asset & {:keys [char-name]
                                  :or {char-name nil}}]
