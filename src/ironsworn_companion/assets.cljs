@@ -136,8 +136,8 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you attempt to Heal using herbal remedies, and you have at least +1 supply, you may choose one (decide before rolling)."
-                      :options {"Prepare" "Add +2."
-                                "Expend" "On a hit, take or give an additional +1 health."}
+                      :options [["Prepare" "Add +2."]
+                                ["Expend" "On a hit, take or give an additional +1 health."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -185,10 +185,10 @@
     :perks [{:id :first
              :enabled true
              :result {:description "Choose your mask's material. When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addtion to any other outcome of the move)."
-                      :options {"Thunderwood" "Edge / Health"
-                                "Bloodwood" "Iron / Health"
-                                "Ghostwood" "Shadow / Spirit"
-                                "Whisperwood" "Wits /Spirit"}
+                      :options [["Thunderwood" "Edge / Health"]
+                                ["Bloodwood" "Iron / Health"]
+                                ["Ghostwood" "Shadow / Spirit"]
+                                ["Whisperwood" "Wits /Spirit"]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -242,8 +242,8 @@
             {:id :third
              :enabled false
              :result {:description "When you slay a beast or horror (at least formidable), you may take a trophy and choose one."
-                      :options {"Power a ritual" "When you or an ally make a ritual move, reroll any dice (one time only)."
-                                "Prove your worth" "When you Sojourn, reroll any dice (one time only)."}
+                      :options [["Power a ritual" "When you or an ally make a ritual move, reroll any dice (one time only)."]
+                                ["Prove your worth" "When you Sojourn, reroll any dice (one time only)."]]
                       :random-event nil}}]}
    {:name "Storyweaver"
     :asset-type "Path"
@@ -350,12 +350,12 @@
              :result "When you Face Danger or Clash against a brawling attack (such as punches, kicks, slams, trips, or grapples), add +1."}]}
    {:name "Cutthroat"
     :asset-type "Combat Talent"
-    :description "If you wirld a dagger or knife..."
+    :description "If you wield a dagger or knife..."
     :perks [{:id :first
              :enabled true
              :result {:description "When you are in postion to Strike at an unsuspecting foe, choose one (before rolling)."
-                      :options {"Strike quickly" "Add +2 and take +1 momentum on a hit."
-                                "Take aim" "Inflict +2 harm on a hit."}
+                      :options [["Strike quickly" "Add +2 and take +1 momentum on a hit."]
+                                ["Take aim" "Inflict +2 harm on a hit."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -375,8 +375,8 @@
             {:id :third
              :enabled false
              :result {:description "When you Draw the Circle, choose one (before rolling)"
-                      :options {"Add..." "... +2"
-                                "Take..." "... +2 momentum on a hit."}
+                      :options [["Add..." "... +2"]
+                                ["Take..." "... +2 momentum on a hit."]]
                       :random-event nil}}]}
    {:name "Ironclad"
     :asset-type "Combat Talent"
@@ -384,8 +384,8 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you equip or adjust your armor, choose one."
-                      :options {"Lightly armored" "When you Endure Harm in a fight, add +1 and take +1 momentum on a hit."
-                                "Geared for war:" "Mark encumbered. When you Endure Harm in a fight, add +2 and take +1 momenutm on a hit."}
+                      :options [["Lightly armored" "When you Endure Harm in a fight, add +1 and take +1 momentum on a hit."]
+                                ["Geared for war:" "Mark encumbered. When you Endure Harm in a fight, add +2 and take +1 momenutm on a hit."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -423,8 +423,8 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you Face Danger by holding a foe at bay using your spear's reach, roll +iron or +edge (your choice). If you score a strong hit, choose one."
-                      :options {"Iron" "Strike now, and add +1."
-                                "Edge" "Take +1 momentum"}
+                      :options [["Iron" "Strike now, and add +1."]
+                                ["Edge" "Take +1 momentum"]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -517,9 +517,9 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you look into flames to study a remote person or location, roll +shadow. You or someone with you must have knowledge of the target. On a strong hit, you may Gather Information through observation using +shadow or +wits. On a weak hit, as above but the flames are hungry; choose one to sacrifice."
-                      :options {"Your blood" "Endure Harm (2 harm)."
-                                "A precious thing" "Endure Stress (2 stress)."
-                                "Provisions" "Suffer -2 supply."}
+                      :options [["Your blood" "Endure Harm (2 harm)."]
+                                ["A precious thing" "Endure Stress (2 stress)."]
+                                ["Provisions" "Suffer -2 supply."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -576,9 +576,9 @@
     :perks [{:id :first
              :enabled true
              :result {:description "When you walk a wide circle, sprinkling the ground with salt, roll +wits. On a strong hit, choose two. On a weak hit, choose one."
-                     :options {"Alert" "When a foe first crosses the boundary, take +1 momentum."
-                                "Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."
-                                "Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."}
+                      :options [["Alert" "When a foe first crosses the boundary, take +1 momentum."]
+                                ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."]
+                                ["Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -656,9 +656,9 @@
             {:id :second
              :enabled false
              :result {:description "When you Undertake a Journey by boat or ship, add +1. On a strong hit, also choose one."
-                      :options {"The wind is at your back" "Mark one extra unit of progress."
-                                "Find safe anchor" "Make Camp now and reroll any dice."
-                                "Reap bounty" "Resupply now and reroll any dice."}
+                      :options [["The wind is at your back" "Mark one extra unit of progress."]
+                                ["Find safe anchor" "Make Camp now and reroll any dice."]
+                                ["Reap bounty" "Resupply now and reroll any dice."]]
                       :random-event nil}}
             {:id :third
              :enabled false

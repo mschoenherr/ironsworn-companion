@@ -19,10 +19,10 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "You succed but face a troublesome cost. Choose one."
-                          :options {"You are delayed..." "... , lose advantage or face a new danger: Suffer -1 momentum."
-                                    "You are tired or hurt." "Endure Harm (1 Harm)."
-                                    "You are dispirited or afraid" "Endure Stress (1 Stress)."
-                                    "You sacrifice resources" "Suffer -1 supply."}
+                          :options [["You are delayed..." "... , lose advantage or face a new danger: Suffer -1 momentum."]
+                                    ["You are tired or hurt." "Endure Harm (1 Harm)."]
+                                    ["You are dispirited or afraid" "Endure Stress (1 Stress)."]
+                                    ["You sacrifice resources" "Suffer -1 supply."]]
                           :random-event nil}
               "Miss" {:description "You fail or your progress is undermined by a dramatic and costly turn of events. Pay the Price."
                       :options nil
@@ -31,8 +31,8 @@
     :move-type :normal
     :description "When you assess a situation, make preparations, or attempt to gain leverage, envision your action and roll any stat."
     :results {"Strong Hit" {:description "You gain advantage. Choose one."
-                            :options {"Take control" "Make another move now (not a progress move); when you do, add +1."
-                                      "Prepare to act" "Take +2 momentum."}
+                            :options [["Take control" "Make another move now (not a progress move); when you do, add +1."]
+                                      ["Prepare to act" "Take +2 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "Your advantage is short-lived. Take +1 momentum."
                           :options nil
@@ -57,8 +57,8 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "Your care is helpful. If you (or the ally under your care) have the wounded condition, you may clear it. Then, take or give up to +2 health. Choose one."
-                          :options ["Suffer -1 supply."
-                                    "Suffer -1 momentum."]
+                          :options [["Expend supplies" "Suffer -1 supply."]
+                                    ["Use time" "Suffer -1 momentum."]]
                           :random-event nil}
               "Miss" {:description "Your aid is ineffective. Pay the Price."
                       :options nil
@@ -79,18 +79,18 @@
     :move-type :normal
     :description "When you rest and recover for several hours in the wild, roll +supply."
     :results {"Strong Hit" {:description "Your and your allies may choose two."
-                            :options {"Recuperate" "Take +1 health for you and any companions."
-                                      "Partake" "Suffer -1 supply and take +1 health for you and any companions."
-                                      "Relax" "Take +1 spirit."
-                                      "Focus" "Take +1 momentum."
-                                      "Prepare" "When you break camp, add +1 if you Undertake a Journey."}
+                            :options [["Recuperate" "Take +1 health for you and any companions."]
+                                      ["Partake" "Suffer -1 supply and take +1 health for you and any companions."]
+                                      ["Relax" "Take +1 spirit."]
+                                      ["Focus" "Take +1 momentum."]
+                                      ["Prepare" "When you break camp, add +1 if you Undertake a Journey."]]
                             :random-event nil}
               "Weak Hit" {:description "Your and your allies may choose one."
-                          :options {"Recuperate" "Take +1 health for you and any companions."
-                                    "Partake" "Suffer -1 supply and take +1 health for you and any companions."
-                                    "Relax" "Take +1 spirit."
-                                    "Focus" "Take +1 momentum."
-                                    "Prepare" "When you break camp, add +1 if you Undertake a Journey."}
+                          :options [["Recuperate" "Take +1 health for you and any companions."]
+                                    ["Partake" "Suffer -1 supply and take +1 health for you and any companions."]
+                                    ["Relax" "Take +1 spirit."]
+                                    ["Focus" "Take +1 momentum."]
+                                    ["Prepare" "When you break camp, add +1 if you Undertake a Journey."]]
                           :random-event nil}
               "Miss" {:description "You take no comfort. Pay the Price."
                       :options nil
@@ -99,8 +99,8 @@
     :move-type :normal
     :description "When you travel across hazardous or unfamiliar lands, first set the rank of your journey and make a progress track for it. Then, for each segment of your journey, roll +wits. If you are setting off from a community with which you share a bond, add +1 to your initial roll."
     :results {"Strong Hit" {:description "You reach a waypoint. If the waypoint is unknown to you, envision it (Ask the Oracle if unsure). Then, choose one."
-                            :options {"You make good use of your resources" "Mark progress."
-                                      "You move at speed" "Mark progress and take +1 momentum, but suffer -1 supply."}
+                            :options [["You make good use of your resources" "Mark progress."]
+                                      ["You move at speed" "Mark progress and take +1 momentum, but suffer -1 supply."]]
                             :random-event nil}
               "Weak Hit" {:description "You reach a waypoint and mark progress, but suffer -1 supply."
                           :options nil
@@ -112,8 +112,8 @@
     :move-type :progress-track
     :description "When your journey comes to an end, roll the challenge dice and compare to your progress. Momentum is ignored on this roll."
     :results {"Strong Hit" {:description "The situation at your destination favors you. Choose one."
-                            :options {"Act" "Make another move now (not a progress move), and add +1."
-                                      "Prepare" "Take +1 momentum."}
+                            :options [["Act" "Make another move now (not a progress move), and add +1."]
+                                      ["Prepare" "Take +1 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "Your arrive, but face an unforseen hazard or complication. Envision what you find (Ask the oracle if unsure)."
                           :options nil
@@ -137,24 +137,24 @@
     :move-type :normal
     :description "When you spend time in a community seeking assisstance, roll +heart. If you share a bond, add +1."
     :results {"Strong Hit" {:description "You and your allies may each choose two from within the categories below. If you share a bond, choose one more."
-                            :options {"Mend" "Clear a wounded debility and take +1 health."
-                                      "Hearten" "Clear a shaken debility and take +1 spirit."
-                                      "Equip" "Clear an unprepared debility and take +1 supply."
-                                      "Recuperate" "Take +2 health for yourself and any companions."
-                                      "Consort" "Take +2 spirit."
-                                      "Provision" "Take +2 supply."
-                                      "Plan" "Take +2 momentum."
-                                      "Provide Aid" "Take a quest: Envision what this community needs, or what trouble it is facing (Ask the Oracle, if unsure). If you chose to help, Swear an Iron Vow and add +1."}
+                            :options [["Mend" "Clear a wounded debility and take +1 health."]
+                                      ["Hearten" "Clear a shaken debility and take +1 spirit."]
+                                      ["Equip" "Clear an unprepared debility and take +1 supply."]
+                                      ["Recuperate" "Take +2 health for yourself and any companions."]
+                                      ["Consort" "Take +2 spirit."]
+                                      ["Provision" "Take +2 supply."]
+                                      ["Plan" "Take +2 momentum."]
+                                      ["Provide Aid" "Take a quest: Envision what this community needs, or what trouble it is facing (Ask the Oracle, if unsure). If you chose to help, Swear an Iron Vow and add +1."]]
                             :random-event nil}
               "Weak Hit" {:description "You and your allies may each choose one from within the categories below. If you share a bond, choose one more."
-                          :options {"Mend" "Clear a wounded debility and take +1 health."
-                                    "Hearten" "Clear a shaken debility and take +1 spirit."
-                                    "Equip" "Clear an unprepared debility and take +1 supply."
-                                    "Recuperate" "Take +2 health for yourself and any companions."
-                                    "Consort" "Take +2 spirit."
-                                    "Provision" "Take +2 supply."
-                                    "Plan" "Take +2 momentum."
-                                    "Provide Aid" "Envision what this community needs, or what trouble it is facing (Ask the Oracle, if unsure). If you chose to help, Swear an Iron Vow and add +1."}
+                          :options [["Mend" "Clear a wounded debility and take +1 health."]
+                                    ["Hearten" "Clear a shaken debility and take +1 spirit."]
+                                    ["Equip" "Clear an unprepared debility and take +1 supply."]
+                                    ["Recuperate" "Take +2 health for yourself and any companions."]
+                                    ["Consort" "Take +2 spirit."]
+                                    ["Provision" "Take +2 supply."]
+                                    ["Plan" "Take +2 momentum."]
+                                    ["Provide Aid" "Take a quest: Envision what this community needs, or what trouble it is facing (Ask the Oracle, if unsure). If you chose to help, Swear an Iron Vow and add +1."]]
                           :random-event nil}
               "Miss" {:description "You find no help here. Pay the Price."
                       :options nil
@@ -163,18 +163,18 @@
     :move-type :normal
     :description "When you challenge someone to a formal duel, or accept a challenge, roll +heart. If you share a bond with this community, add +1. After the duel, if you are the victor, you may make a lawful demand and your opponent must comply or forfeit their honor and standing. If you refuse the challenge, surrender, or are defeated, they make a demand of you."
     :results {"Strong Hit" {:description "Take +1 momentum. You may also choose up to three boasts and take +1 momentum for each."
-                            :options {"Grant first strike" "Your foe has initiative."
-                                      "Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."
-                                      "Hold no iron" "Take no benefit of weapons; your harm is 1."
-                                      "Bloody yourself" "Endure harm (1 harm)."
-                                      "To the death" "One way or another, this fight must end with death."}
+                            :options [["Grant first strike" "Your foe has initiative."]
+                                      ["Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."]
+                                      ["Hold no iron" "Take no benefit of weapons; your harm is 1."]
+                                      ["Bloody yourself" "Endure harm (1 harm)."]
+                                      ["To the death" "One way or another, this fight must end with death."]]
                             :random-event nil}
               "Weak Hit" {:description "You may choose one boast in exchange for +1 momentum."
-                          :options {"Grant first strike" "Your foe has initiative."
-                                    "Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."
-                                    "Hold no iron" "Take no benefit of weapons; your harm is 1."
-                                    "Bloody yourself" "Endure harm (1 harm)."
-                                    "To the death" "One way or another, this fight must end with death."}
+                          :options [["Grant first strike" "Your foe has initiative."]
+                                    ["Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."]
+                                    ["Hold no iron" "Take no benefit of weapons; your harm is 1."]
+                                    ["Bloody yourself" "Endure harm (1 harm)."]
+                                    ["To the death" "One way or another, this fight must end with death."]]
                           :random-event nil}
               "Miss" {:description "You begin the duel at a disadvantage. Your foe has initiative. Pay the Price."
                       :options nil
@@ -183,8 +183,8 @@
     :move-type :normal
     :description "When you spend significant time with a person or community, stand together to face harships, or make sacrifices to their cause, you can attempt to create a bond. When you do, roll +heart. If you make this move after you successfully Fullfill your Vow to their benefit, you may reroll any dice."
     :results {"Strong Hit" {:description "Make note of the bond, mark a tick on your bond progress track, and choose one."
-                            :options {"Cheer up" "Take +1 spirit."
-                                      "Envigorate" "Take +2 momentum."}
+                            :options [["Cheer up" "Take +1 spirit."]
+                                      ["Envigorate" "Take +2 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "They ask something more of you first. Envision what it is (Ask the Oracle, if unsure), do it (or Swear an Iron Vow) and mark the bond. Make note of the bond, mark a tick on your bond progress track, and choose one. If you decline or fail, Pay the Price."
                           :options nil
@@ -196,8 +196,8 @@
     :move-type :normal
     :description "When your bond is tested through conflict, betrayal, or circumstance, roll +heart. If you have no interest in maintaining this relationship, just clear the bond and Pay the Price."
     :results {"Strong Hit" {:description "This test has strengthened your bond. Choose one."
-                            :options {"Cheer up" "Take +1 spirit."
-                                      "Envigorate" "Take +2 momentum"}
+                            :options [["Cheer up" "Take +1 spirit."]
+                                      ["Envigorate" "Take +2 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "Your bond is fragile and you must prove your loyalty. Envision what they ask of you (Ask the Oracle, if unsure), and do it (or Swear an Iron Vow). If you decline or fail, clear the bond and Pay the Price."
                           :options nil
@@ -228,8 +228,8 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "You choose one."
-                          :options {"Bolster your position" "Take +2 momentum."
-                                    "Prepare to act" "Take initiative."}
+                          :options [["Bolster your position" "Take +2 momentum."]
+                                    ["Prepare to act" "Take initiative."]]
                           :random-event nil}
               "Miss" {:description "Combat begins with you at a disadvantage. Pay the Price. Your foe has initiative."
                       :options nil
@@ -250,8 +250,8 @@
     :move-type :normal
     :description "When your foe has initiative and you fight with them in close quarters, roll +iron. When you exchange a volley at range, or shoot at an advancing foe, roll +edge."
     :results {"Strong Hit" {:description "Inflict your harm and choose one. You have the initiative."
-                            :options {"Bolster your position" "Take +1 momentum"
-                                      "Find an opening" "Inflict +1 harm."}
+                            :options [["Bolster your position" "Take +1 momentum"]
+                                      ["Find an opening" "Inflict +1 harm."]]
                             :random-event nil}
               "Weak Hit" {:description "Inflict your harm, but then Pay the Price. Your foe has initiative."
                           :options nil
@@ -267,12 +267,12 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "This foe is no longer in this fight. They are killed, out of action, flee, or surrender as appropriate to the situation and your intent (Ask the Oracte if unsure). Choose one."
-                          :options {"It's worse than you thought" "Endure Harm:"
-                                    "You are overcome" "Endure Stress."
-                                    "Your victory is short-lived" "A new danger or foe appears, or an existing danger worsens."
-                                    "You suffer colleteral damage" "Something of value is lost or broken, or someone must pay an important cost."
-                                    "You'll pay for it" "An objective falls out of reach."
-                                    "Others won't forget" "You are marked for vengeance."}
+                          :options [["It's worse than you thought" "Endure Harm:"]
+                                    ["You are overcome" "Endure Stress."]
+                                    ["Your victory is short-lived" "A new danger or foe appears, or an existing danger worsens."]
+                                    ["You suffer colleteral damage" "Something of value is lost or broken, or someone must pay an important cost."]
+                                    ["You'll pay for it" "An objective falls out of reach."]
+                                    ["Others won't forget" "You are marked for vengeance."]]
                           :random-event nil}
               "Miss" {:description "You have lost this fight. Pay the Price"
                       :options nil
@@ -293,8 +293,8 @@
     :move-type :normal
     :description "When you face physical damage, suffer -health equal to your foe's rank or as appropriate to the situation. If your health is 0, suffer -momentum equal to any remaining -health. Then roll +health or +iron, whichever is higher."
     :results { "Strong Hit" {:description "Choose one."
-                             :options {"Shake it off" "If your health is greater than 0, suffer -1 momentum in exchange for +1 health."
-                                       "Embrace the pain" "Take +1 momentum."}
+                             :options [["Shake it off" "If your health is greater than 0, suffer -1 momentum in exchange for +1 health."]
+                                       ["Embrace the pain" "Take +1 momentum."]]
                              :random-event nil}
               "Weak Hit" {:description "You press on."
                           :options nil
@@ -323,8 +323,8 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "Choose one."
-                          :options {"You die ..." "... but not before making a noble sacrifice. Envision your final moment."
-                                    "Death desires something of you ..." "... in exchange for lift. Envision what it wants (Ask the Oracle if unsure), and Swear an Iron Vow (formidable or extreme) to complete that quest. If you fail to score a hit when you swear an Iron Vow, or refuse the quest, you are dead. Otherwise, you return to the mortal world and are now cursed. You may only clear the cursed debility by completing that quest."}
+                          :options [["You die ..." "... but not before making a noble sacrifice. Envision your final moment."]
+                                    ["Death desires something of you ..." "... in exchange for lift. Envision what it wants (Ask the Oracle if unsure), and Swear an Iron Vow (formidable or extreme) to complete that quest. If you fail to score a hit when you swear an Iron Vow, or refuse the quest, you are dead. Otherwise, you return to the mortal world and are now cursed. You may only clear the cursed debility by completing that quest."]]
                           :random-event nil}
               "Miss" {:description "You are dead."
                       :options nil
@@ -345,8 +345,8 @@
     :move-type :normal
     :description "When you face mental shock or despair, suffer -spirit equal to your foe's rank or as appropriate to the situation. If your spirit is 0, suffer -momentum equal to the remaining -spirit. Then roll +heart or +spirit, whichever is higher."
     :results {"Strong Hit" {:description "Choose one."
-                            :options {"Shake it off" "If your spirit is greater than 0, suffer -1 momentum in exchange for +1 spirit."
-                                      "Embrace the darkness" "Take +1 momentum."}
+                            :options [["Shake it off" "If your spirit is greater than 0, suffer -1 momentum in exchange for +1 spirit."]
+                                      ["Embrace the darkness" "Take +1 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "You press on."
                           :options nil
@@ -364,8 +364,8 @@
                             :options nil
                             :random-event nil}
               "Weak Hit" {:description "Choose one."
-                          :options {"Your spirit or your sanity breaks ..." "... but not before you make a noble sacrifice. Envision your final moments."
-                                    "You see a vision ..." "of dreaded moment coming to pass. Envision that dark future (Ask the Oracle if unsure), and Swear an Iron Vow (formidable or extreme) to prevent it. If you fail to score a hit when you swear an Iron Vow, or refuse the quest, you are lost. Otherwise, you return to your senses and are now tormented. You may only clear the tormented debility by completing the quest."}
+                          :options [["Your spirit or your sanity breaks ..." "... but not before you make a noble sacrifice. Envision your final moments."]
+                                    ["You see a vision ..." "of dreaded moment coming to pass. Envision that dark future (Ask the Oracle if unsure), and Swear an Iron Vow (formidable or extreme) to prevent it. If you fail to score a hit when you swear an Iron Vow, or refuse the quest, you are lost. Otherwise, you return to your senses and are now tormented. You may only clear the tormented debility by completing the quest."]]
                           :random-event nil}
               "Miss" {:description "You succumb to horror or despair and are lost."
                       :options nil
@@ -378,8 +378,8 @@
     :move-type :no-roll
     :description "When your momentum is at its minimum (-6), and you suffer additional -momentum."
     :results {"Other" {:description "Choose one."
-                       :options {"To the last" "Exchange each additional -momentum for any combination of -health, -spirit or -supply, as appropriate to the circumstances."
-                                 "Sacrific progress" "Envision an event or discovery (Ask the Orace if unsure), which undermines your progress in a current quest, journey or fight. Then, for each additional -momentum, clear 1 unit of progress that track per its rank."}
+                       :options [["To the last" "Exchange each additional -momentum for any combination of -health, -spirit or -supply, as appropriate to the circumstances."]
+                                 ["Sacrific progress" "Envision an event or discovery (Ask the Orace if unsure), which undermines your progress in a current quest, journey or fight. Then, for each additional -momentum, clear 1 unit of progress that track per its rank."]]
                        :random-event nil}}}
    {:name "Swear an Iron Vow"
     :move-type :normal
@@ -391,8 +391,8 @@
                           :options nil
                           :random-event nil}
               "Miss" {:description "You face a significant obstacle before you can begin your quest. Envision what stands in your way (Ask the Oracle if unsure), and choose one."
-                      :options {"You press on" "Suffer -2 momentum, and do what you must to overcome this obstacle."
-                                "You give up" "Forsake your Vow"}
+                      :options [["You press on" "Suffer -2 momentum, and do what you must to overcome this obstacle."]
+                                ["You give up" "Forsake your Vow"]]
                       :random-event nil}}}
    {:name "Reach a Milestone"
     :move-type :no-roll
@@ -408,8 +408,8 @@
                           :options nil
                           :random-event nil}
               "Miss" {:description "Your quest is undone. Envision what happens (Ask the Oracle if unsure), and choose one."
-                      :options {"You recommit" "Clear all but one filled progress, and raise the quest's rank by one (if not already epic)."
-                                "You give up" "Forsake your Vow."}
+                      :options [["You recommit" "Clear all but one filled progress, and raise the quest's rank by one (if not already epic)."]
+                                ["You give up" "Forsake your Vow."]]
                       :random-event nil}}}
    {:name "Forsake your Vow"
     :move-type :no-roll
@@ -424,9 +424,9 @@
     :move-type :no-roll
     :description "When you suffer the outcome of a move."
     :results {"Other" {:description "Choose one."
-                       :options {"Choose the obvious" "Make the most obvious negative outcome happen."
-                                 "Ask yes/no" "Envision two negative outcomes. Rate one as likely, and Ask the Oracle using the yes/no table. On a yes, make that outcome happen. Otherwise make it the other."
-                                 "Random" "Roll on the following table."}
+                       :options [["Choose the obvious" "Make the most obvious negative outcome happen."]
+                                 ["Ask yes/no" "Envision two negative outcomes. Rate one as likely, and Ask the Oracle using the yes/no table. On a yes, make that outcome happen. Otherwise make it the other."]
+                                 ["Random" "Roll on the following table."]]
                        :random-event [[2 "Roll again and apply that result but make it worse. If you roll this result yet again, think of something dreadful that changes the course of your quest (Ask the Oracle if unsure) and make it happen."]
                                       [5 "A person or community you trusted loses faith in you, or acts against you."]
                                       [9 "A person or community you care about is exposed to danger."]
@@ -447,421 +447,421 @@
     :move-type :no-roll
     :description "When you seek to resolve questions, discover details in the world, determine how other characters respond, or trigger encounters or events."
     :results {"Other" {:description "You may:"
-                       :options {"Draw a conclusion" "Decide the answer based on the most interesting and obvious result."
-                                 "Ask yes/no" {:description "Ask a yes/no question. Decide the odds of a 'yes', and roll."
-                                  :options {"Almost Certain" {:description "Almost Certain."
-                                                              :options nil
-                                                              :random-event [[10 "No"]
-                                                                             [100 "Yes"]]}
-                                            "Likely" {:description "Likely."
-                                                      :options nil
-                                                      :random-event [[25 "No"]
-                                                            [100 "Yes"]]}
-                                            "50/50" {:description "50/50."
-                                                     :options nil
-                                                     :random-event [[50 "No"]
-                                                                    [100 "Yes"]]}
-                                            "Unlikely" {:description "Unlikely."
-                                                        :options nil
-                                                        :random-event [[75 "No"]
-                                                                       [100 "Yes"]]}
-                                            "Small Chance" {:description "Small Chance."
-                                                            :options nil
-                                                            :random-event [[90 "No"]
-                                                                           [100 "Yes"]]}}
-                                  :random-event nil}
-                                 "Pick two" {:description "Pick two: Envision two options, the first being 'likely' and roll to see which one happens."
-                                             :options nil
-                                             :random-event [[25 "First option."]
-                                                            [100 "The other option."]]}
-                                 "Spark an idea" "Brainstorm or use a random prompt."
-                                 "Action" {:description "Divine the action"
+                       :options [["Draw a conclusion" "Decide the answer based on the most interesting and obvious result."]
+                                 ["Ask yes/no" {:description "Ask a yes/no question. Decide the odds of a 'yes', and roll."
+                                                :options [["Almost Certain" {:description "Almost Certain."
+                                                                             :options nil
+                                                                             :random-event [[10 "No"]
+                                                                                            [100 "Yes"]]}]
+                                                          ["Likely" {:description "Likely."
+                                                                     :options nil
+                                                                     :random-event [[25 "No"]
+                                                                                    [100 "Yes"]]}]
+                                                          ["50/50" {:description "50/50."
+                                                                    :options nil
+                                                                    :random-event [[50 "No"]
+                                                                                   [100 "Yes"]]}]
+                                                          ["Unlikely" {:description "Unlikely."
+                                                                       :options nil
+                                                                       :random-event [[75 "No"]
+                                                                                      [100 "Yes"]]}]
+                                                          ["Small Chance" {:description "Small Chance."
+                                                                           :options nil
+                                                                           :random-event [[90 "No"]
+                                                                                          [100 "Yes"]]}]]
+                                                :random-event nil}]
+                                 ["Pick two" {:description "Pick two: Envision two options, the first being 'likely' and roll to see which one happens."
+                                              :options nil
+                                              :random-event [[25 "First option."]
+                                                             [100 "The other option."]]}]
+                                 ["Spark an idea" "Brainstorm or use a random prompt."]
+                                 ["Action" {:description "Divine the action"
+                                            :options nil
+                                            :random-event [[1 "Scheme"]
+                                                           [2 "Clash"]
+                                                           [3 "Weaken"]
+                                                           [4 "Initiate"]
+                                                           [5 "Create"]
+                                                           [6 "Swear"]
+                                                           [7 "Avenge"]
+                                                           [8 "Guard"]
+                                                           [9 "Defeat"]
+                                                           [10 "Control"]
+                                                           [11 "Break"]
+                                                           [12 "Risk"]
+                                                           [13 "Surrender"]
+                                                           [14 "Inspect"]
+                                                           [15 "Raid"]
+                                                           [16 "Evade"]
+                                                           [17 "Assault"]
+                                                           [18 "Deflect"]
+                                                           [19 "Threaten"]
+                                                           [20 "Attack"]
+                                                           [21 "Leave"]
+                                                           [22 "Preserve"]
+                                                           [23 "Manipulate"]
+                                                           [24 "Remove"]
+                                                           [25 "Eliminate"]
+                                                           [26 "Withdraw"]
+                                                           [27 "Abandon"]
+                                                           [28 "Investigate"]
+                                                           [29 "Hold"]
+                                                           [30 "Focus"]
+                                                           [31 "Uncover"]
+                                                           [32 "Breach"]
+                                                           [33 "Aid"]
+                                                           [34 "Uphold"]
+                                                           [35 "Falter"]
+                                                           [36 "Suppress"]
+                                                           [37 "Hunt"]
+                                                           [38 "Share"]
+                                                           [39 "Destroy"]
+                                                           [40 "Avoid"]
+                                                           [41 "Reject"]
+                                                           [42 "Demand"]
+                                                           [43 "Explore"]
+                                                           [44 "Bolster"]
+                                                           [45 "Seize"]
+                                                           [46 "Mourn"]
+                                                           [47 "Reveal"]
+                                                           [48 "Gather"]
+                                                           [49 "Defy"]
+                                                           [50 "Transform"]
+                                                           [51 "Persevere"]
+                                                           [52 "Serve"]
+                                                           [53 "Begin"]
+                                                           [54 "Move"]
+                                                           [55 "Coordinate"]
+                                                           [56 "Resist"]
+                                                           [57 "Await"]
+                                                           [58 "Impress"]
+                                                           [59 "Take"]
+                                                           [60 "Oppose"]
+                                                           [61 "Capture"]
+                                                           [62 "Overwhelm"]
+                                                           [63 "Challenge"]
+                                                           [64 "Acquire"]
+                                                           [65 "Protect"]
+                                                           [66 "Finish"]
+                                                           [67 "Strengthen"]
+                                                           [68 "Restore"]
+                                                           [69 "Advance"]
+                                                           [70 "Command"]
+                                                           [71 "Refuse"]
+                                                           [72 "Find"]
+                                                           [73 "Deliver"]
+                                                           [74 "Hide"]
+                                                           [75 "Fortify"]
+                                                           [76 "Betray"]
+                                                           [77 "Secure"]
+                                                           [78 "Arrive"]
+                                                           [79 "Affect"]
+                                                           [80 "Change"]
+                                                           [81 "Defend"]
+                                                           [82 "Debate"]
+                                                           [83 "Support"]
+                                                           [84 "Follow"]
+                                                           [85 "Construct"]
+                                                           [86 "Locate"]
+                                                           [87 "Endure"]
+                                                           [88 "Release"]
+                                                           [89 "Lose"]
+                                                           [90 "Reduce"]
+                                                           [91 "Escalate"]
+                                                           [92 "Distract"]
+                                                           [93 "Journey"]
+                                                           [94 "Escort"]
+                                                           [95 "Learn"]
+                                                           [96 "Communicate"]
+                                                           [97 "Depart"]
+                                                           [98 "Search"]
+                                                           [99 "Charge"]
+                                                           [100 "Summon"]]}]
+                                 ["Theme" {:description "Divine the theme"
                                            :options nil
-                                           :random-event [[1 "Scheme"]
-                                                          [2 "Clash"]
-                                                          [3 "Weaken"]
-                                                          [4 "Initiate"]
-                                                          [5 "Create"]
-                                                          [6 "Swear"]
-                                                          [7 "Avenge"]
-                                                          [8 "Guard"]
-                                                          [9 "Defeat"]
-                                                          [10 "Control"]
-                                                          [11 "Break"]
-                                                          [12 "Risk"]
-                                                          [13 "Surrender"]
-                                                          [14 "Inspect"]
-                                                          [15 "Raid"]
-                                                          [16 "Evade"]
-                                                          [17 "Assault"]
-                                                          [18 "Deflect"]
-                                                          [19 "Threaten"]
-                                                          [20 "Attack"]
-                                                          [21 "Leave"]
-                                                          [22 "Preserve"]
-                                                          [23 "Manipulate"]
-                                                          [24 "Remove"]
-                                                          [25 "Eliminate"]
-                                                          [26 "Withdraw"]
-                                                          [27 "Abandon"]
-                                                          [28 "Investigate"]
-                                                          [29 "Hold"]
-                                                          [30 "Focus"]
-                                                          [31 "Uncover"]
-                                                          [32 "Breach"]
-                                                          [33 "Aid"]
-                                                          [34 "Uphold"]
-                                                          [35 "Falter"]
-                                                          [36 "Suppress"]
-                                                          [37 "Hunt"]
-                                                          [38 "Share"]
-                                                          [39 "Destroy"]
-                                                          [40 "Avoid"]
-                                                          [41 "Reject"]
-                                                          [42 "Demand"]
-                                                          [43 "Explore"]
-                                                          [44 "Bolster"]
-                                                          [45 "Seize"]
-                                                          [46 "Mourn"]
-                                                          [47 "Reveal"]
-                                                          [48 "Gather"]
-                                                          [49 "Defy"]
-                                                          [50 "Transform"]
-                                                          [51 "Persevere"]
-                                                          [52 "Serve"]
-                                                          [53 "Begin"]
-                                                          [54 "Move"]
-                                                          [55 "Coordinate"]
-                                                          [56 "Resist"]
-                                                          [57 "Await"]
-                                                          [58 "Impress"]
-                                                          [59 "Take"]
-                                                          [60 "Oppose"]
-                                                          [61 "Capture"]
-                                                          [62 "Overwhelm"]
-                                                          [63 "Challenge"]
-                                                          [64 "Acquire"]
-                                                          [65 "Protect"]
-                                                          [66 "Finish"]
-                                                          [67 "Strengthen"]
-                                                          [68 "Restore"]
-                                                          [69 "Advance"]
-                                                          [70 "Command"]
-                                                          [71 "Refuse"]
-                                                          [72 "Find"]
-                                                          [73 "Deliver"]
-                                                          [74 "Hide"]
-                                                          [75 "Fortify"]
-                                                          [76 "Betray"]
-                                                          [77 "Secure"]
-                                                          [78 "Arrive"]
-                                                          [79 "Affect"]
-                                                          [80 "Change"]
-                                                          [81 "Defend"]
-                                                          [82 "Debate"]
-                                                          [83 "Support"]
-                                                          [84 "Follow"]
-                                                          [85 "Construct"]
-                                                          [86 "Locate"]
-                                                          [87 "Endure"]
-                                                          [88 "Release"]
-                                                          [89 "Lose"]
-                                                          [90 "Reduce"]
-                                                          [91 "Escalate"]
-                                                          [92 "Distract"]
-                                                          [93 "Journey"]
-                                                          [94 "Escort"]
-                                                          [95 "Learn"]
-                                                          [96 "Communicate"]
-                                                          [97 "Depart"]
-                                                          [98 "Search"]
-                                                          [99 "Charge"]
-                                                          [100 "Summon"]]}
-                                 "Theme" {:description "Divine the theme"
-                                          :options nil
-                                          :random-event [[1 "Risk"]
-                                                         [2 "Ability"]
-                                                         [3 "Price"]
-                                                         [4 "Ally"]
-                                                         [5 "Battle"]
-                                                         [6 "Safety"]
-                                                         [7 "Survival"]
-                                                         [8 "Weapon"]
-                                                         [9 "Wound"]
-                                                         [10 "Shelter"]
-                                                         [11 "Leader"]
-                                                         [12 "Fear"]
-                                                         [13 "Time"]
-                                                         [14 "Duty"]
-                                                         [15 "Secret"]
-                                                         [16 "Innocence"]
-                                                         [17 "Renown"]
-                                                         [18 "Direction"]
-                                                         [19 "Death"]
-                                                         [20 "Honor"]
-                                                         [21 "Labor"]
-                                                         [22 "Solution"]
-                                                         [23 "Tool"]
-                                                         [24 "Balance"]
-                                                         [25 "Love"]
-                                                         [26 "Barrier"]
-                                                         [27 "Creation"]
-                                                         [28 "Decay"]
-                                                         [29 "Trade"]
-                                                         [30 "Bond"]
-                                                         [31 "Hope"]
-                                                         [32 "Superstition"]
-                                                         [33 "Peace"]
-                                                         [34 "Deception"]
-                                                         [35 "History"]
-                                                         [36 "World"]
-                                                         [37 "Vow"]
-                                                         [38 "Protection"]
-                                                         [39 "Nature"]
-                                                         [40 "Opinion"]
-                                                         [41 "Burden"]
-                                                         [42 "Vengeance"]
-                                                         [43 "Opportunity"]
-                                                         [44 "Faction"]
-                                                         [45 "Danger"]
-                                                         [46 "Corruption"]
-                                                         [47 "Freedom"]
-                                                         [48 "Debt"]
-                                                         [49 "Hate"]
-                                                         [50 "Possession"]
-                                                         [51 "Stranger"]
-                                                         [52 "Passage"]
-                                                         [53 "Land"]
-                                                         [54 "Creature"]
-                                                         [55 "Disease"]
-                                                         [56 "Advantage"]
-                                                         [57 "Blood"]
-                                                         [58 "Language"]
-                                                         [59 "Rumour"]
-                                                         [60 "Weakness"]
-                                                         [61 "Greed"]
-                                                         [62 "Family"]
-                                                         [63 "Resource"]
-                                                         [64 "Structure"]
-                                                         [65 "Dream"]
-                                                         [66 "Community"]
-                                                         [67 "War"]
-                                                         [68 "Portent"]
-                                                         [69 "Prize"]
-                                                         [70 "Destiny"]
-                                                         [71 "Momentum"]
-                                                         [72 "Power"]
-                                                         [73 "Memory"]
-                                                         [74 "Ruin"]
-                                                         [75 "Mysticism"]
-                                                         [76 "Rival"]
-                                                         [77 "Problem"]
-                                                         [78 "Idea"]
-                                                         [79 "Revenge"]
-                                                         [80 "Health"]
-                                                         [81 "Fellowship"]
-                                                         [82 "Enemy"]
-                                                         [83 "Religion"]
-                                                         [84 "Spirit"]
-                                                         [85 "Fame"]
-                                                         [86 "Desolation"]
-                                                         [87 "Strength"]
-                                                         [88 "Knowledge"]
-                                                         [89 "Truth"]
-                                                         [90 "Quest"]
-                                                         [91 "Pride"]
-                                                         [92 "Loss"]
-                                                         [93 "Law"]
-                                                         [94 "Path"]
-                                                         [95 "Warning"]
-                                                         [96 "Relationship"]
-                                                         [97 "Wealth"]
-                                                         [98 "Home"]
-                                                         [99 "Strategy"]
-                                                         [100 "Supply"]]}
-                                 "Region" {:description "Divine the region"
-                                           :options nil
-                                           :random-event [[12 "Barrier Islands"]
-                                                          [24 "Ragged Coast"]
-                                                          [34 "Deep Wilds"]
-                                                          [46 "Flooded Lands"]
-                                                          [60 "Havens"]
-                                                          [72 "Hinterlands"]
-                                                          [84 "Tempest Hills"]
-                                                          [94 "Veiled Mountains"]
-                                                          [99 "Shattered Wastes"]
-                                                          [100 "Elsewhere"]]}
-                                 "Location" {:description "Divine the location"
-                                             :options nil
-                                             :random-event [[1 "Hideout"]
-                                                            [2 "Ruin"]
-                                                            [3 "Mine"]
-                                                            [4 "Waste"]
-                                                            [5 "Mystical Path"]
-                                                            [6 "Path"]
-                                                            [7 "Outpost"]
-                                                            [8 "Wall"]
-                                                            [9 "Battlefield"]
-                                                            [10 "Hovel"]
-                                                            [11 "Spring"]
-                                                            [12 "Lair"]
-                                                            [13 "Fort"]
-                                                            [14 "Bridge"]
-                                                            [15 "Camp"]
-                                                            [16 "Cairn/Grave"]
-                                                            [18 "Caravan"]
-                                                            [20 "Waterfall"]
-                                                            [22 "Cave"]
-                                                            [24 "Swamp"]
-                                                            [26 "Fen"]
-                                                            [28 "Ravine"]
-                                                            [30 "Road"]
-                                                            [32 "Tree"]
-                                                            [34 "Pond"]
-                                                            [36 "Fields"]
-                                                            [38 "March"]
-                                                            [40 "Steading"]
-                                                            [42 "Rapids"]
-                                                            [44 "Pass"]
-                                                            [46 "Trail"]
-                                                            [48 "Glade"]
-                                                            [50 "Plain"]
-                                                            [52 "Ridge"]
-                                                            [54 "Cliff"]
-                                                            [56 "Grove"]
-                                                            [58 "Village"]
-                                                            [60 "Moor"]
-                                                            [62 "Thicket"]
-                                                            [64 "River Ford"]
-                                                            [66 "Valley"]
-                                                            [68 "Bay/Fjord"]
-                                                            [70 "Foothills"]
-                                                            [72 "Lake"]
-                                                            [75 "River"]
-                                                            [79 "Forest"]
-                                                            [83 "Coast"]
-                                                            [88 "Hill"]
-                                                            [93 "Mountain"]
-                                                            [99 "Woods"]
-                                                            [100 "Anomaly"]]}
-                                 "Coastal Waters Location" {:description "Divine a coastal waters location"
-                                                            :options nil
-                                                            :random-event [[1 "Fleet"]
-                                                                           [2 "Sargassum"]
-                                                                           [3 "Flotsam"]
-                                                                           [4 "Mystical Site"]
-                                                                           [5 "Lair"]
-                                                                           [10 "Wreck"]
-                                                                           [15 "Harbour"]
-                                                                           [23 "Ship"]
-                                                                           [30 "Rocks"]
-                                                                           [38 "Fjord"]
-                                                                           [46 "Estuary"]
-                                                                           [54 "Cove"]
-                                                                           [62 "Bay"]
-                                                                           [70 "Ice"]
-                                                                           [85 "Island"]
-                                                                           [99 "Open Water"]
-                                                                           [100 "Anomaly"]]}
-                                 "Location Descriptor" {:description "Divine a descriptor for your location"
+                                           :random-event [[1 "Risk"]
+                                                          [2 "Ability"]
+                                                          [3 "Price"]
+                                                          [4 "Ally"]
+                                                          [5 "Battle"]
+                                                          [6 "Safety"]
+                                                          [7 "Survival"]
+                                                          [8 "Weapon"]
+                                                          [9 "Wound"]
+                                                          [10 "Shelter"]
+                                                          [11 "Leader"]
+                                                          [12 "Fear"]
+                                                          [13 "Time"]
+                                                          [14 "Duty"]
+                                                          [15 "Secret"]
+                                                          [16 "Innocence"]
+                                                          [17 "Renown"]
+                                                          [18 "Direction"]
+                                                          [19 "Death"]
+                                                          [20 "Honor"]
+                                                          [21 "Labor"]
+                                                          [22 "Solution"]
+                                                          [23 "Tool"]
+                                                          [24 "Balance"]
+                                                          [25 "Love"]
+                                                          [26 "Barrier"]
+                                                          [27 "Creation"]
+                                                          [28 "Decay"]
+                                                          [29 "Trade"]
+                                                          [30 "Bond"]
+                                                          [31 "Hope"]
+                                                          [32 "Superstition"]
+                                                          [33 "Peace"]
+                                                          [34 "Deception"]
+                                                          [35 "History"]
+                                                          [36 "World"]
+                                                          [37 "Vow"]
+                                                          [38 "Protection"]
+                                                          [39 "Nature"]
+                                                          [40 "Opinion"]
+                                                          [41 "Burden"]
+                                                          [42 "Vengeance"]
+                                                          [43 "Opportunity"]
+                                                          [44 "Faction"]
+                                                          [45 "Danger"]
+                                                          [46 "Corruption"]
+                                                          [47 "Freedom"]
+                                                          [48 "Debt"]
+                                                          [49 "Hate"]
+                                                          [50 "Possession"]
+                                                          [51 "Stranger"]
+                                                          [52 "Passage"]
+                                                          [53 "Land"]
+                                                          [54 "Creature"]
+                                                          [55 "Disease"]
+                                                          [56 "Advantage"]
+                                                          [57 "Blood"]
+                                                          [58 "Language"]
+                                                          [59 "Rumour"]
+                                                          [60 "Weakness"]
+                                                          [61 "Greed"]
+                                                          [62 "Family"]
+                                                          [63 "Resource"]
+                                                          [64 "Structure"]
+                                                          [65 "Dream"]
+                                                          [66 "Community"]
+                                                          [67 "War"]
+                                                          [68 "Portent"]
+                                                          [69 "Prize"]
+                                                          [70 "Destiny"]
+                                                          [71 "Momentum"]
+                                                          [72 "Power"]
+                                                          [73 "Memory"]
+                                                          [74 "Ruin"]
+                                                          [75 "Mysticism"]
+                                                          [76 "Rival"]
+                                                          [77 "Problem"]
+                                                          [78 "Idea"]
+                                                          [79 "Revenge"]
+                                                          [80 "Health"]
+                                                          [81 "Fellowship"]
+                                                          [82 "Enemy"]
+                                                          [83 "Religion"]
+                                                          [84 "Spirit"]
+                                                          [85 "Fame"]
+                                                          [86 "Desolation"]
+                                                          [87 "Strength"]
+                                                          [88 "Knowledge"]
+                                                          [89 "Truth"]
+                                                          [90 "Quest"]
+                                                          [91 "Pride"]
+                                                          [92 "Loss"]
+                                                          [93 "Law"]
+                                                          [94 "Path"]
+                                                          [95 "Warning"]
+                                                          [96 "Relationship"]
+                                                          [97 "Wealth"]
+                                                          [98 "Home"]
+                                                          [99 "Strategy"]
+                                                          [100 "Supply"]]}]
+                                 ["Region" {:description "Divine the region"
+                                            :options nil
+                                            :random-event [[12 "Barrier Islands"]
+                                                           [24 "Ragged Coast"]
+                                                           [34 "Deep Wilds"]
+                                                           [46 "Flooded Lands"]
+                                                           [60 "Havens"]
+                                                           [72 "Hinterlands"]
+                                                           [84 "Tempest Hills"]
+                                                           [94 "Veiled Mountains"]
+                                                           [99 "Shattered Wastes"]
+                                                           [100 "Elsewhere"]]}]
+                                 ["Location" {:description "Divine the location"
+                                              :options nil
+                                              :random-event [[1 "Hideout"]
+                                                             [2 "Ruin"]
+                                                             [3 "Mine"]
+                                                             [4 "Waste"]
+                                                             [5 "Mystical Path"]
+                                                             [6 "Path"]
+                                                             [7 "Outpost"]
+                                                             [8 "Wall"]
+                                                             [9 "Battlefield"]
+                                                             [10 "Hovel"]
+                                                             [11 "Spring"]
+                                                             [12 "Lair"]
+                                                             [13 "Fort"]
+                                                             [14 "Bridge"]
+                                                             [15 "Camp"]
+                                                             [16 "Cairn/Grave"]
+                                                             [18 "Caravan"]
+                                                             [20 "Waterfall"]
+                                                             [22 "Cave"]
+                                                             [24 "Swamp"]
+                                                             [26 "Fen"]
+                                                             [28 "Ravine"]
+                                                             [30 "Road"]
+                                                             [32 "Tree"]
+                                                             [34 "Pond"]
+                                                             [36 "Fields"]
+                                                             [38 "March"]
+                                                             [40 "Steading"]
+                                                             [42 "Rapids"]
+                                                             [44 "Pass"]
+                                                             [46 "Trail"]
+                                                             [48 "Glade"]
+                                                             [50 "Plain"]
+                                                             [52 "Ridge"]
+                                                             [54 "Cliff"]
+                                                             [56 "Grove"]
+                                                             [58 "Village"]
+                                                             [60 "Moor"]
+                                                             [62 "Thicket"]
+                                                             [64 "River Ford"]
+                                                             [66 "Valley"]
+                                                             [68 "Bay/Fjord"]
+                                                             [70 "Foothills"]
+                                                             [72 "Lake"]
+                                                             [75 "River"]
+                                                             [79 "Forest"]
+                                                             [83 "Coast"]
+                                                             [88 "Hill"]
+                                                             [93 "Mountain"]
+                                                             [99 "Woods"]
+                                                             [100 "Anomaly"]]}]
+                                 ["Coastal Waters Location" {:description "Divine a coastal waters location"
+                                                             :options nil
+                                                             :random-event [[1 "Fleet"]
+                                                                            [2 "Sargassum"]
+                                                                            [3 "Flotsam"]
+                                                                            [4 "Mystical Site"]
+                                                                            [5 "Lair"]
+                                                                            [10 "Wreck"]
+                                                                            [15 "Harbour"]
+                                                                            [23 "Ship"]
+                                                                            [30 "Rocks"]
+                                                                            [38 "Fjord"]
+                                                                            [46 "Estuary"]
+                                                                            [54 "Cove"]
+                                                                            [62 "Bay"]
+                                                                            [70 "Ice"]
+                                                                            [85 "Island"]
+                                                                            [99 "Open Water"]
+                                                                            [100 "Anomaly"]]}]
+                                 ["Location Descriptor" {:description "Divine a descriptor for your location"
+                                                         :options nil
+                                                         :random-event [[2 "High"]
+                                                                        [4 "Remote"]
+                                                                        [6 "Exposed"]
+                                                                        [8 "Small"]
+                                                                        [10 "Broken"]
+                                                                        [12 "Diverse"]
+                                                                        [14 "Rough"]
+                                                                        [16 "Dark"]
+                                                                        [18 "Shadowy"]
+                                                                        [20 "Contested"]
+                                                                        [22 "Grim"]
+                                                                        [24 "Wild"]
+                                                                        [26 "Fertile"]
+                                                                        [28 "Blocked"]
+                                                                        [30 "Ancient"]
+                                                                        [32 "Perilous"]
+                                                                        [34 "Hidden"]
+                                                                        [36 "Occupied"]
+                                                                        [38 "Rich"]
+                                                                        [40 "Big"]
+                                                                        [42 "Savage"]
+                                                                        [44 "Defended"]
+                                                                        [46 "Withered"]
+                                                                        [48 "Mystical"]
+                                                                        [50 "Inaccessible"]
+                                                                        [52 "Protected"]
+                                                                        [54 "Abandoned"]
+                                                                        [56 "Wide"]
+                                                                        [58 "Foul"]
+                                                                        [60 "Dead"]
+                                                                        [62 "Ruined"]
+                                                                        [64 "Barren"]
+                                                                        [66 "Cold"]
+                                                                        [68 "Blighted"]
+                                                                        [70 "Low"]
+                                                                        [72 "Beautiful"]
+                                                                        [74 "Abundant"]
+                                                                        [76 "Lush"]
+                                                                        [78 "Flooded"]
+                                                                        [80 "Empty"]
+                                                                        [82 "Strange"]
+                                                                        [84 "Corrupted"]
+                                                                        [86 "Peaceful"]
+                                                                        [88 "Forgotten"]
+                                                                        [90 "Expansive"]
+                                                                        [92 "Settled"]
+                                                                        [94 "Dense"]
+                                                                        [96 "Civilized"]
+                                                                        [98 "Desolate"]
+                                                                        [100 "Isolated"]]}]
+                                 ["Settlement Trouble" {:description "Divine the settlement trouble"
                                                         :options nil
-                                                        :random-event [[2 "High"]
-                                                                       [4 "Remote"]
-                                                                       [6 "Exposed"]
-                                                                       [8 "Small"]
-                                                                       [10 "Broken"]
-                                                                       [12 "Diverse"]
-                                                                       [14 "Rough"]
-                                                                       [16 "Dark"]
-                                                                       [18 "Shadowy"]
-                                                                       [20 "Contested"]
-                                                                       [22 "Grim"]
-                                                                       [24 "Wild"]
-                                                                       [26 "Fertile"]
-                                                                       [28 "Blocked"]
-                                                                       [30 "Ancient"]
-                                                                       [32 "Perilous"]
-                                                                       [34 "Hidden"]
-                                                                       [36 "Occupied"]
-                                                                       [38 "Rich"]
-                                                                       [40 "Big"]
-                                                                       [42 "Savage"]
-                                                                       [44 "Defended"]
-                                                                       [46 "Withered"]
-                                                                       [48 "Mystical"]
-                                                                       [50 "Inaccessible"]
-                                                                       [52 "Protected"]
-                                                                       [54 "Abandoned"]
-                                                                       [56 "Wide"]
-                                                                       [58 "Foul"]
-                                                                       [60 "Dead"]
-                                                                       [62 "Ruined"]
-                                                                       [64 "Barren"]
-                                                                       [66 "Cold"]
-                                                                       [68 "Blighted"]
-                                                                       [70 "Low"]
-                                                                       [72 "Beautiful"]
-                                                                       [74 "Abundant"]
-                                                                       [76 "Lush"]
-                                                                       [78 "Flooded"]
-                                                                       [80 "Empty"]
-                                                                       [82 "Strange"]
-                                                                       [84 "Corrupted"]
-                                                                       [86 "Peaceful"]
-                                                                       [88 "Forgotten"]
-                                                                       [90 "Expansive"]
-                                                                       [92 "Settled"]
-                                                                       [94 "Dense"]
-                                                                       [96 "Civilized"]
-                                                                       [98 "Desolate"]
-                                                                       [100 "Isolated"]]}
-                                 "Settlement Trouble" {:description "Divine the settlement trouble"
-                                                       :options nil
-                                                       :random-event [[2 "Outsiders rejected"]
-                                                                      [4 "Dangerous discovery"]
-                                                                      [6 "Dreadful omens"]
-                                                                      [8 "Natural disaster"]
-                                                                      [10 "Old wounds reopened"]
-                                                                      [12 "Important object is lost"]
-                                                                      [14 "Someone is captured"]
-                                                                      [16 "Mysterious phenomenon"]
-                                                                      [18 "Revolt against a leader"]
-                                                                      [20 "Vengeful outcast"]
-                                                                      [22 "Rival settlement"]
-                                                                      [24 "Nature strikes back"]
-                                                                      [26 "Someone is missing"]
-                                                                      [28 "Production halts"]
-                                                                      [30 "Mysterious murders"]
-                                                                      [32 "Debt comes due"]
-                                                                      [34 "Unjust leadership"]
-                                                                      [36 "Disastrous accident"]
-                                                                      [38 "In league with the enemy"]
-                                                                      [40 "Raiders prey on the weak"]
-                                                                      [42 "Cursed past"]
-                                                                      [44 "An innocent is accused"]
-                                                                      [46 "Corrupted by dark magic"]
-                                                                      [48 "Isolated by brutal weather"]
-                                                                      [50 "Provisions are scarce"]
-                                                                      [52 "Sickness runs amok"]
-                                                                      [54 "Allies become enemies"]
-                                                                      [56 "Attack is imminent"]
-                                                                      [58 "Lost caravan"]
-                                                                      [60 "Dark secret revealed"]
-                                                                      [62 "Urgent expedition"]
-                                                                      [64 "A leader falls"]
-                                                                      [66 "Families in conflict"]
-                                                                      [68 "Incompetent leadership"]
-                                                                      [70 "Reckless warmongering"]
-                                                                      [72 "Beast on the hunt"]
-                                                                      [74 "Betrayed from within"]
-                                                                      [76 "Broken truce"]
-                                                                      [78 "Wrathful haunt"]
-                                                                      [80 "Conflict with the firstborn"]
-                                                                      [82 "Trade route blocked"]
-                                                                      [84 "In the crossfire"]
-                                                                      [86 "Stranger causes discord"]
-                                                                      [88 "Important event threatened"]
-                                                                      [90 "Dangerous tradition"]
-                                                                      [100 "Roll twice"]]}} 
+                                                        :random-event [[2 "Outsiders rejected"]
+                                                                       [4 "Dangerous discovery"]
+                                                                       [6 "Dreadful omens"]
+                                                                       [8 "Natural disaster"]
+                                                                       [10 "Old wounds reopened"]
+                                                                       [12 "Important object is lost"]
+                                                                       [14 "Someone is captured"]
+                                                                       [16 "Mysterious phenomenon"]
+                                                                       [18 "Revolt against a leader"]
+                                                                       [20 "Vengeful outcast"]
+                                                                       [22 "Rival settlement"]
+                                                                       [24 "Nature strikes back"]
+                                                                       [26 "Someone is missing"]
+                                                                       [28 "Production halts"]
+                                                                       [30 "Mysterious murders"]
+                                                                       [32 "Debt comes due"]
+                                                                       [34 "Unjust leadership"]
+                                                                       [36 "Disastrous accident"]
+                                                                       [38 "In league with the enemy"]
+                                                                       [40 "Raiders prey on the weak"]
+                                                                       [42 "Cursed past"]
+                                                                       [44 "An innocent is accused"]
+                                                                       [46 "Corrupted by dark magic"]
+                                                                       [48 "Isolated by brutal weather"]
+                                                                       [50 "Provisions are scarce"]
+                                                                       [52 "Sickness runs amok"]
+                                                                       [54 "Allies become enemies"]
+                                                                       [56 "Attack is imminent"]
+                                                                       [58 "Lost caravan"]
+                                                                       [60 "Dark secret revealed"]
+                                                                       [62 "Urgent expedition"]
+                                                                       [64 "A leader falls"]
+                                                                       [66 "Families in conflict"]
+                                                                       [68 "Incompetent leadership"]
+                                                                       [70 "Reckless warmongering"]
+                                                                       [72 "Beast on the hunt"]
+                                                                       [74 "Betrayed from within"]
+                                                                       [76 "Broken truce"]
+                                                                       [78 "Wrathful haunt"]
+                                                                       [80 "Conflict with the firstborn"]
+                                                                       [82 "Trade route blocked"]
+                                                                       [84 "In the crossfire"]
+                                                                       [86 "Stranger causes discord"]
+                                                                       [88 "Important event threatened"]
+                                                                       [90 "Dangerous tradition"]
+                                                                       [100 "Roll twice"]]}]] 
                        :random-event nil}}}
    ])

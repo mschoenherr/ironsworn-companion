@@ -117,7 +117,7 @@
 (s/def ::result (s/or :string string?
                       :complex-result (s/keys ::req-un [::description ::options ::random-events])))
 (s/def ::results (s/map-of ::result-name ::result))
-(s/def ::options (s/map-of ::name ::result))
+(s/def ::options (s/coll-of (s/tuple ::name ::result)))
 
 (s/def ::move-type #{:normal :progress :progress-vow :progress-bonds})
 

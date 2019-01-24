@@ -346,7 +346,7 @@
 (defn result-view [result]
   "Component for viewing a specific result. Recurses through results in options or random event."
   (let [w100 (atom nil)
-        cur-option (atom nil)]
+        cur-option (atom (first (first (:options result))))]
     (fn [result]
       (if (string? result)
         [text {:style {:flex 1
@@ -363,12 +363,16 @@
             [picker {:selected-value @cur-option 
                      :on-value-change (fn [val index]
                                         (reset! cur-option val))}
-             (for [opt (keys (:options result))]
+             (for [opt (map first (:options result))]
                ^{:key opt}
                [picker-item {:label opt
                              :value opt}])]
             (when @cur-option
-              [result-view (get (:options result) @cur-option)])]) ;; this is needed for nested results, especially nested random tables in ask the oracle
+              [result-view (second
+                            (first
+                             (filter
+                              #(= (first %) @cur-option) ;; probably should move this function to db.cljs
+                              (:options result))))])]) ;; this is needed for nested results, especially nested random tables in ask the oracle
          (when (:random-event result)
            [button {:title "Roll" :on-press #(reset! w100 (rolls/roll-d100))}
             :enclosing-style {:margin 2}])
