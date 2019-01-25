@@ -13,6 +13,7 @@
 
 (ns ironsworn-companion.db
   (:require [clojure.spec.alpha :as s]
+            [ironsworn-companion.world :refer [world-options]]
             [ironsworn-companion.assets :refer [all-assets]]
             [ironsworn-companion.moves :refer [all-moves]]))
 
@@ -48,10 +49,17 @@
 
 (def integer-proba? (s/and integer? #(<= % 100) #(>= % 1)))
 
+(s/def ::name non-empty-string?)
+(s/def ::enabled boolean?)
+
+(s/def ::theme (s/tuple ::name ::name))
+(s/def ::themes (s/map-of ::name ::theme))
+(s/def ::selected-val ::name)
+(s/def ::topic (s/keys :req-un [::name ::enabled ::selected-val ::themes]))
+(s/def ::world (s/coll-of ::topic))
 (s/def ::journal-entry non-empty-string?)
 (s/def ::journal (s/coll-of ::journal-entry))
 
-(s/def ::name non-empty-string?)
 
 (s/def ::momentum (s/and integer? #(<= % 10) #(>= % -6)))
 
@@ -79,7 +87,6 @@
 (s/def ::initiative boolean?)
 
 (s/def ::res-counter (s/keys :req-un [::current ::max]))
-(s/def ::enabled boolean?)
 (s/def ::id (s/or :string ::name
                   :keyword keyword?))
 (s/def ::perk (s/keys :req-un [::id ::enabled ::result]))
@@ -136,6 +143,7 @@
                    ::active-screen
                    ::nav-history
                    ::moves
+                   ::world
                    ::assets
                    ::active-move]))
 
@@ -149,6 +157,7 @@
              :active-screen :savegames
              :moves all-moves
              :assets all-assets
+             :world world-options
              :active-move nil})
 
 ;; model functions
