@@ -80,3 +80,8 @@
  :get-world
  (fn [db _]
    (:world db)))
+
+(reg-sub
+ :get-regions
+ (fn [db _]
+   (:regions db)))

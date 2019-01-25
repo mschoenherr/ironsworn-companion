@@ -478,3 +478,25 @@
                     %)
                  old-world)))))
 
+(reg-event-db
+ :change-location
+ validate-spec
+ (fn [db [_ r-name name new-name new-desc]]
+   (if (and (not-empty new-name)
+            (not-empty new-desc))
+     (-> db
+         (update-in [:regions r-name :locations] dissoc name)
+         (assoc-in [:regions r-name :locations new-name] new-desc))
+     db)))
+
+(reg-event-db
+ :new-location
+ validate-spec
+ (fn [db [_ r-name]]
+   (assoc-in db [:regions r-name :locations "New location"] "Describe it")))
+
+(reg-event-db
+ :del-location
+ validate-spec
+ (fn [db [_ r-name l-name]]
+   (update-in db [:regions r-name :locations] dissoc l-name)))

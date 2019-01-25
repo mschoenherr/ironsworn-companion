@@ -98,13 +98,26 @@
      style-map
      {:color ironsworn-color})]])
 
-(defn text-input [{:keys [:on-submit-editing :placeholder :style]
+(defn text-input [{:keys [:on-submit-editing :placeholder :style
+                          :default-value]
                    :or {style {:width "100%"}}}]
   "Default text-input for the app."
-  [react-text-input {:on-submit-editing #(on-submit-editing (.. % -nativeEvent -text))
-                     :select-text-on-focus true
-                     :placeholder placeholder
-                     :style style}])
+  [react-text-input (merge
+                     {:on-submit-editing #(on-submit-editing (.. % -nativeEvent -text))
+                      :select-text-on-focus true
+                      :style style}
+                     (if default-value
+                       {:default-value default-value}
+                       {:placeholder placeholder}))])
+
+(defn text-list-view [heading text-coll]
+  "Component for viewing a list of strings."
+  [view {:style {:align-items "center"}}
+   [subheading-view heading]
+   (for [item text-coll]
+     ^{:key item}
+     [text {:style {:font-size 16}}
+      item])])
 
 ;; Views for the Journal
 (defn journal-view []
@@ -820,16 +833,24 @@
             :on-press #(dispatch [:new-game])}]])
 
 ;; world-views
+(defn quest-starter-view [starter]
+  "Component for viewing/hiding a starter."
+  (let [show-quest-starter? (atom false)]
+    (fn [starter]
+      [view
+       [button {:title "Quest starter"
+                :on-press #(swap! show-quest-starter? not)}]
+       (when @show-quest-starter?
+         [text starter])
+       ])))
+
 (defn theme-view [theme]
   "Component for viewing a theme."
   (let [show-quest-starter? (atom false)]
     (fn [theme]
       [view
        [text (first theme)]
-       [button {:title "Quest starter"
-                :on-press #(swap! show-quest-starter? not)}]
-       (when @show-quest-starter?
-         [text (second theme)])])))
+       [quest-starter-view (second theme)]])))
 
 (defn topic-view [topic]
   "Component for viewing a topic in world views."
@@ -874,6 +895,63 @@
          ^{:key topic}
          [topic-view topic])])))
 
+(defn location-view [region-name name description]
+  "Component for viewing a location."
+  (let [edit? (atom false)
+        new-name (atom name)
+        new-desc (atom description)]
+    (fn [region-name name description]
+      [view
+       (if @edit?
+         [view
+          [text-input {:on-submit-editing #(reset! new-name %)
+                       :default-value name}]
+          [text-input {:on-submit-editing #(reset! new-desc %)
+                       :default-value description}]
+          [button {:title "Submit"
+                   :on-press #(do
+                                (dispatch [:change-location region-name name @new-name @new-desc])
+                                (swap! edit? not))}]]
+         [view {:style {:margin 2
+                        :border-width 1
+                        :padding 1}}
+          [subheading-view name]
+          [text description]])
+       [button {:title "Edit"
+                :on-press #(swap! edit? not)}]
+       [button {:title "Delete"
+                :on-press #(dispatch [:del-location region-name name])}]])))
+
+(defn region-view [name region]
+  "Component for viewing a region."
+  (let [show-details? (atom false)]
+    (fn [name region]
+      [view {:style {:border-width 1
+                     :margin 2
+                     :padding 1}}
+       [button {:title name
+                :on-press #(swap! show-details? not)}]
+       (when @show-details?
+         [view
+          [text-list-view "Features" (:features region)]
+          [text (:description region)]
+          [quest-starter-view (:starter region)]
+          (for [loc-name (keys (:locations region))]
+            ^{:key loc-name}
+            [location-view name loc-name (get-in region [:locations loc-name])])
+          [button {:title "Add location"
+                   :on-press #(dispatch [:new-location name])}]])])))
+
+(defn regions-view []
+  "Component for viewing all regions."
+  (let [regions (subscribe [:get-regions])]
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       (let [derefed-regions @regions]
+         (for [region-name (keys derefed-regions)]
+          ^{:key region-name}
+          [region-view region-name (get derefed-regions region-name)]))])))
+
 ;; Nav-views
 (defn nav-menu []
   "Component for picking the active screen."
@@ -885,6 +963,7 @@
                       ["Assets" :asset-list]
                       ["Journal" :journal]
                       ["World" :world]
+                      ["Regions" :region-screen]
                       ["Load/Save" :savegames]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
@@ -900,6 +979,7 @@
       :progress-tracks [progress-tracks-view]
       :move-list [moves-list]
       :asset-list [asset-list]
+      :region-screen [regions-view]
       :savegames [savegame-menu]
       :move [move-view])))
 

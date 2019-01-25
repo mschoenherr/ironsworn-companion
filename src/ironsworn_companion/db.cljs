@@ -13,6 +13,7 @@
 
 (ns ironsworn-companion.db
   (:require [clojure.spec.alpha :as s]
+            [ironsworn-companion.regions :refer [all-regions]]
             [ironsworn-companion.world :refer [world-options]]
             [ironsworn-companion.assets :refer [all-assets]]
             [ironsworn-companion.moves :refer [all-moves]]))
@@ -111,7 +112,7 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
@@ -134,6 +135,13 @@
 (s/def ::active-move (s/or :empty nil?
                            :move ::move))
 
+(s/def ::locations (s/map-of ::name ::description))
+(s/def ::features (s/coll-of ::description))
+(s/def ::starter ::name)
+(s/def ::region (s/keys ::req-un [::features ::description ::starter]
+                        ::opt-un [::locations]))
+(s/def ::regions (s/map-of ::name ::region))
+
 (s/def ::app-db
   (s/keys :req-un [::journal
                    ::characters
@@ -144,6 +152,7 @@
                    ::nav-history
                    ::moves
                    ::world
+                   ::regions
                    ::assets
                    ::active-move]))
 
@@ -157,6 +166,7 @@
              :active-screen :savegames
              :moves all-moves
              :assets all-assets
+             :regions all-regions
              :world world-options
              :active-move nil})
 
