@@ -343,6 +343,7 @@
                                                  :location :vows :char-name name]))
                 :placeholder "New vow name"}]])
 
+(declare move-link)
 (defn result-view [result]
   "Component for viewing a specific result. Recurses through results in options or random event."
   (let [w100 (atom nil)
@@ -373,6 +374,8 @@
                              (filter
                               #(= (first %) @cur-option) ;; probably should move this function to db.cljs
                               (:options result))))])]) ;; this is needed for nested results, especially nested random tables in ask the oracle
+         (when (:move result)
+           [move-link (:move result)])
          (when (:random-event result)
            [button {:title "Roll" :on-press #(reset! w100 (rolls/roll-d100))}
             :enclosing-style {:margin 2}])

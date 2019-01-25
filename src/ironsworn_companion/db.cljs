@@ -115,7 +115,8 @@
 (s/def ::random-events (s/or :empty nil?
                              :list (s/coll-of ::random-event)))
 (s/def ::result (s/or :string string?
-                      :complex-result (s/keys ::req-un [::description ::options ::random-events])))
+                      :complex-result (s/keys ::req-un [::description ::options ::random-events]
+                                              ::opt-un [::move])))
 (s/def ::results (s/map-of ::result-name ::result))
 (s/def ::options (s/coll-of (s/tuple ::name ::result)))
 

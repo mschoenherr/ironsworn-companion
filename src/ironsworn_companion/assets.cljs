@@ -195,7 +195,7 @@
              :result "As above, and you may instead add +2 and suffer -2 (decide before rolling)."}
             {:id :third
              :enabled false
-             :result "When you Face Death or Face Desolation while wearing the mask, you may roll +its stat (instead of +heard)."}]}
+             :result "When you Face Death or Face Desolation while wearing the mask, you may roll +its stat (instead of +heart)."}]}
    {:name "Ritualist"
     :asset-type "Path"
     :description "Once you Fullfill Your Vow (formidable or greater) in service to an elder mystic, and Forge a Bond to train with them..."
@@ -443,7 +443,29 @@
              :result "When you have your axe in a hand, and use the promise of violence to Compel or Secure an Advantage, add +1 and take +1 momentum on a hit."}
             {:id :third
              :enabled false
-             :result "When you make a tribute to a fallen foe (formidable or greater) by carving a rune in the haft of your axe, roll +heart. On a strong hit, inflict +1d6 harm (one time only) when you Strike or Clash. On a weak hit, as above, but this death weighs on you; Endure Stress (2 stress)."}]} ;; need to implement a no-move-roll-screen
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Pay Tribute"
+                             :move-type :normal
+                             :description "When you make a tribute to a fallen foe (formidable or greater) by carving a rune in the haft of your axe, roll +heart."
+                             :results {"Strong Hit" {:description "Inflict +1d6 harm (one time only) when you Strike or Clash."
+                                                     :options nil
+                                                     :random-event [[16 "1 Harm"]
+                                                                    [33 "2 Harm"]
+                                                                    [50 "3 Harm"]
+                                                                    [67 "4 Harm"]
+                                                                    [84 "5 Harm"]
+                                                                    [100 "6 Harm"]]}
+                                       "Weak Hit" {:description "Inflict +1d6 harm (one time only) when you Strike or Clash. This death weighs on you; Endure Stress (2 stress)."
+                                                   :options nil
+                                                   :random-event [[16 "1 Harm"]
+                                                                  [33 "2 Harm"]
+                                                                  [50 "3 Harm"]
+                                                                  [67 "4 Harm"]
+                                                                  [84 "5 Harm"]
+                                                                  [100 "6 Harm"]]}
+                                       "Miss" "This death weighs on you; Endure Stress (2 stress)"}}}}]}
    {:name "Swordmaster"
     :asset-type "Combat Talent"
     :description "If you wield a sword..."
@@ -460,10 +482,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you summon a flock of crows and ask a single question, roll +wits. On a strong hit, you interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum. On a weak hit, the crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Summon crows"
+                             :move-type :normal
+                             :description "When you summon a flock of crows and ask a single question, roll +wits."
+                             :results {"Strong Hit" "You interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum."
+                                       "Weak Hit" "The crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum."
+                                       "Miss" "The crows don't answer."}}}}
             {:id :second
              :enabled false
-             :result "As above, and the crows will also help guide you on the proper path. On a hit, add +1 on the next segment when you Undertake a Journey."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Summon crows for guidance"
+                             :move-type :normal
+                             :description "When you summon a flock of crows and ask a single question, roll +wits."
+                             :results {"Strong Hit" "You interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum. They also guide you on the proper path. Add +1 on the next segment when you Undertake a Journey."
+                                       "Weak Hit" "The crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum. They also guide you on the proper path. Add +1 on the next segment when you Undertake a Journey."
+                                       "Miss" "The crows don't answer."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -471,10 +509,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you wear an animal pelt and dance in moonlight, roll +wits. On a strong hit, you or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent. On a weak hit, as above, but the wilds call as you dance; Endure Stress (2 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Enchant pelt"
+                             :move-type :normal
+                             :description "When you wear an animal pelt and dance in moonlight, roll +wits."
+                             :results {"Strong Hit" "You or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent."
+                                       "Weak Hit" "You or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent. The wilds call as you dance; Endure Stress (2 stress)."
+                                       "Miss" "Your dance is in vain."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may instead perform this ritual wearing the pelt of a beast. If you do, name the related stat and add +2 instead of +1."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Enchant beast pelt"
+                             :move-type :normal
+                             :description "When you wear an animal or beast pelt and dance in moonlight, roll +wits."
+                             :results {"Strong Hit" "You or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). Add +2 if it is a beast pelt, instead of +1. If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent."
+                                       "Weak Hit" "You or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). Add +2 if it is a beast pelt, instead of +1. If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent. The wilds call as you dance; Endure Stress (2 stress)."
+                                       "Miss" "Your dance is in vain."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -482,10 +536,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you surround the remains of a recentyl deceased intelligent creature with lit candles, and summon its spirit, roll +heart. Add +1 if you share a bond. On a strong hit, the spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1). On a weak hit, as above, but the spirit delivers troubling news unrelated to your purpose. Envision what it tells you (Ask the Oracle if unsure) and Endure Stress (1 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Commune with the dead"
+                             :move-type :normal
+                             :description "When you surround the remains of a recently deceased intelligent creature with lit candles, and summon its spirit, roll +heart. Add +1 if you share a bond."
+                             :results {"Strong Hit" "The spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1)."
+                                       "Weak Hit" "The spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1). The spirit delivers troubling news unrelated to your purpose. Envision what it tells you (Ask the Oracle if unsure) and Endure Stress (1 stress)."
+                                       "Miss" "Your attempts are in vain. Endure Stress (1 stress)."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may also commune with the long-dead."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Commune with the long-dead"
+                             :move-type :normal
+                             :description "When you surround the remains of a deceased intelligent creature with lit candles, and summon its spirit, roll +heart. Add +1 if you share a bond. The creature may be long-dead."
+                             :results {"Strong Hit" "The spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1)."
+                                       "Weak Hit" "The spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1). The spirit delivers troubling news unrelated to your purpose. Envision what it tells you (Ask the Oracle if unsure) and Endure Stress (1 stress)."
+                                       "Miss" "Your attempts are in vain. Endure Stress (1 stress)."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -493,10 +563,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. On a strong hit, you may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1. On a weak hit, as above, but the answers are revealed only with extra time and focus; suffer -2 momentum."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Read the runes"
+                             :move-type :normal
+                             :description "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart."
+                             :results {"Strong Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1."
+                                       "Weak Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1. The answers are revealed only with extra time and focus; suffer -2 momentum."
+                                       "Miss" "Your efforts are in vain and take a long time; suffer -2 momentum."}}}}
             {:id :second
              :enabled false
-             :result "As above, and your divination can also reveal information about this person's future."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Read the future"
+                             :move-type :normal
+                             :description "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. Your divinatino can also reveal information about this person's future."
+                             :results {"Strong Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1."
+                                       "Weak Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1. The answers are revealed only with extra time and focus; suffer -2 momentum."
+                                       "Miss" "Your efforts are in vain and take a long time; suffer -2 momentum."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}
@@ -505,10 +591,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you hold a weapon and sing a keen for those it has killed, roll +heart. On a strong hit, the wielder inflicts +1 harm when they Strike or Clash. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent. On a weak hit, as above, but the voices of those who were slain join in your song; Endure Stress (2 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Sing a keen"
+                             :move-type :normal
+                             :description "When you hold a weapon and sing a keen for those it has killed, roll +heart."
+                             :results {"Strong Hit" "The wielder inflicts +1 harm when they Strike or Clash. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent."
+                                       "Weak Hit" "The wielder inflicts +1 harm when they Strike or Clash. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent. The voices of those who were slain join in your song; Endure Stress (2 stress)."
+                                       "Miss" "The voices of those who were slain join in your song; Endure Stress (2 stress)."}}}}
             {:id :second
              :enabled false
-             :result "As above, and the wielder may also (one time only) add +1 and take +2 momentum on a hit when they Draw the Circle, Enter the Fray, or Batle."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Sing a frightening keen"
+                             :move-type :normal
+                             :description "When you hold a weapon and sing a keen for those it has killed, roll +heart."
+                             :results {"Strong Hit" "The wielder inflicts +1 harm when they Strike or Clash. The wielder may also (one time only) add +1 and take +2 momentum on a hit when they Draw the Circle, Enter the Fray, or Battle. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent."
+                                       "Weak Hit" "The wielder inflicts +1 harm when they Strike or Clash. The wielder may also (one time only) add +1 and take +2 momentum on a hit when they Draw the Circle, Enter the Fray, or Battle. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent. The voices of those who were slain join in your song; Endure Stress (2 stress)."
+                                       "Miss" "The voices of those who were slain join in your song; Endure Stress (2 stress)."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -516,14 +618,42 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result {:description "When you look into flames to study a remote person or location, roll +shadow. You or someone with you must have knowledge of the target. On a strong hit, you may Gather Information through observation using +shadow or +wits. On a weak hit, as above but the flames are hungry; choose one to sacrifice."
-                      :options [["Your blood" "Endure Harm (2 harm)."]
-                                ["A precious thing" "Endure Stress (2 stress)."]
-                                ["Provisions" "Suffer -2 supply."]]
-                      :random-event nil}}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "See the flames"
+                             :move-type :normal
+                             :description "When you look into flames to study a remote person or location, roll +shadow. You or someone with you must have knowledge of the target."
+                             :results {"Strong Hit" "You may Gather Information through observation using +shadow or +wits."
+                                       "Weak Hit" {:description "You may Gather Information through observation using +shadow or +wits. The flames are hungry; choose one to sacrifice."
+                                                   :options [["Your blood" "Endure Harm (2 harm)."]
+                                                             ["A precious thing" "Endure Stress (2 stress)."]
+                                                             ["Provisions" "Suffer -2 supply."]]
+                                                   :random-event nil}
+                                       "Miss" {:description "The flames are hungry; choose one to sacrifice."
+                                               :options [["Your blood" "Endure Harm (2 harm)."]
+                                                         ["A precious thing" "Endure Stress (2 stress)."]
+                                                         ["Provisions" "Suffer -2 supply."]]
+                                               :random-event nil}}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may study a past event."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "See the past"
+                             :move-type :normal
+                             :description "When you look into flames to study a remote person or location, roll +shadow. You may also study its past. You or someone with you must have knowledge of the target."
+                             :results {"Strong Hit" "You may Gather Information through observation using +shadow or +wits."
+                                       "Weak Hit" {:description "You may Gather Information through observation using +shadow or +wits. The flames are hungry; choose one to sacrifice."
+                                                   :options [["Your blood" "Endure Harm (2 harm)."]
+                                                             ["A precious thing" "Endure Stress (2 stress)."]
+                                                             ["Provisions" "Suffer -2 supply."]]
+                                                   :random-event nil}
+                                       "Miss" {:description "The flames are hungry; choose one to sacrifice."
+                                               :options [["Your blood" "Endure Harm (2 harm)."]
+                                                         ["A precious thing" "Endure Stress (2 stress)."]
+                                                         ["Provisions" "Suffer -2 supply."]]
+                                               :random-event nil}}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -531,10 +661,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow. On a strong hit, take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first Face Danger to find your way."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Cloak with shadows"
+                             :move-type :normal
+                             :description "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow."
+                             :results {"Strong Hit" "Take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking."
+                                       "Weak Hit" "Take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. The shadows try to lead you astray. You must first Face Danger to find your way."
+                                       "Miss" "The shadows try to lead you astray. You must Face Danger to find your way."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may also travel along the hidden paths of the shadow realms to Undertake a Journey using +shadow (instead of +wits). If you do, Endure Stress (1 stress) and mark one extra unit of progress on a strong hit."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Cloak/Travel with shadows"
+                             :move-type :normal
+                             :description "When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow."
+                             :results {"Strong Hit" "Take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. You may also travel along the hidden paths of the shadow realms to Undertake a Journey using +shadow (instead of +wits). If you do, Endure Stress (1 stress)."
+                                       "Weak Hit" "Take +1 momentum. Then reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking.  You may also travel along the hidden paths of the shadow realms to Undertake a Journey using +shadow (instead of +wits). If you do, Endure Stress (1 stress). The shadows try to lead you astray. You must first Face Danger to find your way."
+                                       "Miss" "The shadows try to lead you astray. You must Face Danger to find your way."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -542,10 +688,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you speak a person's name three times to the wind, roll +wits. On a strong hit, the wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). On a weak hit, as above, but this person's need creates a troubling dilemma or complication; Endure Stress (1 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Whisper to the wind"
+                             :move-type :normal
+                             :description "When you speak a person's name three times to the wind, roll +wits."
+                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only)."
+                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress)."
+                                       "Miss" "The wind does not respond. Endure Stress (1 stress)."}}}}
             {:id :second
              :enabled false
-             :result "As above, and if you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Speak to the wind"
+                             :move-type :normal
+                             :description "When you speak a person's name three times to the wind, roll +wits."
+                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
+                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
+                                       "Miss" "The wind does not respond. Endure Stress (1 stress)."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -553,10 +715,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you hold a totem of your animal companion and focus on it, roll +heart. On a strong hit, you are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. On a weak hit, as above, but creating this connection is unsettling; Endure Stress (1 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Bond with your totem"
+                             :move-type :normal
+                             :description "When you hold a totem of your animal companion and focus on it, roll +heart."
+                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent."
+                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
+                                       "Miss" "Creating this connection is unsettling; Endure Stress (1 stress)."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "See through your totem"
+                             :move-type :normal
+                             :description "When you hold a totem of your animal companion and focus on it, roll +heart."
+                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent."
+                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
+                                       "Miss" "Creating this connection is unsettling; Endure Stress (1 stress)."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -564,10 +742,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you paint yourself in blood and ash, roll +wits. On a strong hit, you may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent. On a weak hit, as above, but the blood must be your own; Endure Harm (2 stress)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Paint yourself in blood"
+                             :move-type :normal
+                             :description "When you paint yourself in blood and ash, roll +wits."
+                             :results {"Strong Hit" "You may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent."
+                                       "Weak Hit" "You may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent. The blood must be your own; Endure Harm (2 stress)."
+                                       "Miss" "The blood must be your own; Endure Harm (2 stress)."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may also add +1 when you Strike, Clash, or Battle."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Paint a warmask"
+                             :move-type :normal
+                             :description "When you paint yourself in blood and ash, roll +wits."
+                             :results {"Strong Hit" "You may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. You may also add +1 when you Strike, Clash, or Battle. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent."
+                                       "Weak Hit" "You may add +2 and take +1 momentum on a hit when you Secure an Advantage or Compel using fear or intimidation. You may also add +1 when you Strike, Clash, or Battle. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent. The blood must be your own; Endure Harm (2 stress)."
+                                       "Miss" "The blood must be your own; Endure Harm (2 stress)."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -575,14 +769,42 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result {:description "When you walk a wide circle, sprinkling the ground with salt, roll +wits. On a strong hit, choose two. On a weak hit, choose one."
-                      :options [["Alert" "When a foe first crosses the boundary, take +1 momentum."]
-                                ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."]
-                                ["Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."]]
-                      :random-event nil}}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Draw a circle"
+                             :move-type :normal
+                             :description "When you walk a wide circle, sprinkling the ground with salt, roll +wits."
+                             :results {"Strong Hit" {:description "Choose two."
+                                                     :options [["Alert" "When a foe first crosses the boundary, take +1 momentum."]
+                                                               ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."]
+                                                               ["Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."]]
+                                                     :random-event nil}
+                                       "Weak Hit" {:description "Choose one."
+                                                   :options [["Alert" "When a foe first crosses the boundary, take +1 momentum."]
+                                                             ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +1 harm."]
+                                                             ["Trap" "Your ward is 'likely' (Ask the Oracle) to trap a foe within the boundary."]]
+                                                   :random-event nil}
+                                       "Miss" "It's in vain."}}}}
             {:id :second
              :enabled false
-             :result "As above, and improve the effect of your ward (+2 momentum, +2 harm, and 'almost certain')."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Draw a strong circle"
+                             :move-type :normal
+                             :description "When you walk a wide circle, sprinkling the ground with salt, roll +wits."
+                             :results {"Strong Hit" {:description "Choose two."
+                                                     :options [["Alert" "When a foe first crosses the boundary, take +2 momentum."]
+                                                               ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +2 harm."]
+                                                               ["Trap" "Your ward is 'almost certain' (Ask the Oracle) to trap a foe within the boundary."]]
+                                                     :random-event nil}
+                                       "Weak Hit" {:description "Choose one."
+                                                   :options [["Alert" "When a foe first crosses the boundary, take +2 momentum."]
+                                                             ["Inflict" "When you first inflict harm against a foe within the boundary, inflict +2 harm."]
+                                                             ["Trap" "Your ward is 'almost certain' (Ask the Oracle) to trap a foe within the boundary."]]
+                                                   :random-event nil}
+                                       "Miss" "It's in vain."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
@@ -606,7 +828,15 @@
     :asset-type "Path"
     :perks [{:id :first
              :enabled true
-             :result "When your supply is reduced to 0, suffer any remaining -supply as -momentum. THen, roll +wits. On a strong hit, you manage to scrape by and take +1 supply. On a weak hit, you may suffer -2 momentum in exchange for +1 supply. On a miss, you are Out of Supply."}
+             :result {:description "When your supply is reduced to 0, suffer any remaining -supply as -momentum. Then,..."
+                      :options nil
+                      :random-event nil
+                      :move {:name "Scrape by"
+                             :move-type :normal
+                             :description "Roll +wits."
+                             :results {"Strong Hit" "You manage to scrape by and take +1 supply."
+                                       "Weak Hit" "You may suffer -2 momentum in exchange for +1 supply."
+                                       "Miss" "You are Out of Supply."}}}}
             {:id :second
              :enabled false
              :result "When you Sojourn, you may reroll any dice. If you do (decide before your first roll), your needs are few, but your isolation sets you apart from others. A strong hit counts as a weak hit."}
@@ -617,10 +847,18 @@
     :asset-type "Path"
     :perks [{:id :first
              :enabled true
-             :result "When you establish a false identity, roll +shadow. On a strong hit, you may add +2 when you make moves using this identity to deceive or influence others. If you roll a 1 on your action die when using your false identity, someone doubts you. Make appropriate moves to reassure them or prevent them from revealing the truth. On a weak hit, as above, but add +1 instead of +2."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Establish false identity"
+                             :move-type :normal
+                             :description "When you establish a false identity, roll +shadow."
+                             :results {"Strong Hit" "You may add +2 when you make moves using this identity to deceive or influence others. If you roll a 1 on your action die when using your false identity, someone doubts you. Make appropriate moves to reassure them or prevent them from revealing the truth. "
+                                       "Weak Hit" "You may add +1 when you make moves using this identity to deceive or influence others. If you roll a 1 on your action die when using your false identity, someone doubts you. Make appropriate moves to reassure them or prevent them from revealing the truth. "
+                                       "Miss" "Your false identity is sub-par."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may roll +shadow (instead of +heart) when you Sojourn under your false identity. If you do, take +1 momentum on a hit."}
+             :result "You may roll +shadow (instead of +heart) when you Sojourn under your false identity. If you do, take +1 momentum on a hit."}
             {:id :third
              :enabled false
              :result "When you Secure an Advantage by revealing your true identity in a dramatic moment, reroll any dice."}]}
@@ -679,7 +917,15 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you create a simulacrum, envision your process and materials. Then, roll +heart. On a strong hit, your creation is given unnatural life. If you make a move using the simulacrum to assault or overcome an obstacle through strength or intimidation, add +2. It has 3 health and suffers harm as appropriate, but is not a companion and may not be healed. At 0 health, it is dead. On a weak hit, as above, but if you roll a 1 on your action die when aided by your simulacrum, it will betray you or turn on you (as at least a formidable foe)."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Create a simulacrum"
+                             :move-type :normal
+                             :description "When you create a simulacrum, envision your process and materials. Then, roll +heart."
+                             :results {"Strong Hit" "Your creation is given unnatural life. If you make a move using the simulacrum to assault or overcome an obstacle through strength or intimidation, add +2. It has 3 health and suffers harm as appropriate, but is not a companion and may not be healed. At 0 health, it is dead."
+                                       "Weak Hit" "Your creation is given unnatural life. If you make a move using the simulacrum to assault or overcome an obstacle through strength or intimidation, add +2. It has 3 health and suffers harm as appropriate, but is not a companion and may not be healed. At 0 health, it is dead. If you roll a 1 on your action die when aided by your simulacrum, it will betray you or turn on you (as at least a formidable foe)."
+                                       "Miss" "It stays dead."}}}}
             {:id :second
              :enabled false
              :result "Your simulacrum has 6 health."}
@@ -690,10 +936,26 @@
     :asset-type "Ritual"
     :perks [{:id :first
              :enabled true
-             :result "When you fashion a charm, envision it and name the specific person or creature it protects against. Then roll +wits. On a strong hit, when the wearer opposes the target through a move, add +2. If a 1 is rolled on the action die while making a move using the charm, the magic is spent. Ona a weak hit, as above, but the wearer adds +1 instead of +2."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Make a specific charm"
+                             :move-type :normal
+                             :description "When you fashion a charm, envision it and name the specific person or creature it protects against. Then roll +wits."
+                             :results {"Strong Hit" "When the wearer opposes the target through a move, add +2. If a 1 is rolled on the action die while making a move using the charm, the magic is spent."
+                                       "Weak Hit" "When the wearer opposes the target through a move, add +1. If a 1 is rolled on the action die while making a move using the charm, the magic is spent."
+                                       "Miss" "The charm is useless."}}}}
             {:id :second
              :enabled false
-             :result "As above, and you may instead fashion a charm which aids the wearer against all supernatural threats, such as mystic rituals or horrors."}
+             :result {:description "You may"
+                      :options nil
+                      :random-event nil
+                      :move {:name "Make a universal charm"
+                             :move-type :normal
+                             :description "When you fashion a charm, envision it and name the specific person or creature it protects against. You may instead fashion a charm which aids the wearer against all supernatural threats, such as mystic rituals or horrors. Then roll +wits."
+                             :results {"Strong Hit" "When the wearer opposes the target through a move, add +2. If a 1 is rolled on the action die while making a move using the charm, the magic is spent."
+                                       "Weak Hit" "When the wearer opposes the target through a move, add +1. If a 1 is rolled on the action die while making a move using the charm, the magic is spent."
+                                       "Miss" "The charm is useless."}}}}
             {:id :third
              :enabled false
              :result "When you perform this ritual, add +1 and take +1 momentum on a hit."}]}
