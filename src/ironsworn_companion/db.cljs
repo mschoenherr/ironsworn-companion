@@ -36,7 +36,7 @@
                :initiative false
                :assets []})
 
-(def levels ["Troublesome" "Formidable" "Dangerous" "Extreme" "Epic"])
+(def levels ["Troublesome" "Dangerous" "Formidable" "Extreme" "Epic"])
 
 ;; spec of app-db
 
@@ -111,7 +111,7 @@
 (s/def ::description ::name)
 (s/def ::result-name #{"Strong Hit" "Weak Hit" "Miss" "Other"})
 
-(s/def ::random-event (s/tuple integer-proba? ::description))
+(s/def ::random-event (s/tuple integer-proba? ::result))
 (s/def ::random-events (s/or :empty nil?
                              :list (s/coll-of ::random-event)))
 (s/def ::result (s/or :string string?
