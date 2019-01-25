@@ -55,7 +55,7 @@
 (s/def ::theme (s/tuple ::name ::name))
 (s/def ::themes (s/map-of ::name ::theme))
 (s/def ::selected-val ::name)
-(s/def ::topic (s/keys :req-un [::name ::enabled ::selected-val ::themes]))
+(s/def ::topic (s/keys :req-un [::name ::selected-val ::themes]))
 (s/def ::world (s/coll-of ::topic))
 (s/def ::journal-entry non-empty-string?)
 (s/def ::journal (s/coll-of ::journal-entry))
@@ -111,7 +111,7 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 

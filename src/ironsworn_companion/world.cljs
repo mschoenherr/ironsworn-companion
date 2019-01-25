@@ -2,7 +2,6 @@
 
 (def world-options
   [{:name "The old world"
-    :enabled true
     :selected-val "The savage clans ..."
     :themes {"The savage clans ..." ["... called the Skulde invaded the kingdoms of the Old World. Our armies fell. Most were killed or taken into slavery. Those who escaped set sail aboard anything that would float. After an arduous months-long voyage, the survivors made landfall upon the Ironlands."
                                      "Quest Starter: You are a descendant of the Skulde. Because of your heritage, your family has long borne the distrust of your fellow Ironlanders. Now, a small force of Skulde have landed on our shores. Are they the harbinger of an invasion? Where do your loyalties lie?"]
@@ -11,7 +10,6 @@
              "The Old World could no longer ..." ["... sustain us. We were too large in number. We had felled the forests. Our crops withered in the barren ground. The cities and villages overflowed with desperate, hungry people. Petty kings battled for scraps. We cast our fate to the sea and found the Ironlands. A new world. A fresh start."
                                                   "Quest Starter: Decades ago, the exodus ended. Since then, no ships have sailed here from the Old World. Until now. Word comes of a single ship, newly arrived across the vast ocean, grounded on the rocks of the Barrier Islands. When you hear the name of this ship, you swear to uncover the fate of its passengers. Why is it so important to you?"]}}
    {:name "Iron"
-    :enabled true
     :selected-val "The imposing hills ..."
     :themes {"The imposing hills ..." ["... and mountains of the Ironlands are rich in iron ore. Most prized of all is the star-forged black iron."
                                        "Quest Starter: The caravan, bound for the distant southlands, left the mining settlement last season but never arrived at its destination. It carried a bounty of black iron. Why is finding this lost caravan so important to you?"]
@@ -21,7 +19,6 @@
                                               "Quest Starter: Your dreams are haunted by visions of a pillar which stands in an unfamiliar landscape. What do you see? Why are you sworn to seek it out?
 "]}}
    {:name "Legacies"
-    :enabled true
     :selected-val "We are the first humans ..." 
     :themes {"We are the first humans ..." ["... to walk these lands."
                                             "Quest Starter: In the writings of one of the first settlers, there is a description of a glade in the heart of the Deep Wilds. The spirits of this place are said to grant a miraculous blessing. What boon does it bestow?"]
@@ -31,7 +28,6 @@
                                            "Quest starter: Miners uncovered an underground ruin. Thereafter, the people of the settlement are haunted by strange dreams. The ruins call to them, they say. Several have disappeared in that dark, ancient place—including someone important to you.
 "]}}
    {:name "Communities"
-    :enabled true
     :selected-val "We are few ..." 
     :themes {"We are few ..." ["... in number in this accursed land. Most rarely have contact with anyone outside our own small steading or village, and strangers are viewed with deep suspicion."
                                "Quest Starter: In the dead of winter, a desperate man arrives at a snowbound steading. He is wounded, hungry, and nearly frozen to death. His family has been taken. By whom? Will you brave the merciless winter to save them?"]
@@ -40,7 +36,6 @@
              "We have forged ..." ["... the Ironlands into a home. Villages within the Havens are connected by well-trod roads. Trade caravans travel between settlements in the Havens and those in outlying regions. Even so, much of this land is untamed."
                                    "Quest Starter: Caravans are forced to pay for passage along a trade road. This payment, one-quarter of the goods carried, leaves several communities without sufficient winter stores. Who is making these demands? How will you set things right?"]}}
    {:name "Leaders"
-    :enabled true
     :selected-val "Leadership is as varied ..."
     :themes {"Leadership is as varied ..." ["... as the people. Some communities are governed by the head of a powerful family. Or, they have a council of elders who make decisions and settle disputes. In others, the priests hold sway. For some, it is duels in the circle that decide."
                                             "Quest Starter: You have vivid reoccurring dreams of an Ironlands city. It has strong stone walls, bustling markets, and a keep on a high hill. And so many people! Nowhere in the Ironlands does such a city exist. In your dreams, you are the ruler of this city. Somehow, no matter how long it takes, you must make this vision a reality."]
@@ -49,7 +44,6 @@
              "Numerous clan-chiefs rule ..." ["... over petty domains. Most are intent on becoming the one true king. Their squabbles will be our undoing."
                                               "Quest Starter: You secretly possess one-half of the True Crown, an Old World relic. Centuries ago, this crown was broken in two when an assassin’s axe split the head of the supreme ruler. You are descended from that lineage. Who gave you this relic? Will you find the other half of the broken crown and attempt to unite the clans under your rule? Or, do you see another use for it?"]}}
    {:name "Defense"
-    :enabled true
     :selected-val "Here in the Ironlands ..."
     :themes {"Here in the Ironlands ..." ["..., supplies are too precious, and the lands are too sparsely populated, to support organized fighting forces. When a community is threatened, the people stand together to protect their own."
                                           "Quest Starter: A settlement is unable, or unwilling, to defend itself against an imminent threat. Why? What peril do they face? What will you do to protect them?"]
@@ -58,7 +52,6 @@
              "Our warbands ..." ["... are rallied to strike at our enemies or defend our holdings. Though not nearly as impressive as the armies that once marched across the Old World, these forces are as well-trained and equipped as their communities can manage. The banners of the warbands are adorned with depictions of their Old World history and Ironland victories."
                                  "Quest Starter: A warband was wiped out in a battle against an overwhelming enemy. What is your connection to this band? Who defeated them? Will you carry their banner on a quest for vengeance, or do you vow to see it brought home to a place of honor?"]}}
    {:name "Mysticism"
-    :enabled true
     :selected-val "Some still find comfort ..." 
     :themes {"Some still find comfort ..." ["... in the old ways. They call on mystics to divine the fortune of their newborn, or ask them to perform rituals to invoke a bountiful harvest. Others act out of fear against those who they suspect of having power. However, most folk believe true magic—if it ever existed—is lost to us now."
                                             "Quest Starter: Someone close to you is accused of cursing a settlement, causing fields to go fallow and cattle to become sick. What is the evidence of this? Will you defend this person and uncover the true cause of the settlement’s troubles?"]
@@ -67,7 +60,6 @@
              "Magic courses through this land ..." ["... as the rivers flow through the hills. The power is there for those who choose to harness it, and even the common folk often know a helpful ritual or two."
                                                     "Quest Starter: Someone you love walked the paths of power, and succumbed to it. Who are they? Why did they fall into darkness? Where are they now? Do you seek to save them or defeat them?"]}}
    {:name "Religion"
-    :enabled true
     :selected-val "A few Ironlanders still ..."
     :themes {"A few Ironlanders still ..." ["... make signs or mumble prayers out of habit or tradition, but most believe the gods long ago abandoned us."
                                             "Quest Starter: A charismatic Ironlander, encouraging her followers to renounce the vestiges of Old World religions, proposes a new path for this new world. What doctrine does she teach? What does she seek to achieve? Are you sworn to aid or stop her?"]
@@ -76,7 +68,6 @@
              "Our gods are many." ["They make themselves known through manifestations and miracles. Some say they even secretly walk among us. The priests convey the will of the gods and hold sway over many communities."
                                    "Quest Starter: You bear the mark of a god. What is it? The priests declare this as a sign you are chosen to fulfill a destiny. Do you accept this fate, and swear to see it through, or are you determined to see it undone? What force opposes you?"]}}
    {:name "Firstborn"
-    :enabled true
     :selected-val "The firstborn have ..."
     :themes {"The firstborn have ..." ["... passed into legend. Some say the remnants of the old tribes still dwell in deep forests or high mountains. Most believe they were never anything more than myth."
                                        "Quest Starter: Someone obsessed with the firstborn wants to find evidence of their existence. This will require an expedition into the far reaches of the Ironlands. What is your role in this mission?"]
@@ -85,7 +76,6 @@
              "The firstborn hold sway ..." ["... in the Ironlands. The elves of the deep forests and the giants of the hills tolerate us and even trade with us—for now. Ironlanders fear the day they decide we are no longer welcome here."
                                             "Quest Starter: Humans and giants are on the brink of war. What has happened? Who do you side with? Can anything be done to defuse the situation?"]}}
    {:name "Beasts"
-    :enabled true
     :selected-val "The beasts of old ..."
     :themes {"The beasts of old ..." ["... are nothing but legend. A few who travel into the deep forests and high mountains return with wild tales of monstrous creatures, but they are obviously delusional. No such things exist."
                                       "Quest Starter: You were witness to an attack by what you thought was an animal of monstrous proportions. No one believes you. In fact, you are accused of the murder you blame on this beast. How can you prove your innocence? Can you even trust your own memories of the event?"]
@@ -94,7 +84,6 @@
              "Beasts of all sorts ..." ["... roam the Ironlands. They dwell primarily in the reaches, but range into the settled lands to hunt. There, they often prey on cattle, but attacks on travelers, caravans, or even settlements are not uncommon."
                                         "Quest Starter: Professional slayers earn their keep by killing beasts. This particular slayer, famed throughout the Ironlands for her numerous kills, has gone missing on a hunt. Did she finally meet her match, or is something more nefarious at play. What is your connection to her?"]}}
    {:name "Horrors"
-    :enabled true
     :selected-val "Nothing but stories ..."
     :themes {"Nothing but stories ..." ["... to frighten children."
                                        "Quest Starter: The murders began last season. Local gossip suggests they are the work of a vengeful horror, but there may be more mundane forces at work. What is your connection to these killings? What will you do to stop them?"]

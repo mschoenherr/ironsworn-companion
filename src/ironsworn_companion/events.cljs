@@ -437,3 +437,44 @@
    (update-in db [:characters char-name :xp]
               #(max 0 (+ % value)))))
 
+(reg-event-db
+ :set-theme
+ validate-spec
+ (fn [db [_ topic theme-name]]
+   (let [old-world (:world db)]
+     (assoc db :world
+            (map #(if (= % topic)
+                    (assoc topic :selected-val theme-name)
+                    %)
+                 old-world)))))
+
+(reg-event-db
+ :add-theme
+ validate-spec
+ (fn [db [_ topic new-theme]]
+   (if (and (contains? new-theme :key)
+            (contains? new-theme :description)
+            (contains? new-theme :starter))
+     (let [old-world (:world db)]
+       (assoc db :world
+              (map #(if (= % topic)
+                      (assoc-in topic [:themes (:key new-theme)]
+                                [(:description new-theme)
+                                 (:starter new-theme)])
+                      %)
+                   old-world)))
+     db)))
+
+(reg-event-db
+ :del-theme
+ validate-spec
+ (fn [db [_ topic]]
+   (let [old-world (:world db)]
+     (assoc db :world
+            (map #(if (= % topic)
+                    (let [new-top (update topic :themes
+                                          dissoc (:selected-val topic))]
+                      (assoc new-top :selected-val (first (keys (:themes new-top)))))
+                    %)
+                 old-world)))))
+

@@ -75,3 +75,8 @@
  :get-all-assets
  (fn [db _]
    (:assets db)))
+
+(reg-sub
+ :get-world
+ (fn [db _]
+   (:world db)))

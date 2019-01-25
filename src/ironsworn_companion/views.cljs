@@ -819,6 +819,61 @@
    [button {:title "New Game"
             :on-press #(dispatch [:new-game])}]])
 
+;; world-views
+(defn theme-view [theme]
+  "Component for viewing a theme."
+  (let [show-quest-starter? (atom false)]
+    (fn [theme]
+      [view
+       [text (first theme)]
+       [button {:title "Quest starter"
+                :on-press #(swap! show-quest-starter? not)}]
+       (when @show-quest-starter?
+         [text (second theme)])])))
+
+(defn topic-view [topic]
+  "Component for viewing a topic in world views."
+  (let [add-theme? (atom false)
+        new-theme (atom {})]
+    (fn [topic]
+      [view {:style {:border-width 1
+                     :margin 2
+                     :padding 1}}
+       [subheading-view (:name topic)]
+       [view
+        [picker {:selected-value (:selected-val topic)
+                 :on-value-change (fn [val index]
+                                    (dispatch [:set-theme topic val]))}
+         (for [theme (keys (:themes topic))]
+           ^{:key theme}
+           [picker-item {:label theme :value theme}])]
+        [theme-view (get-in topic [:themes (:selected-val topic)])]
+        [button {:title "Add theme"
+                 :on-press #(swap! add-theme? not)}]
+        (when @add-theme?
+          [view
+           [text-input {:on-submit-editing (fn [title]
+                                             (swap! new-theme #(assoc % :key title)))
+                        :placeholder "Title"}]
+           [text-input {:on-submit-editing (fn [description]
+                                             (swap! new-theme #(assoc % :description description)))
+                        :placeholder "Description"}]
+           [text-input {:on-submit-editing (fn [starter]
+                                             (swap! new-theme #(assoc % :starter starter)))
+                        :placeholder "Quest starter"}]
+           [button {:title "Submit"
+                    :on-press #(dispatch [:add-theme topic @new-theme])}]])
+        [button {:title "Delete theme"
+                 :on-press #(dispatch [:del-theme topic])}]]])))
+
+(defn world-view []
+  (let [world (subscribe [:get-world])]
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       (for [topic @world]
+         ^{:key topic}
+         [topic-view topic])])))
+
 ;; Nav-views
 (defn nav-menu []
   "Component for picking the active screen."
@@ -829,6 +884,7 @@
                       ["Progress Tracks" :progress-tracks]
                       ["Assets" :asset-list]
                       ["Journal" :journal]
+                      ["World" :world]
                       ["Load/Save" :savegames]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
@@ -840,6 +896,7 @@
     (case @active-screen
       :journal [journal-view]
       :chars [chars-view]
+      :world [world-view]
       :progress-tracks [progress-tracks-view]
       :move-list [moves-list]
       :asset-list [asset-list]
