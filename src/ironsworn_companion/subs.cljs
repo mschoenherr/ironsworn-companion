@@ -85,3 +85,8 @@
  :get-regions
  (fn [db _]
    (:regions db)))
+
+(reg-sub
+ :get-foes
+ (fn [db _]
+   (:foes db)))

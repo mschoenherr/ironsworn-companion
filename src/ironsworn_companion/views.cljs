@@ -952,6 +952,41 @@
           ^{:key region-name}
           [region-view region-name (get derefed-regions region-name)]))])))
 
+;; foe-views
+
+(defn foe-view [foe]
+  "Component for viewing a single foe."
+  (let [show-details? (atom false)]
+    (fn [foe]
+      [view {:style {:margin 2
+                     :padding 1
+                     :border-width 1}}
+       [button {:title (:name foe)
+                :on-press #(swap! show-details? not)}]
+       (when @show-details?
+         [view
+          [view {:style {:flex-direction "row"
+                         :justify-content "space-evenly"}}
+           [text (str "Rank: " (:lvl foe))]
+           [button {:title "Add"
+                    :on-press #(do
+                                 (dispatch [:insert-new-pt (:name foe) :rank (:lvl foe)])
+                                 (dispatch [:set-screen :progress-tracks]))}]]
+          [text-list-view "Features" (:features foe)]
+          [text-list-view "Drives" (:drives foe)]
+          [text-list-view "Tactics" (:tactics foe)]
+          [text (:description foe)]
+          [quest-starter-view (:starter foe)]])])))
+
+(defn foes-view []
+  "Component for viewing all foes."
+  (let [foes (subscribe [:get-foes])]
+    (fn []
+      [scroll-view {:style {:flex 7}}
+       (for [foe @foes]
+         ^{:key (:name foe)}
+         [foe-view foe])])))
+
 ;; Nav-views
 (defn nav-menu []
   "Component for picking the active screen."
@@ -964,6 +999,7 @@
                       ["Journal" :journal]
                       ["World" :world]
                       ["Regions" :region-screen]
+                      ["Foes" :foe-screen]
                       ["Load/Save" :savegames]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
@@ -981,6 +1017,7 @@
       :asset-list [asset-list]
       :region-screen [regions-view]
       :savegames [savegame-menu]
+      :foe-screen [foes-view]
       :move [move-view])))
 
 

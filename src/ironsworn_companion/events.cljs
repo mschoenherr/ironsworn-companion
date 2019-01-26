@@ -303,16 +303,17 @@
 (reg-event-db
  :insert-new-pt
  validate-spec
- (fn [db [_ pt-name & {:keys [location char-name]
+ (fn [db [_ pt-name & {:keys [location char-name rank]
                        :or {location :progress-tracks
-                            char-name nil}}]]
+                            char-name nil
+                            rank "Dangerous"}}]]
    (case location
      :progress-tracks (assoc-in db
                                 [:progress-tracks pt-name]
-                                ["Dangerous" 0])
+                                [rank 0])
      :vows (assoc-in db
                      [:characters char-name :vows pt-name]
-                     ["Dangerous" 0]))))
+                     [rank 0]))))
 
 (reg-event-db
  :delete-prog

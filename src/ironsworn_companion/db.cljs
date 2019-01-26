@@ -13,6 +13,7 @@
 
 (ns ironsworn-companion.db
   (:require [clojure.spec.alpha :as s]
+            [ironsworn-companion.foes :refer [all-foes]]
             [ironsworn-companion.regions :refer [all-regions]]
             [ironsworn-companion.world :refer [world-options]]
             [ironsworn-companion.assets :refer [all-assets]]
@@ -112,7 +113,7 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen :foe-screen})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
@@ -142,6 +143,12 @@
                         ::opt-un [::locations]))
 (s/def ::regions (s/map-of ::name ::region))
 
+(s/def ::tactics ::features)
+(s/def ::drives ::features)
+(s/def ::npc-type ::name)
+(s/def ::foe (s/keys ::req-un [::name ::lvl ::npc-type ::features ::drives ::tactics ::description ::starter]))
+(s/def ::foes (s/coll-of ::foe))
+
 (s/def ::app-db
   (s/keys :req-un [::journal
                    ::characters
@@ -154,6 +161,7 @@
                    ::world
                    ::regions
                    ::assets
+                   ::foes
                    ::active-move]))
 
 ;; initial state of app-db
@@ -168,6 +176,7 @@
              :assets all-assets
              :regions all-regions
              :world world-options
+             :foes all-foes
              :active-move nil})
 
 ;; model functions
