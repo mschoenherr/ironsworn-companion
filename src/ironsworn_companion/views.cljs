@@ -14,6 +14,7 @@
 (ns ironsworn-companion.views
   (:require [reagent.core :as r :refer [atom]]
             [re-frame.core :refer [subscribe dispatch dispatch-sync]]
+            [ironsworn-companion.about :refer [about-text software-license-text rpg-license-text]]
             [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
             [ironsworn-companion.events :refer [all-savegames]]
@@ -84,7 +85,6 @@
   "Shows a subheading."
   [text {:style {:font-weight "bold"
                  :font-size 16
-                 :flex 1
                  :text-align "center"
                  :color ironsworn-color}}
    heading-text])
@@ -987,6 +987,17 @@
          ^{:key (:name foe)}
          [foe-view foe])])))
 
+;; the licensing and welcome view
+(defn about-view []
+  "Component for viewing license and generic info."
+  [view
+   [heading-view "About"]
+   [view
+    [subheading-view "Ironsworn Companion"]
+    [text about-text]
+    [text rpg-license-text]
+    [text software-license-text]]])
+
 ;; Nav-views
 (defn nav-menu []
   "Component for picking the active screen."
@@ -1000,7 +1011,8 @@
                       ["World" :world]
                       ["Regions" :region-screen]
                       ["Foes" :foe-screen]
-                      ["Load/Save" :savegames]]]
+                      ["Load/Save" :savegames]
+                      ["About" :about-screen]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
               :on-press #(dispatch [:set-screen (second screen-name)])}])])
@@ -1018,6 +1030,8 @@
       :region-screen [regions-view]
       :savegames [savegame-menu]
       :foe-screen [foes-view]
-      :move [move-view])))
+      :move [move-view]
+      :about-screen [about-view]
+      [about-view])))
 
 

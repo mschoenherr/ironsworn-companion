@@ -113,7 +113,7 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen :foe-screen})
+(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen :foe-screen :about-screen})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
