@@ -890,10 +890,12 @@
 (defn world-view []
   (let [world (subscribe [:get-world])]
     (fn []
-      [scroll-view {:style {:flex 7}}
-       (for [topic @world]
-         ^{:key topic}
-         [topic-view topic])])))
+      [view {:style {:flex 1}}
+       [heading-view "World"]
+       [scroll-view {:style {:flex 7}}
+        (for [topic @world]
+          ^{:key topic}
+          [topic-view topic])]])))
 
 (defn location-view [region-name name description]
   "Component for viewing a location."
@@ -946,11 +948,13 @@
   "Component for viewing all regions."
   (let [regions (subscribe [:get-regions])]
     (fn []
-      [scroll-view {:style {:flex 7}}
-       (let [derefed-regions @regions]
-         (for [region-name (keys derefed-regions)]
-          ^{:key region-name}
-          [region-view region-name (get derefed-regions region-name)]))])))
+      [view {:style {:flex 1}}
+       [heading-view "Regions"]
+       [scroll-view {:style {:flex 7}}
+        (let [derefed-regions @regions]
+          (for [region-name (keys derefed-regions)]
+            ^{:key region-name}
+            [region-view region-name (get derefed-regions region-name)]))]])))
 
 ;; foe-views
 
@@ -958,7 +962,7 @@
   "Component for viewing a single foe."
   (let [show-details? (atom false)]
     (fn [foe]
-      [view {:style {:margin 2
+      [view {:style {:margin 1
                      :padding 1
                      :border-width 1}}
        [button {:title (:name foe)
@@ -982,10 +986,12 @@
   "Component for viewing all foes."
   (let [foes (subscribe [:get-foes])]
     (fn []
-      [scroll-view {:style {:flex 7}}
-       (for [foe @foes]
-         ^{:key (:name foe)}
-         [foe-view foe])])))
+      [view {:style {:flex 1}}
+       [heading-view "Foes"]
+       [scroll-view {:style {:flex 7}}
+        (for [foe @foes]
+          ^{:key (:name foe)}
+          [foe-view foe])]])))
 
 ;; views for bond details
 (defn bond-detail-view [detail]
