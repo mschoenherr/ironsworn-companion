@@ -987,6 +987,57 @@
          ^{:key (:name foe)}
          [foe-view foe])])))
 
+;; views for bond details
+(defn bond-detail-view [detail]
+  "Component for viewing and editing a single bond detail."
+  (let [edit? (atom false)
+        really-delete? (atom false)
+        new-name (atom (:name detail))
+        new-desc (atom (:description detail))]
+    (fn [detail]
+      (if @edit?
+        [view
+         [text-input {:on-submit-editing #(reset! new-name %)
+                      :default-value (:name detail)}]
+         [text-input {:on-submit-editing #(reset! new-desc %)
+                      :default-value (:description detail)}]
+         [button {:title "Submit"
+                  :on-press #(do
+                               (dispatch [:mod-bond-detail (:name detail) @new-name @new-desc])
+                               (swap! edit? not))}]]
+        [view
+         [subheading-view (:name detail)]
+         [text {:style {:text-align "center"
+                        :font-size 16
+                        :padding 1
+                        :margin 1}}
+          (:description detail)]
+         [view {:style {:flex-direction "row"
+                        :justify-content "space-evenly"}}
+          [button {:title "Edit"
+                   :on-press #(swap! edit? not)}]
+          (if @really-delete?
+            [button {:title "Really delete"
+                     :on-press #(do
+                                  (dispatch [:del-bond-detail (:name detail)])
+                                  (swap! really-delete? not))}]
+            [button {:title "Delete"
+                     :on-press #(swap! really-delete? not)}])]]))))
+
+(defn bond-details-view []
+  (let [bond-details (subscribe [:get-bond-details])]
+    (fn []
+      [view
+       [heading-view "Bonds"]
+       (for [bond-detail @bond-details]
+         ^{:key (:name bond-detail)}
+         [view {:style {:border-width 1
+                        :margin 1
+                        :padding 1}}
+          [bond-detail-view bond-detail]])
+       [button {:title "New bond"
+                :on-press #(dispatch [:add-bond-detail "New bond" "Describe it"])}]])))
+
 ;; the licensing and welcome view
 (defn about-view []
   "Component for viewing license and generic info."
@@ -1008,6 +1059,7 @@
                       ["Progress Tracks" :progress-tracks]
                       ["Assets" :asset-list]
                       ["Journal" :journal]
+                      ["Bonds" :bond-screen]
                       ["World" :world]
                       ["Regions" :region-screen]
                       ["Foes" :foe-screen]
@@ -1032,6 +1084,7 @@
       :foe-screen [foes-view]
       :move [move-view]
       :about-screen [about-view]
+      :bond-screen [bond-details-view]
       [about-view])))
 
 

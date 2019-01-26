@@ -113,7 +113,10 @@
 
 (s/def ::oracle ::name)
 
-(s/def ::active-screen #{:chars :roll :move :asset :journal :move-list :asset-list :savegames :progress-tracks :world :region-screen :foe-screen :about-screen})
+(s/def ::active-screen #{:chars :roll :move :asset
+                         :journal :move-list :asset-list
+                         :savegames :progress-tracks :world :region-screen
+                         :foe-screen :about-screen :bond-screen})
 
 (s/def ::nav-history (s/coll-of ::active-screen))
 
@@ -149,20 +152,24 @@
 (s/def ::foe (s/keys ::req-un [::name ::lvl ::npc-type ::features ::drives ::tactics ::description ::starter]))
 (s/def ::foes (s/coll-of ::foe))
 
+(s/def ::bond-detail (s/keys ::req-un [::name ::description]))
+(s/def ::bond-details (s/coll-of ::bond-detail))
+
 (s/def ::app-db
-  (s/keys :req-un [::journal
-                   ::characters
-                   ::progress-tracks
-                   ::active-char
-                   ::roll-result
-                   ::active-screen
-                   ::nav-history
-                   ::moves
-                   ::world
-                   ::regions
-                   ::assets
-                   ::foes
-                   ::active-move]))
+  (s/keys ::req-un [::journal
+                    ::characters
+                    ::progress-tracks
+                    ::active-char
+                    ::roll-result
+                    ::active-screen
+                    ::nav-history
+                    ::moves
+                    ::world
+                    ::regions
+                    ::assets
+                    ::foes
+                    ::active-move
+                    ::bond-details]))
 
 ;; initial state of app-db
 (def app-db {:journal (list)
@@ -177,7 +184,8 @@
              :regions all-regions
              :world world-options
              :foes all-foes
-             :active-move nil})
+             :active-move nil
+             :bond-details []})
 
 ;; model functions
 (defn mod-stat [num value]

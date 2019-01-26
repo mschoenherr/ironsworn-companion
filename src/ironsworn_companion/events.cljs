@@ -501,3 +501,27 @@
  validate-spec
  (fn [db [_ r-name l-name]]
    (update-in db [:regions r-name :locations] dissoc l-name)))
+
+(reg-event-db
+ :mod-bond-detail
+ validate-spec
+ (fn [db [_ old-name new-name desc]]
+   (let [old-details (:bond-details db)]
+     (assoc db :bond-details
+            (conj (filter #(not= (:name %) old-name) old-details)
+                  {:name new-name :description desc})))))
+
+(reg-event-db
+ :add-bond-detail
+ validate-spec
+ (fn [db [_ name desc]]
+   (update db :bond-details
+           conj {:name name :description desc})))
+
+(reg-event-db
+ :del-bond-detail
+ validate-spec
+ (fn [db [_ name]]
+   (update db :bond-details
+           (fn [details]
+             (filter #(not= name (:name %)) details)))))

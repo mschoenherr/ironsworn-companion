@@ -90,3 +90,8 @@
  :get-foes
  (fn [db _]
    (:foes db)))
+
+(reg-sub
+ :get-bond-details
+ (fn [db _]
+   (:bond-details db)))
