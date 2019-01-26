@@ -23,7 +23,7 @@
 ;; react native imports for use in re-frame
 (def ReactNative (js/require "react-native"))
 
-(def text (r/adapt-react-class (.-Text ReactNative)))
+(def react-native-text (r/adapt-react-class (.-Text ReactNative)))
 (def view (r/adapt-react-class (.-View ReactNative)))
 (def react-text-input (r/adapt-react-class (.-TextInput ReactNative)))
 (def scroll-view (r/adapt-react-class (.-ScrollView ReactNative)))
@@ -68,11 +68,23 @@
 
 (def ironsworn-color "#8ba4a8")
 
+(defn text
+  ([display-text]
+   [react-native-text {:style {:font-size 16
+                               :text-align "center"}}
+    display-text])
+  ([{:keys [:style]} display-text]
+   "Generic text-view for uniform styling."
+   (let [default-style {:font-size 16
+                        :text-align "center"}]
+     [react-native-text {:style (merge default-style style)}
+      display-text])))
+
 (defn heading-view [heading-text]
   "Shows a heading for a screen."
   [text
    {:style {:font-weight "bold"
-            :font-size 19
+            :font-size 20
             :color ironsworn-color
             :width "100%"
             :border-width 2
@@ -84,12 +96,12 @@
 (defn subheading-view [heading-text]
   "Shows a subheading."
   [text {:style {:font-weight "bold"
-                 :font-size 16
+                 :font-size 18
                  :text-align "center"
                  :color ironsworn-color}}
    heading-text])
 
-(defn button [style-map & {:keys [enclosing-style]
+(defn button [style-map & {:keys [enclosing-style] ;; could be more readible with sensible destucturing
                            :or {enclosing-style {}}}]
   "Default Button for the app, merges styles in style-map mit defaults. Defaults having precedence."
   [view {:style (merge enclosing-style {:padding 2})}
@@ -116,7 +128,8 @@
    [subheading-view heading]
    (for [item text-coll]
      ^{:key item}
-     [text {:style {:font-size 16}}
+     [text {:style {:border-bottom-width 1
+                    :margin 1}}
       item])])
 
 ;; Views for the Journal
@@ -134,8 +147,7 @@
       (for [entry @journal]
         ^{:key entry}
         [text {:style {:font-size 16
-                       :padding 2
-                       :border-bottom-width 1}}
+                       :padding 2}}
          entry])]]))
 
 ;; Views for Char
@@ -343,18 +355,24 @@
 
 (defn vows-view [name vows]
   "Component for viewing all vows."
-  [view {:style {:flex-direction "column"
-                 :justify-content "space-evenly"
-                 :border-width 1
-                 :margin 1}}
-   [subheading-view "Vows"]
-   (for [vow (sorted-hash-seq vows)]
-     ^{:key vow}
-     [vow-view name vow])
-   [text-input {:on-submit-editing #(do
-                                      (dispatch [:insert-new-pt %
-                                                 :location :vows :char-name name]))
-                :placeholder "New vow name"}]])
+  (let [new-vow? (atom false)]
+    (fn [name vows]
+      [view {:style {:flex-direction "column"
+                     :justify-content "space-evenly"
+                     :border-width 1
+                     :margin 1}}
+       [subheading-view "Vows"]
+       (for [vow (sorted-hash-seq vows)]
+         ^{:key vow}
+         [vow-view name vow])
+       (if @new-vow?
+         [text-input {:on-submit-editing #(do
+                                            (dispatch [:insert-new-pt %
+                                                       :location :vows :char-name name])
+                                            (swap! new-vow? not))
+                      :placeholder "Enter vow name"}]
+         [button {:title "New vow"
+                  :on-press #(swap! new-vow? not)}])])))
 
 (declare move-link)
 (defn result-view [result]
@@ -502,11 +520,20 @@
                          :or {init-show-char? true}}]
   "Component for viewing and editing a char identified by name."
   (let [char (subscribe [:get-char name])
-        show-char? (atom init-show-char?)]
+        show-char? (atom init-show-char?)
+        really-delete? (atom false)]
     (fn [name]
       [view
-       [button {:title name 
-                :on-press #(swap! show-char? not)}]
+       [view {:style {:flex-direction "row"
+                      :justify-content "space-evenly"}}
+        [button {:title name 
+                 :on-press #(swap! show-char? not)}]
+        (when @show-char?
+          (if @really-delete?
+            [button {:title "Really Delete"
+                     :on-press #(dispatch [:delete-char name])}]
+            [button {:title "Delete"
+                     :on-press #(swap! really-delete? not)}]))]
        (when @show-char?
          [view
           [view {:style {:flex-direction "row" :justify-content "space-evenly"}}
@@ -524,27 +551,20 @@
 (defn chars-view []
   "Component for viewing all chars in db."
   (let [chars (subscribe [:get-chars])
-        input-new-char? (atom false)
-        delete-char? (atom false)]
+        input-new-char? (atom false)]
     (fn []
       [view {:style {:flex 7}}
        [heading-view "Characters"]
        [scroll-view 
         (for [char-name (keys @chars)]
           ^{:key char-name}
-          [char-view char-name])
+          [char-view char-name :init-show-char? false])
         (if @input-new-char?
           [text-input {:on-submit-editing #(do
                                              (dispatch [:insert-new-char %])
                                              (swap! input-new-char? not))
                        :placeholder "Character Name"}]
-          [button {:title "New Character" :on-press #(swap! input-new-char? not)}])
-        (if @delete-char?
-          [text-input {:on-submit-editing #(do
-                                             (dispatch [:delete-char %])
-                                             (swap! delete-char? not))
-                       :placeholder "Type name of character to delete"}]
-          [button {:title "Delete Character" :on-press #(swap! delete-char? not)}])]])))
+          [button {:title "New Character" :on-press #(swap! input-new-char? not)}])]])))
 
 
 
