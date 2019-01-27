@@ -17,7 +17,7 @@
             [ironsworn-companion.about :refer [about-text software-license-text rpg-license-text]]
             [ironsworn-companion.rolls :as rolls]
             [ironsworn-companion.db :as db]
-            [ironsworn-companion.events :refer [all-savegames]]
+            [ironsworn-companion.events :refer [all-savegames current-save]]
             [ironsworn-companion.subs]))
 
 ;; react native imports for use in re-frame
@@ -841,17 +841,19 @@
 
 (defn savegame-view [save]
   "Component for rendering all buttons for working on given savefile."
-  [view {:style {:flex-direction "row"
-                 :margin 2
-                 :border-width 1}}
-   [button {:title save
-            :on-press #(do
-                         (dispatch [:load-db save])
-                         (toast (str "Loading: " save)))}]
-   [button {:title "Delete"
-            :on-press #(dispatch [:del-save save])}]
-   [text-input {:on-submit-editing #(dispatch [:rename-save save %])
-                :placeholder "New name"}]])
+  [view {:margin 1
+         :border-width 1}
+   (when (= @current-save save)
+     [subheading-view "Currently playing:"])
+   [view {:style {:flex-direction "row"}}
+    [button {:title save
+             :on-press #(do
+                          (dispatch [:load-db save])
+                          (toast (str "Loading: " save)))}]
+    [button {:title "Delete"
+             :on-press #(dispatch [:del-save save])}]
+    [text-input {:on-submit-editing #(dispatch [:rename-save save %])
+                 :placeholder "New name"}]]])
 
 (defn savegame-menu []
   "Component for loading and saving games"

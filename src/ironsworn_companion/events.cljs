@@ -32,6 +32,7 @@
 (def default-db-id "Unnamed Campaign")
 
 (def all-savegames (atom (sorted-set))) ;; keeping track of the savegames here
+(def current-save (atom nil))
 
 (defn set-cur-id [db-id]
   "Sets the default id to db-id."
@@ -52,7 +53,8 @@
        (.then #(if % (cljs.reader/read-string %) app-db))
        (.then #(do
                  (set-cur-id db-id)
-                 (swap! all-savegames conj db-id) ;; check if this is really necessary (does not hurt, at least)
+                 (swap! all-savegames conj db-id)
+                 (reset! current-save db-id) ;; check if this is really necessary (does not hurt, at least)
                  %))
        (.then callback))))
 
