@@ -176,7 +176,7 @@
              :characters {}
              :progress-tracks {}
              :active-char nil
-             :nav-history (list)
+             :nav-history (list) 
              :roll-result nil
              :active-screen :savegames
              :moves all-moves

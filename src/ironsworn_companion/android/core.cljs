@@ -24,6 +24,7 @@
 (def app-registry (.-AppRegistry ReactNative))
 (def view (r/adapt-react-class (.-View ReactNative)))
 (def drawer (r/adapt-react-class (.-DrawerLayoutAndroid ReactNative)))
+(def back-handler (.-BackHandler ReactNative)) ;; not adapting, since its nota real component
 
 ;; Set the entry point for app-root
 (defn app-root []
@@ -35,6 +36,9 @@
 
 (defn init []
   (dispatch-sync [:initialize-db])
+  (.addEventListener back-handler "hardwareBackPress" (fn []
+                                                        (dispatch [:go-back])
+                                                        true))
   (.addEventListener app-state "change"
                      (fn [next-state]
                        (case next-state

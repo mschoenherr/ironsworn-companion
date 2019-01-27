@@ -21,6 +21,8 @@
    [ironsworn-companion.db :as db]
    [ironsworn-companion.db :as db :refer [app-db]]))
 
+;; nav-history maximum
+(def nav-hist-len 20)
 ;; Initializing the storage backend here
 (def ReactNative (js/require "react-native"))
 
@@ -217,16 +219,20 @@
  :set-screen
  validate-spec
  (fn [db [_ value]]
-   (update-in db [:nav-history] conj (:active-screen db))
-   (assoc-in db [:active-screen] value)))
+   (-> db
+       (update-in [:nav-history] conj (:active-screen db))
+       (update-in [:nav-history] #(apply list (take nav-hist-len %)))
+       (assoc-in [:active-screen] value))))
 
 (reg-event-db
  :go-back
  validate-spec
  (fn [db _]
-   (-> db
-       (assoc :active-screen (first (:nav-history db)))
-       (update-in [:nav-history] pop))))
+   (if (empty? (:nav-history db))
+     db
+     (-> db
+         (assoc :active-screen (first (:nav-history db)))
+         (update-in [:nav-history] rest)))))
 
 (reg-event-db
  :mod-stat
