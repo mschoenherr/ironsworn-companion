@@ -17,6 +17,7 @@ git init
 git remote add ironsworn-source https://github.com/mschoenherr/ironsworn-companion.git
 rm LICENSE README.md src/ironsworn-companion/db.cljs src/ironsworn-companion/subs.cljs src/ironsworn-companion/events.cljs
 rm src/ironsworn-companion/android/core.cljs
+rm android/app/src/main/web_hi_res_512.png android/app/src/main/res/mipmap-*dpi/ic_launcher.png
 git fetch ironsworn-source
 git merge --allow-unrelated-histories ironsworn-source/master
 ```

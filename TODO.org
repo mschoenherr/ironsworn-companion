@@ -1,8 +1,3 @@
-* implement Android Backbutton (with history)
-* nice images for ticks and dices
-* complete asset list
-* multiple savegames
-* separate oracle screen
 * unflicker switches 
   probably by using dispatch-sync and re-frame/flush
 * further split up bigger views and refactor (unifying smaller components for a uniform look)
