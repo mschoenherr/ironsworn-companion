@@ -32,6 +32,7 @@
 (def picker (r/adapt-react-class (.-Picker ReactNative)))
 (def picker-item (r/adapt-react-class (.. ReactNative -Picker -Item)))
 (def image (r/adapt-react-class (.-Image ReactNative)))
+(def Toast (.-ToastAndroid ReactNative))
 
 ;; static images go here
 (def zerotick (js/require "./images/zerotick.png"))
@@ -67,6 +68,10 @@
 ;; atomic views and constants
 
 (def ironsworn-color "#8ba4a8")
+
+(defn toast [text]
+  "Displays text as a short toast."
+  (.show Toast text (.-SHORT Toast)))
 
 (defn text
   ([display-text]
@@ -477,7 +482,7 @@
           [button {:title "Remove" :on-press #(dispatch [:rm-ass char-name (:name asset)])}]
           [button {:title "Add" :on-press #(do
                                              (dispatch [:add-ass-to-act-char (:name asset)])
-                                             (dispatch [:set-screen :chars]))}])]
+                                             (toast (str "Added: " (:name asset))))}])]
        (when @show-asset?
          [view {:style {:padding 2}}
           [text (:asset-type asset)]
@@ -527,7 +532,8 @@
        [view {:style {:flex-direction "row"
                       :justify-content "space-evenly"}}
         [button {:title name 
-                 :on-press #(swap! show-char? not)}]
+                 :on-press #(swap! show-char? not)}
+         :enclosing-style {:flex 1}]
         (when @show-char?
           (if @really-delete?
             [button {:title "Really Delete"
@@ -836,7 +842,9 @@
                  :margin 2
                  :border-width 1}}
    [button {:title save
-            :on-press #(dispatch [:load-db save])}]
+            :on-press #(do
+                         (dispatch [:load-db save])
+                         (toast (str "Loading: " save)))}]
    [button {:title "Delete"
             :on-press #(dispatch [:del-save save])}]
    [text-input {:on-submit-editing #(dispatch [:rename-save save %])
@@ -845,7 +853,7 @@
 (defn savegame-menu []
   "Component for loading and saving games"
   [view {:style {:flex 7}}
-   [heading-view "Load/Save"]
+   [heading-view "Campaigns"]
    (for [save @all-savegames]
      ^{:key save}
      [savegame-view save])
@@ -985,17 +993,17 @@
       [view {:style {:margin 1
                      :padding 1
                      :border-width 1}}
-       [button {:title (:name foe)
-                :on-press #(swap! show-details? not)}]
+       [view {:style {:flex-direction "row"}}
+        [button {:title (:name foe)
+                 :on-press #(swap! show-details? not)}
+         :enclosing-style {:flex 1}]
+        [button {:title "Add"
+                 :on-press #(do
+                              (dispatch [:insert-new-pt (:name foe) :rank (:lvl foe)])
+                              (toast (str "Added: " (:name foe))))}]]
        (when @show-details?
          [view
-          [view {:style {:flex-direction "row"
-                         :justify-content "space-evenly"}}
-           [text (str "Rank: " (:lvl foe))]
-           [button {:title "Add"
-                    :on-press #(do
-                                 (dispatch [:insert-new-pt (:name foe) :rank (:lvl foe)])
-                                 (dispatch [:set-screen :progress-tracks]))}]]
+          [text (str "Rank: " (:lvl foe))]
           [text-list-view "Features" (:features foe)]
           [text-list-view "Drives" (:drives foe)]
           [text-list-view "Tactics" (:tactics foe)]
@@ -1089,7 +1097,7 @@
                       ["World" :world]
                       ["Regions" :region-screen]
                       ["Foes" :foe-screen]
-                      ["Load/Save" :savegames]
+                      ["Campaigns" :savegames]
                       ["About" :about-screen]]]
      ^{:key screen-name}
      [button {:title (first screen-name)
