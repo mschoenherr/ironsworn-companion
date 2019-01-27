@@ -115,17 +115,20 @@
      style-map
      {:color ironsworn-color})]])
 
-(defn text-input [{:keys [:on-submit-editing :placeholder :style
+(defn text-input [{:keys [:on-submit-editing :placeholder
+                          :style :on-change-text
                           :default-value]
                    :or {style {:width "100%"}}}]
   "Default text-input for the app."
   [react-text-input (merge
-                     {:on-submit-editing #(on-submit-editing (.. % -nativeEvent -text))
-                      :select-text-on-focus true
+                     {:select-text-on-focus true
                       :style style}
                      (if default-value
                        {:default-value default-value}
-                       {:placeholder placeholder}))])
+                       {:placeholder placeholder})
+                     (if on-submit-editing
+                       {:on-submit-editing #(on-submit-editing (.. % -nativeEvent -text))}
+                       {:on-change-text #(on-change-text %)}))])
 
 (defn text-list-view [heading text-coll]
   "Component for viewing a list of strings."
@@ -931,26 +934,29 @@
         new-name (atom name)
         new-desc (atom description)]
     (fn [region-name name description]
-      [view
+      [view {:style {:margin 2
+                     :border-width 1
+                     :padding 1}}
        (if @edit?
          [view
-          [text-input {:on-submit-editing #(reset! new-name %)
+          [text-input {:on-change-text #(reset! new-name %)
                        :default-value name}]
-          [text-input {:on-submit-editing #(reset! new-desc %)
+          [text-input {:on-change-text #(reset! new-desc %)
                        :default-value description}]
           [button {:title "Submit"
                    :on-press #(do
                                 (dispatch [:change-location region-name name @new-name @new-desc])
                                 (swap! edit? not))}]]
-         [view {:style {:margin 2
-                        :border-width 1
-                        :padding 1}}
+         [view 
           [subheading-view name]
           [text description]])
-       [button {:title "Edit"
-                :on-press #(swap! edit? not)}]
-       [button {:title "Delete"
-                :on-press #(dispatch [:del-location region-name name])}]])))
+       [view {:style {:flex-direction "row"}}
+        [button {:title "Edit"
+                 :on-press #(swap! edit? not)}
+         :enclosing-style {:flex 1}]
+        [button {:title "Delete"
+                 :on-press #(dispatch [:del-location region-name name])}
+         :enclosing-style {:flex 1}]]])))
 
 (defn region-view [name region]
   "Component for viewing a region."
@@ -1031,9 +1037,9 @@
     (fn [detail]
       (if @edit?
         [view
-         [text-input {:on-submit-editing #(reset! new-name %)
+         [text-input {:on-change-text #(reset! new-name %)
                       :default-value (:name detail)}]
-         [text-input {:on-submit-editing #(reset! new-desc %)
+         [text-input {:on-change-text #(reset! new-desc %)
                       :default-value (:description detail)}]
          [button {:title "Submit"
                   :on-press #(do
