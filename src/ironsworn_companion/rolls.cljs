@@ -93,8 +93,8 @@
   "Modifies result to accomodate burn result effect. Char is left unmodified."
   (cond
     (not (and (second challenge1) (second challenge2))) result
-    (> momentum (first challenge1)) (update-in result [:challenge1 1] not)
-    (> momentum (first challenge2)) (update-in result [:challenge2 1] not)
+    (and (> momentum (first challenge1)) (<= (first action-die) (first challenge1))) (update-in result [:challenge1 1] not)
+    (and (> momentum (first challenge2)) (<= (first action-die) (first challenge2))) (update-in result [:challenge2 1] not)
     :else result))
 
 (defn burn-possible? [result char]
