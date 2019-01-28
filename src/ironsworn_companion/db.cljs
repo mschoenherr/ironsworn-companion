@@ -155,8 +155,11 @@
 (s/def ::bond-detail (s/keys ::req-un [::name ::description]))
 (s/def ::bond-details (s/coll-of ::bond-detail))
 
+(s/def ::version ::name)
+
 (s/def ::app-db
-  (s/keys ::req-un [::journal
+  (s/keys ::req-un [::version
+                    ::journal
                     ::characters
                     ::progress-tracks
                     ::active-char
@@ -172,7 +175,8 @@
                     ::bond-details]))
 
 ;; initial state of app-db
-(def app-db {:journal (list)
+(def app-db {:version "v1"
+             :journal (list)
              :characters {}
              :progress-tracks {}
              :active-char nil
