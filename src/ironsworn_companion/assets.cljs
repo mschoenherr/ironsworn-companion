@@ -11,7 +11,7 @@
     :description "Your hawk can aid you when it is aloft."
     :perks [{:id "Far-seeing"
              :enabled false
-             :result "When you Untertake a Journey, or when you Resupply by hunting small game, add +1."}
+             :result "When you Undertake a Journey, or when you Resupply by hunting small game, add +1."}
             {:id "Fierce"
              :enabled false
              :result "When you Secure an Advantage +edge using your hawk to harass and distract your foes, add +1 and take +1 momentum on a hit."}
@@ -89,7 +89,7 @@
              :result "When you Sojourn or Make Camp in the company of your banner-kin, add +1 and take +1 momentum on a hit."}
             {:id :second
              :enabled false
-             :result "When you Swear an Iron Vow to serve your leader or faction on a mission, you may reroll any dice. When you Fullfill Your Vow and mark experience, take +1 experience."}
+             :result "When you Swear an Iron Vow to serve your leader or faction on a mission, you may reroll any dice. When you Fulfil Your Vow and mark experience, take +1 experience."}
             {:id :third
              :enabled false
              :result "When you Enter the Fray bearing your banner, add +1 and take +1 momentum on a hit. When you burn momentum while carrying your banner in combat, take +1 momentum after you reset."}]
@@ -126,7 +126,7 @@
              :result "When you say your daily prayers, you may Secure an Advantage by asking your god to grant you a blessing. If you do, roll +your god's stat. On a hit, take +1 momentum."}
             {:id :second
              :enabled false
-             :result "When you Swear an Iron Vow to serve your god on a divine quest, you may roll +your god's stat and reroll any dice. When you Fullfill Your Vow and mark experience, take +1 experience."}
+             :result "When you Swear an Iron Vow to serve your god on a divine quest, you may roll +your god's stat and reroll any dice. When you Fulfil Your Vow and mark experience, take +1 experience."}
             {:id :third
              :enabled false
              :result "When you Sojourn, and spread the word of your god, you may roll +your god's stat. If you do, take +1 momentum on a hit."}]
@@ -145,7 +145,7 @@
             {:id :third
              :enabled false
              :result "When you Make Camp and choose the option to partake, you can use your supplies to create a restorative meal. If you do, you and your companions may take +1 health. Any allies who choose to partake may also take +1 health."}]}
-   {:name "Honorbound"
+   {:name "Honourbound"
     :asset-type "Path"
     :perks [{:id :first
              :enabled true
@@ -155,7 +155,7 @@
              :result "When you Secure an Advantage or Compel by telling a hard truth, add +1 and take +1 momentum on a hit. On a weak hit or miss, envision how this truth complicates your current situation."}
             {:id :third
              :enabled false
-             :result "When you Fullfill Your Vow and score a weak hit or miss, you may reroll any dice as you Swear an Iron Vow to set things right. On a hit, take +2 momentum."}]}
+             :result "When you Fulfil Your Vow and score a weak hit or miss, you may reroll any dice as you Swear an Iron Vow to set things right. On a hit, take +2 momentum."}]}
    {:name "Loyalist"
     :asset-type "Path"
     :perks [{:id :first
@@ -184,7 +184,7 @@
     :custom-note ["Mask" "X-wood: Stat / Resource"]
     :perks [{:id :first
              :enabled true
-             :result {:description "Choose your mask's material. When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addtion to any other outcome of the move)."
+             :result {:description "Choose your mask's material. When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addition to any other outcome of the move)."
                       :options [["Thunderwood" "Edge / Health"]
                                 ["Bloodwood" "Iron / Health"]
                                 ["Ghostwood" "Shadow / Spirit"]
@@ -198,7 +198,7 @@
              :result "When you Face Death or Face Desolation while wearing the mask, you may roll +its stat (instead of +heart)."}]}
    {:name "Ritualist"
     :asset-type "Path"
-    :description "Once you Fullfill Your Vow (formidable or greater) in service to an elder mystic, and Forge a Bond to train with them..."
+    :description "Once you Fulfil Your Vow (formidable or greater) in service to an elder mystic, and Forge a Bond to train with them..."
     :perks [{:id :first
              :enabled true
              :result "When you Secure an Advantage to ready yourself for a ritual, envision how you prepare. Then, add +1 and take +1 momentum on a hit."}
@@ -238,7 +238,7 @@
              :result "When you Gather Information by tracking a beast or horror, or when you Secure an Advantage by readying yourself to fight against them, add +1 and take +1 momentum on a hit."}
             {:id :second
              :enabled false
-             :result "When you Swear an Iron Vow to slay a beast or horror, you may reroll any dice. When you Fulfill Your Vow and mark experience, take +1 experience."}
+             :result "When you Swear an Iron Vow to slay a beast or horror, you may reroll any dice. When you Fulfil Your Vow and mark experience, take +1 experience."}
             {:id :third
              :enabled false
              :result {:description "When you slay a beast or horror (at least formidable), you may take a trophy and choose one."
@@ -282,13 +282,13 @@
     :asset-type "Path"
     :perks [{:id :first
              :enabled true
-             :result "When you Untertake a Journey and burn momentum to improve your result, envision how you reorient yourself. Then, take +2 momentum after you reset."}
+             :result "When you Undertake a Journey and burn momentum to improve your result, envision how you reorient yourself. Then, take +2 momentum after you reset."}
             {:id :second
              :enabled false
              :result "When you Secure an Advantage or Gather Information by carefully surveying the landscape or scouting ahead, add +1 and take +1 momentum on a hit."}
             {:id :third
              :enabled false
-             :result "When you Swear an Iron Vow to safely guide someone on a perilous journey, you may reroll any dice. When you Fullfill Your Vow and mark experience take +1 experience."}]}
+             :result "When you Swear an Iron Vow to safely guide someone on a perilous journey, you may reroll any dice. When you Fulfil Your Vow and mark experience take +1 experience."}]}
    {:name "Wildblood"
     :asset-type "Path"
     :perks [{:id :first
@@ -302,7 +302,7 @@
              :result "When you Make Camp in the woodlands, you may roll +wits (instead of +supply). If you do, you and your allies may each choose 1 more option on a hit."}]}
    {:name "Weaponmaster"
     :asset-type "Path"
-    :description "Once you Fullfill Your Vow (formidable or greater in service to a seasoned warrior, and Forge a Bond to train with them..."
+    :description "Once you Fulfil Your Vow (formidable or greater in service to a seasoned warrior, and Forge a Bond to train with them..."
     :perks [{:id :first
              :enabled true
              :result "When you Secure an Advantage by sizing up you foe in a fight, or in a charged situation which may lead to a fight, add +1 and take +1 momentum on a hit."}
@@ -341,7 +341,7 @@
     :description "If you are unarmed or fighting with a non-deadly weapon..."
     :perks [{:id :first
              :enabled true
-             :result "When you Secure an Advantage +iron by engagin in close-quarters brawling (such as hitting, tripping, or smashing), add +1. If you score a hit, you may also inflict 1 harm."}
+             :result "When you Secure an Advantage +iron by engaging in close-quarters brawling (such as hitting, tripping, or smashing), add +1. If you score a hit, you may also inflict 1 harm."}
             {:id :second
              :enabled false
              :result "When you Strike or Clash with brutal intent, you may inflict 2 harm (instead of 1)."}
@@ -353,7 +353,7 @@
     :description "If you wield a dagger or knife..."
     :perks [{:id :first
              :enabled true
-             :result {:description "When you are in postion to Strike at an unsuspecting foe, choose one (before rolling)."
+             :result {:description "When you are in position to Strike at an unsuspecting foe, choose one (before rolling)."
                       :options [["Strike quickly" "Add +2 and take +1 momentum on a hit."]
                                 ["Take aim" "Inflict +2 harm on a hit."]]
                       :random-event nil}}
@@ -363,7 +363,7 @@
             {:id :third
              :enabled false
              :result "Once per fight, when you Secure an Advantage +shadow by performing a feint or misdirection, reroll any dice and +1 momentum on a hit."}]}
-   {:name "Duelist"
+   {:name "Duellist"
     :asset-type "Combat Talent"
     :description "If you wield a bladed weapon in each hand..."
     :perks [{:id :first
@@ -380,12 +380,12 @@
                       :random-event nil}}]}
    {:name "Ironclad"
     :asset-type "Combat Talent"
-    :description "If you wear armor"
+    :description "If you wear armour"
     :perks [{:id :first
              :enabled true
-             :result {:description "When you equip or adjust your armor, choose one."
-                      :options [["Lightly armored" "When you Endure Harm in a fight, add +1 and take +1 momentum on a hit."]
-                                ["Geared for war:" "Mark encumbered. When you Endure Harm in a fight, add +2 and take +1 momenutm on a hit."]]
+             :result {:description "When you equip or adjust your armour, choose one."
+                      :options [["Lightly armoured" "When you Endure Harm in a fight, add +1 and take +1 momentum on a hit."]
+                                ["Geared for war:" "Mark encumbered. When you Endure Harm in a fight, add +2 and take +1 momentum on a hit."]]
                       :random-event nil}}
             {:id :second
              :enabled false
@@ -416,7 +416,7 @@
              :result "When you bear a shield painted with a meaningful symbol, and you Endure Stress as you face off against a fearsome foe, add +1 and take +1 momentum on a hit."}
             {:id :third
              :enabled false
-             :result "When forced to Endure Harm in a fight, you may instead sacrifice your shield and ignore all harm. If you do, your shield is detroyed or will require extensive repair; suffer -2 momentum."}]}
+             :result "When forced to Endure Harm in a fight, you may instead sacrifice your shield and ignore all harm. If you do, your shield is destroyed or will require extensive repair; suffer -2 momentum."}]}
    {:name "Skirmisher"
     :asset-type "Combat Talent"
     :description "If you wield a spear..."
@@ -489,7 +489,7 @@
                              :move-type :normal
                              :description "When you summon a flock of crows and ask a single question, roll +wits."
                              :results {"Strong Hit" "You interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum."
-                                       "Weak Hit" "The crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum."
+                                       "Weak Hit" "The crows ignore your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum."
                                        "Miss" "The crows don't answer."}}}}
             {:id :second
              :enabled false
@@ -500,7 +500,7 @@
                              :move-type :normal
                              :description "When you summon a flock of crows and ask a single question, roll +wits."
                              :results {"Strong Hit" "You interpret their calls as a helpful omen. Envision the response (Ask the Oracle if unsure) and take +2 momentum. They also guide you on the proper path. Add +1 on the next segment when you Undertake a Journey."
-                                       "Weak Hit" "The crows ignor your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum. They also guide you on the proper path. Add +1 on the next segment when you Undertake a Journey."
+                                       "Weak Hit" "The crows ignore your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (Ask the Oracle if unsure), and take +1 momentum. They also guide you on the proper path. Add +1 on the next segment when you Undertake a Journey."
                                        "Miss" "The crows don't answer."}}}}
             {:id :third
              :enabled false
@@ -579,7 +579,7 @@
                       :random-event nil
                       :move {:name "Read the future"
                              :move-type :normal
-                             :description "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. Your divinatino can also reveal information about this person's future."
+                             :description "When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. Your divination can also reveal information about this person's future."
                              :results {"Strong Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1."
                                        "Weak Hit" "You may Gather Information about that person and people close to them (including insight you and the subject have no knowledge of) by reading the runes. If you do, add +1. The answers are revealed only with extra time and focus; suffer -2 momentum."
                                        "Miss" "Your efforts are in vain and take a long time; suffer -2 momentum."}}}}
@@ -694,8 +694,8 @@
                       :move {:name "Whisper to the wind"
                              :move-type :normal
                              :description "When you speak a person's name three times to the wind, roll +wits."
-                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only)."
-                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress)."
+                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fulfil this need when you Compel them, you may reroll any dice (one time only)."
+                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fulfil this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress)."
                                        "Miss" "The wind does not respond. Endure Stress (1 stress)."}}}}
             {:id :second
              :enabled false
@@ -705,8 +705,8 @@
                       :move {:name "Speak to the wind"
                              :move-type :normal
                              :description "When you speak a person's name three times to the wind, roll +wits."
-                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
-                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fullfill this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
+                             :results {"Strong Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fulfil this need when you Compel them, you may reroll any dice (one time only). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
+                                       "Weak Hit" "The wind whispers of this person's need. Envision what you hear (Ask the Oracle if unsure). If you use this information or fulfil this need when you Compel them, you may reroll any dice (one time only). This person's need creates a troubling dilemma or complication; Endure Stress (1 stress). If you roll a strong hit when you Compel, you may also reroll any dice (one time only) when you Gather Information from this person."
                                        "Miss" "The wind does not respond. Endure Stress (1 stress)."}}}}
             {:id :third
              :enabled false
@@ -721,8 +721,8 @@
                       :move {:name "Bond with your totem"
                              :move-type :normal
                              :description "When you hold a totem of your animal companion and focus on it, roll +heart."
-                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent."
-                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
+                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a hit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent."
+                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a hit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
                                        "Miss" "Creating this connection is unsettling; Endure Stress (1 stress)."}}}}
             {:id :second
              :enabled false
@@ -732,8 +732,8 @@
                       :move {:name "See through your totem"
                              :move-type :normal
                              :description "When you hold a totem of your animal companion and focus on it, roll +heart."
-                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent."
-                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a thit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
+                             :results {"Strong Hit" "You are bound together. Add +1 and take +1 momentum on a hit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent."
+                                       "Weak Hit" "You are bound together. Add +1 and take +1 momentum on a hit when you use a companion ability. You may also perceive the world through your companion's senses while you make moves aided by them (even when you are apart). If you roll a 1 on your action die when using a companion ability, the magic is spent. Creating this connection is unsettling; Endure Stress (1 stress)."
                                        "Miss" "Creating this connection is unsettling; Endure Stress (1 stress)."}}}}
             {:id :third
              :enabled false
@@ -842,7 +842,7 @@
              :result "When you Sojourn, you may reroll any dice. If you do (decide before your first roll), your needs are few, but your isolation sets you apart from others. A strong hit counts as a weak hit."}
             {:id :third
              :enabled false
-             :result "When you Reach Your Destination and roll a strong hit, you recall or recognize something helpful about this place. Envision what it is, and take +2 momentum."}]}
+             :result "When you Reach Your Destination and roll a strong hit, you recall or recognise something helpful about this place. Envision what it is, and take +2 momentum."}]}
    {:name "Pretender"
     :asset-type "Path"
     :perks [{:id :first
@@ -885,7 +885,7 @@
              :result "When you Undertake a Journey, and your action score is equal to one or both challenge dice, you may push your horse harder and add +1. If you do, make the Companion Endure Harm move (1 harm)."}
             {:id :third
              :enabled false
-             :result "When you Reach Your Destination and roll a strong hit, you recall or recognize something helpful about this place. Envision what it is, and take +2 momentum."}]}
+             :result "When you Reach Your Destination and roll a strong hit, you recall or recognise something helpful about this place. Envision what it is, and take +2 momentum."}]}
    {:name "Waterborn"
     :asset-type "Path"
     :perks [{:id :first

@@ -26,9 +26,9 @@
                "Suspicious of strangers"]
     :drives ["Prepare for the winter"
              "Protect family"]
-    :tactics ["Desperate defense"
+    :tactics ["Desperate defence"
               "Stand together"]
-    :description "Most of us in the Ironlands are common folk. We are farmers, laborers, crafters, sailors, and traders. When trouble comes, we know which way the pointy end goes, and we stand together to protect our homes and kin."
+    :description "Most of us in the Ironlands are common folk. We are farmers, labourers, crafters, sailors, and traders. When trouble comes, we know which way the pointy end goes, and we stand together to protect our homes and kin."
     :starter "Two prominent families are at odds. What is the source of the conflict? What is your relationship to them? What danger threatens to destroy their community if they can’t put aside their petty squabble?"}
    {:name "Hunter"
     :npc-type "Ironlander"
@@ -59,7 +59,7 @@
     :npc-type "Ironlander"
     :lvl "Dangerous"
     :features ["Geared for war"
-               "Battle fervor"]
+               "Battle fervour"]
     :drives ["What is theirs will be ours"
              "Stand with my kin"
              "Die a glorious death"]
@@ -76,7 +76,7 @@
     :drives ["The thrill of the fight"
              "Protect those in my charge"
              "Survive another day"]
-    :tactics ["Maneuver for advantage"
+    :tactics ["Manoeuvre for advantage"
               "Find an opening"]
     :description "Some Ironlanders, through strength of arms, set themselves apart from the common rabble. They are trained to fight, or simply born to it. For them, a sword, spear, or axe is as natural a tool as any hammer or spade."
     :starter "A legendary warrior, now well past their prime, swears to face a daunting foe in one final battle. What help do they ask of you and why? Who is their enemy?"}
@@ -92,7 +92,7 @@
     :tactics ["Strike from shadow"
               "Force their surrender"
               "Turn the forest against them"]
-    :description "Elves are strange beings of the forest, seldom seen beyond the ancient woods of the Deep Wilds. They are fiercely protective of their lands and suspicious of humans. Their scouts patrol the borderlands, riding the fearsome mounts we call gaunts. Others of their kind watch us from the shadow of the deep woods, spears and bow at the ready. Some say elven mystics can bind the animals and beasts of the forest to aid in the defense of the Wilds. A few warn that the elves are biding their time, readying the attack which will drive us from these lands."
+    :description "Elves are strange beings of the forest, seldom seen beyond the ancient woods of the Deep Wilds. They are fiercely protective of their lands and suspicious of humans. Their scouts patrol the borderlands, riding the fearsome mounts we call gaunts. Others of their kind watch us from the shadow of the deep woods, spears and bow at the ready. Some say elven mystics can bind the animals and beasts of the forest to aid in the defence of the Wilds. A few warn that the elves are biding their time, readying the attack which will drive us from these lands."
     :starter "The leader of an Ironlander community seeks an audience with the elves. For what purpose? Why are you compelled to help?"}
    {:name "Giant"
     :npc-type "Firstborn"
@@ -118,7 +118,7 @@
              "Cling to vestiges of power"]
     :tactics ["Control the elements"
               "Destroy with primal rage"]
-    :description "The primordials, said to be the vestigial spirits of long-forgotten gods, are the most ancient of the firstborn. Each embodies some aspect of the natural world, bound in a crude mimicry of a human or large animal. A river primordial is a mass of rock, gravel, and flowing water. A forest primordial is formed of wood, earth, rocks, and plants. A mountain primordial is a lumbering being of glacier stone and ice. A fire primordial, depending on its mood, might take form as embers, ash, and smoke—or as a raging pyre. They range in size from the height of an Ironlander to half-again as tall as a giant. Rumors persist of primordials who dwell in the deepest parts of the Wilds, or high in the ranges of the Veiled Mountains, who are as tall as an ancient tree. Beyond, some suggest, in the Shattered Wastes, live primordials who tower into the clouds. Is the sound of distant thunder sometimes the footfalls of mountain-sized primordials who dwell beyond the edge of the known world? Primordials are solitary beings as unpredictable as the natural forces they personify. They might ignore you. They might lurk at a distance, as if observing you. Or, they might attack. They do not speak in any language we can understand. Some suggest they have no intelligence, and are merely a manifestation of the natural world, no different than a winter storm. How do you kill a primordial? Most scoff at the idea. You are just as likely to kill the rain or the sea. A mystic might tell you to use a weapon imbued with elemental power. Don’t trust them. If you see a primordial, keep your distance. Better yet, run."
+    :description "The primordials, said to be the vestigial spirits of long-forgotten gods, are the most ancient of the firstborn. Each embodies some aspect of the natural world, bound in a crude mimicry of a human or large animal. A river primordial is a mass of rock, gravel, and flowing water. A forest primordial is formed of wood, earth, rocks, and plants. A mountain primordial is a lumbering being of glacier stone and ice. A fire primordial, depending on its mood, might take form as embers, ash, and smoke—or as a raging pyre. They range in size from the height of an Ironlander to half-again as tall as a giant. Rumours persist of primordials who dwell in the deepest parts of the Wilds, or high in the ranges of the Veiled Mountains, who are as tall as an ancient tree. Beyond, some suggest, in the Shattered Wastes, live primordials who tower into the clouds. Is the sound of distant thunder sometimes the footfalls of mountain-sized primordials who dwell beyond the edge of the known world? Primordials are solitary beings as unpredictable as the natural forces they personify. They might ignore you. They might lurk at a distance, as if observing you. Or, they might attack. They do not speak in any language we can understand. Some suggest they have no intelligence, and are merely a manifestation of the natural world, no different than a winter storm. How do you kill a primordial? Most scoff at the idea. You are just as likely to kill the rain or the sea. A mystic might tell you to use a weapon imbued with elemental power. Don’t trust them. If you see a primordial, keep your distance. Better yet, run."
     :starter "In the dead of winter, a fire primordial is razing homes and burning a nearby wood. At night, orange flames light the sky. What can be done to stop this destruction?"}
    {:name "Troll"
     :npc-type "Firstborn"
@@ -133,7 +133,7 @@
     :tactics ["Be sneaky"
               "Bite and claw"
               "Run and hide"]
-    :description "Trolls mostly live in the Flooded Land, but it’s not unusual to encounter one in the Hinterlands or even in the southern reaches of the Havens. They are solitary creatures, wary of contact with Ironlanders but likely to attack if scared or provoked. They move with their back hunched, often skulking on all four gangly limbs. When they stand straight they are much taller than humans—nearly as tall as a giant. Their skin is a sickly pale gray, but they can camouflage themselves by changing it to match their environment. Trolls collect objects of all sorts, and particularly value Ironlander trinkets. They are tormented by the fear of others stealing their hoard, and are constantly seeking out new, better hiding places. The items are mostly junk to anyone but a troll, but occasionally an object of real value finds its way into the dregs."
+    :description "Trolls mostly live in the Flooded Land, but it’s not unusual to encounter one in the Hinterlands or even in the southern reaches of the Havens. They are solitary creatures, wary of contact with Ironlanders but likely to attack if scared or provoked. They move with their back hunched, often skulking on all four gangly limbs. When they stand straight they are much taller than humans—nearly as tall as a giant. Their skin is a sickly pale grey, but they can camouflage themselves by changing it to match their environment. Trolls collect objects of all sorts, and particularly value Ironlander trinkets. They are tormented by the fear of others stealing their hoard, and are constantly seeking out new, better hiding places. The items are mostly junk to anyone but a troll, but occasionally an object of real value finds its way into the dregs."
     :starter "The villagers tolerate the troll who lives nearby because its presence serves to dissuade a greater threat. They even donate items for its hoard, and put up with its occasional thievery. But now, the troll is missing. What is the looming threat the troll helped avert?"}
    {:name "Varou"
     :npc-type "Firstborn"
@@ -171,7 +171,7 @@
              "Defend sows"]
     :tactics ["Charge and gore"
               "Circle and attack again"]
-    :description "In the Old World, wild boars were belligerent and dangerous animals. Here inthe Ironlands? They are even bigger and meaner. They attack without warning or provocation. They will run you down, gore you, bite you, and circle around to do it all again. And again. And again."
+    :description "In the Old World, wild boars were belligerent and dangerous animals. Here in the Ironlands? They are even bigger and meaner. They attack without warning or provocation. They will run you down, gore you, bite you, and circle around to do it all again. And again. And again."
     :starter "A boar hunt ends in tragedy when an Ironlander is gored and grievously wounded. How do you know this person? What terrible truth do they reveal as they lay dying?"}
    {:name "Gaunt"
     :npc-type "Animals"
@@ -183,8 +183,8 @@
     :tactics ["Rear up"
               "Charge"
               "Trample"]
-    :description "A gaunt is a creature unique to the Ironlands. They maneuver across the rough, dense terrain of the Deep Wilds and Hinterlands with uncanny speed and grace. This makes them ideal as mounts for the elves, who breed and train them. A gaunt will not usually act aggressively without provocation, but they are as deadly as the fiercest warhorse under the command of a talented rider."
-    :starter "Villages in the Hinterlands have fallen prey to a large band of gaunt-riding elves. They attack with sudden and violent force, and are gone before any sort of defense can be mustered. Their leader, a warrior of unmatched skill, rides a distinctive white gaunt. What has driven these elves to strike out against the Ironlanders?"}
+    :description "A gaunt is a creature unique to the Ironlands. They manoeuvre across the rough, dense terrain of the Deep Wilds and Hinterlands with uncanny speed and grace. This makes them ideal as mounts for the elves, who breed and train them. A gaunt will not usually act aggressively without provocation, but they are as deadly as the fiercest warhorse under the command of a talented rider."
+    :starter "Villages in the Hinterlands have fallen prey to a large band of gaunt-riding elves. They attack with sudden and violent force, and are gone before any sort of defence can be mustered. Their leader, a warrior of unmatched skill, rides a distinctive white gaunt. What has driven these elves to strike out against the Ironlanders?"}
    {:name "Marsh Rat"
     :npc-type "Animals"
     :lvl "Troublesome"
@@ -205,7 +205,7 @@
     :tactics ["Stalk"
               "Pack rush"
               "Drag to the ground"]
-    :description "The Ironlands are home to several breeds of wolves. Most are not aggressive and stay clear of settlements and travelers. Despite that, attacks against Ironlanders are not unknown. A harsh winter and insufficient prey can drive a pack to hunt livestock or even an unwary Ironlander. As night falls we hear their howls, and hope they are well fed."
+    :description "The Ironlands are home to several breeds of wolves. Most are not aggressive and stay clear of settlements and travellers. Despite that, attacks against Ironlanders are not unknown. A harsh winter and insufficient prey can drive a pack to hunt livestock or even an unwary Ironlander. As night falls we hear their howls, and hope they are well fed."
     :starter "You find the grisly remains of a pack of wolves. All are dead, even the cubs. What caused this? Why is it a harbinger of a greater danger?"}
    {:name "Basilisk"
     :npc-type "Beasts"
@@ -215,7 +215,7 @@
                "Vibrant yellow eyes"]
     :drives ["Devour"]
     :tactics ["Lay in wait"
-              "Mesmerizing gaze"
+              "Mesmerising gaze"
               "Sudden bite"
               "Crush"]
     :description "Basilisks dwell in the Flooded Lands, lurking in the murky waters of the swamps or within marshy thickets. There, they wait patiently for prey. They regularly feed on marsh rats or deer, but will eagerly make a meal out of a passing Ironlander."
@@ -256,7 +256,7 @@
               "Ram and swamp ships"
               "Devour prey whole"]
     :description "These massive sea beasts lurk in the darkness of the deepest fjords and in the abyssal depths beyond the Barrier Islands. They sometimes surface to hunt within shallower waters. They will indiscriminately destroy any Ironlander vessel which strays too close to their hunting grounds. Watchful sailors might catch sight of a leviathan circling their boat, studying them, in the moments before it attacks. Their dagger-shaped head is as tough and destructive as any battering ram, able to shatter a ship in a single blow."
-    :starter "A leviathan lurks off the coast, preying on fishing boats and trade ships. Among the dead is someone important to you. Who is it? You have vowed to send this beast back to the depths, but doing so will require a mythic weapon — The Abyssal Harpoon, an Old World artifact said to be carved from the bones of a long-dead sea god. Where is this weapon rumored to be held?"}
+    :starter "A leviathan lurks off the coast, preying on fishing boats and trade ships. Among the dead is someone important to you. Who is it? You have vowed to send this beast back to the depths, but doing so will require a mythic weapon — The Abyssal Harpoon, an Old World artefact said to be carved from the bones of a long-dead sea god. Where is this weapon rumoured to be held?"}
    {:name "Mammoth"
     :npc-type "Beasts"
     :lvl "Extreme"
@@ -292,7 +292,7 @@
     :lvl "Dangerous"
     :features ["Skeletal corpse"
                "Yellowed bones"
-               "Tattered remains of clothing and armor"]
+               "Tattered remains of clothing and armour"]
     :drives ["Destroy life"]
     :tactics ["Rush with unexpected speed"
               "Attack with the weapons they bore in life"
@@ -346,18 +346,18 @@
               "Draw in a whirlwind of materials to reform and enlarge"
               "Envelop and suffocate"]
     :description "It is said that elves who die an unjust death or have cause to seek retribution can rise as a hollow. Their form is a rippling mass of dead leaves, plants, soil, carrion, and insects. They move with a nightmarish, shambling gait. Their face is the wooden mask they wore in life. Their voice is the rattle of the wind through dry leaves. As with haunts, they can be temporarily defeated but cannot be killed by physical means. They are a relentless force, bound to this world by a singular motivation — vengeance."
-    :starter "A hollow terrorizes an Ironlander village. What does it seek? What will you do to stop it?"}
+    :starter "A hollow terrorises an Ironlander village. What does it seek? What will you do to stop it?"}
    {:name "Iron Revenant"
     :npc-type "Horrors"
     :lvl "Extreme"
-    :features ["Empty, patchwork shell of armor and other hunks of metal"
+    :features ["Empty, patchwork shell of armour and other hunks of metal"
                "Wielding iron weapons"
                "A low, reverberating voice"]
-    :drives ["Fulfill the vow"
+    :drives ["Fulfil the vow"
              "Destroy any who stand in their way"]
     :tactics ["Steadfast attacks"
               "Pull in iron with an unyielding, magnetic force"]
-    :description "Some vows are held so fiercely that they survive even after death. An iron revenant is an incorporeal force of furious resolve, the unfinished vow of an Ironsworn given horrible form as a construct of metal. Attacks may slow them down or temporarily break apart their armored form, but they have no flesh to pierce and cannot be killed. An iron revenant won’t stop until their vow is fulfilled.A"
+    :description "Some vows are held so fiercely that they survive even after death. An iron revenant is an incorporeal force of furious resolve, the unfinished vow of an Ironsworn given horrible form as a construct of metal. Attacks may slow them down or temporarily break apart their armoured form, but they have no flesh to pierce and cannot be killed. An iron revenant won’t stop until their vow is fulfilled."
     :starter "Someone you knew has taken form as an iron revenant. Who is it? What is their vow?"}
    {:name "Sodden"
     :npc-type "Horrors"

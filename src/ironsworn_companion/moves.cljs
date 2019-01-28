@@ -12,7 +12,7 @@
     :results {"Strong Hit" {:description "You are successful. Take +1 momentum."
                             :options nil
                             :random-event nil}
-              "Weak Hit" {:description "You succed but face a troublesome cost. Choose one."
+              "Weak Hit" {:description "You succeed but face a troublesome cost. Choose one."
                           :options [["You are delayed..." "... , lose advantage or face a new danger: Suffer -1 momentum."]
                                     ["You are tired or hurt." "Endure Harm (1 Harm)."]
                                     ["You are dispirited or afraid" "Endure Stress (1 Stress)."]
@@ -105,11 +105,11 @@
    {:name "Reach your Destination"
     :move-type :progress-track
     :description "When your journey comes to an end, roll the challenge dice and compare to your progress. Momentum is ignored on this roll."
-    :results {"Strong Hit" {:description "The situation at your destination favors you. Choose one."
+    :results {"Strong Hit" {:description "The situation at your destination favours you. Choose one."
                             :options [["Act" "Make another move now (not a progress move), and add +1."]
                                       ["Prepare" "Take +1 momentum."]]
                             :random-event nil}
-              "Weak Hit" {:description "Your arrive, but face an unforseen hazard or complication. Envision what you find (Ask the oracle if unsure)."
+              "Weak Hit" {:description "Your arrive, but face an unforeseen hazard or complication. Envision what you find (Ask the oracle if unsure)."
                           :options nil
                           :random-event nil}
               "Miss" {:description "You have gone hopelessly astray, your objective is lost to you, or you were misled about your destination. If your journey continues, clear all but one filled progress., and raise the journey's rank by one (if not already epic)."
@@ -129,7 +129,7 @@
                       :random-event nil}}}
    {:name "Sojourn"
     :move-type :normal
-    :description "When you spend time in a community seeking assisstance, roll +heart. If you share a bond, add +1."
+    :description "When you spend time in a community seeking assistance, roll +heart. If you share a bond, add +1."
     :results {"Strong Hit" {:description "You and your allies may each choose two from within the categories below. If you share a bond, choose one more."
                             :options [["Mend" "Clear a wounded debility and take +1 health."]
                                       ["Hearten" "Clear a shaken debility and take +1 spirit."]
@@ -155,17 +155,17 @@
                       :random-event nil}}}
    {:name "Draw the Circle"
     :move-type :normal
-    :description "When you challenge someone to a formal duel, or accept a challenge, roll +heart. If you share a bond with this community, add +1. After the duel, if you are the victor, you may make a lawful demand and your opponent must comply or forfeit their honor and standing. If you refuse the challenge, surrender, or are defeated, they make a demand of you."
+    :description "When you challenge someone to a formal duel, or accept a challenge, roll +heart. If you share a bond with this community, add +1. After the duel, if you are the victor, you may make a lawful demand and your opponent must comply or forfeit their honour and standing. If you refuse the challenge, surrender, or are defeated, they make a demand of you."
     :results {"Strong Hit" {:description "Take +1 momentum. You may also choose up to three boasts and take +1 momentum for each."
                             :options [["Grant first strike" "Your foe has initiative."]
-                                      ["Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."]
+                                      ["Bare yourself" "Take no benefit of armour or shield; your foe's harm is +1."]
                                       ["Hold no iron" "Take no benefit of weapons; your harm is 1."]
                                       ["Bloody yourself" "Endure harm (1 harm)."]
                                       ["To the death" "One way or another, this fight must end with death."]]
                             :random-event nil}
               "Weak Hit" {:description "You may choose one boast in exchange for +1 momentum."
                           :options [["Grant first strike" "Your foe has initiative."]
-                                    ["Bare yourself" "Take no benefit of armor or shield; your foe's harm is +1."]
+                                    ["Bare yourself" "Take no benefit of armour or shield; your foe's harm is +1."]
                                     ["Hold no iron" "Take no benefit of weapons; your harm is 1."]
                                     ["Bloody yourself" "Endure harm (1 harm)."]
                                     ["To the death" "One way or another, this fight must end with death."]]
@@ -175,10 +175,10 @@
                       :random-event nil}}}
    {:name "Forge a Bond"
     :move-type :normal
-    :description "When you spend significant time with a person or community, stand together to face harships, or make sacrifices to their cause, you can attempt to create a bond. When you do, roll +heart. If you make this move after you successfully Fullfill your Vow to their benefit, you may reroll any dice."
+    :description "When you spend significant time with a person or community, stand together to face hardships, or make sacrifices to their cause, you can attempt to create a bond. When you do, roll +heart. If you make this move after you successfully Fulfil your Vow to their benefit, you may reroll any dice."
     :results {"Strong Hit" {:description "Make note of the bond, mark a tick on your bond progress track, and choose one."
                             :options [["Cheer up" "Take +1 spirit."]
-                                      ["Envigorate" "Take +2 momentum."]]
+                                      ["Invigorate" "Take +2 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "They ask something more of you first. Envision what it is (Ask the Oracle, if unsure), do it (or Swear an Iron Vow) and mark the bond. Make note of the bond, mark a tick on your bond progress track, and choose one. If you decline or fail, Pay the Price."
                           :options nil
@@ -191,7 +191,7 @@
     :description "When your bond is tested through conflict, betrayal, or circumstance, roll +heart. If you have no interest in maintaining this relationship, just clear the bond and Pay the Price."
     :results {"Strong Hit" {:description "This test has strengthened your bond. Choose one."
                             :options [["Cheer up" "Take +1 spirit."]
-                                      ["Envigorate" "Take +2 momentum."]]
+                                      ["Invigorate" "Take +2 momentum."]]
                             :random-event nil}
               "Weak Hit" {:description "Your bond is fragile and you must prove your loyalty. Envision what they ask of you (Ask the Oracle, if unsure), and do it (or Swear an Iron Vow). If you decline or fail, clear the bond and Pay the Price."
                           :options nil
@@ -212,7 +212,7 @@
               "Weak Hit" {:description "Your life takes an unexpected turn, but not necessarily for the worse. You find yourself spending your days with someone or in a place you did not foresee. Envision it (Ask the Oracle if unsure)."
                           :options nil
                           :random-event nil}
-              "Miss" {:description "Your fears are realized."
+              "Miss" {:description "Your fears are realised."
                       :options nil
                       :random-event nil}}}
    {:name "Enter the Fray"
@@ -257,14 +257,14 @@
    {:name "End the Fight"
     :move-type :progress-track
     :description "When you make a move to take decisive action, and score a strong hit, you may resolve the outcome for this fight. If you do, roll the challenge dice and compare to your progress. Momentum is ignored on this roll."
-    :results {"Strong Hit" {:description "This foe is no longer in this fight. They are killed, out of action, flee, or surrender as appropriate to the situation and your intent (Ask the Oracte if unsure)."
+    :results {"Strong Hit" {:description "This foe is no longer in this fight. They are killed, out of action, flee, or surrender as appropriate to the situation and your intent (Ask the Oracle if unsure)."
                             :options nil
                             :random-event nil}
-              "Weak Hit" {:description "This foe is no longer in this fight. They are killed, out of action, flee, or surrender as appropriate to the situation and your intent (Ask the Oracte if unsure). Choose one."
+              "Weak Hit" {:description "This foe is no longer in this fight. They are killed, out of action, flee, or surrender as appropriate to the situation and your intent (Ask the Oracle if unsure). Choose one."
                           :options [["It's worse than you thought" "Endure Harm:"]
                                     ["You are overcome" "Endure Stress."]
                                     ["Your victory is short-lived" "A new danger or foe appears, or an existing danger worsens."]
-                                    ["You suffer colleteral damage" "Something of value is lost or broken, or someone must pay an important cost."]
+                                    ["You suffer collateral damage" "Something of value is lost or broken, or someone must pay an important cost."]
                                     ["You'll pay for it" "An objective falls out of reach."]
                                     ["Others won't forget" "You are marked for vengeance."]]
                           :random-event nil}
@@ -329,7 +329,7 @@
     :results {"Strong Hit" {:description "Your companion rallies. Give them +1 health."
                             :options nil
                             :random-event nil}
-              "Weak Hit" {:description "Your companion is battered. If their health is 0, they cannot assisst you until they gain at least +1 health."
+              "Weak Hit" {:description "Your companion is battered. If their health is 0, they cannot assist you until they gain at least +1 health."
                           :options nil
                           :random-event nil}
               "Miss" {:description  "Also suffer -1 momentum. If your companions health is 0, they are gravely wounded and out of action. Without aid, they die in an hour or two. If you roll a miss with a 1 on your action die, and your companions health is 0, they are now dead. Take +1 experience for each marked ability on your companion asset, and remove it."
@@ -373,11 +373,11 @@
     :description "When your momentum is at its minimum (-6), and you suffer additional -momentum."
     :results {"Other" {:description "Choose one."
                        :options [["To the last" "Exchange each additional -momentum for any combination of -health, -spirit or -supply, as appropriate to the circumstances."]
-                                 ["Sacrific progress" "Envision an event or discovery (Ask the Orace if unsure), which undermines your progress in a current quest, journey or fight. Then, for each additional -momentum, clear 1 unit of progress that track per its rank."]]
+                                 ["Sacrifice progress" "Envision an event or discovery (Ask the Oracle if unsure), which undermines your progress in a current quest, journey or fight. Then, for each additional -momentum, clear 1 unit of progress that track per its rank."]]
                        :random-event nil}}}
    {:name "Swear an Iron Vow"
     :move-type :normal
-    :description "When you swear upon iron to complete a quest, write your vow and give the quest a rank. Then, roll +heart. If you make this vow to a person or commmunity with whom you share a bond, add +1."
+    :description "When you swear upon iron to complete a quest, write your vow and give the quest a rank. Then, roll +heart. If you make this vow to a person or community with whom you share a bond, add +1."
     :results {"Strong Hit" {:description "You are emboldened and it is clear what you must do next (Ask the Oracle if unsure). Take +2 momentum."
                             :options nil
                             :random-event nil}
@@ -392,13 +392,13 @@
     :move-type :no-roll
     :description "When you make significant progress in your quest by overcoming a critical obstacle, completing a perilous journey, solving a complex mystery, defeating a powerful threat, gaining vital support, or acquiring a crucial item, you may mark progress."
     :results nil}
-   {:name "Fullfill your Vow"
+   {:name "Fulfil your Vow"
     :move-type :vow-move
-    :description "When you achieve what you believe to be the fullfillment of you vow, roll the challenge dice and compare to your progress. Momentum is ignored on this roll."
+    :description "When you achieve what you believe to be the fulfilment of you vow, roll the challenge dice and compare to your progress. Momentum is ignored on this roll."
     :results {"Strong Hit" {:description "Your quest is complete mark experience according to its rank (troublesome = 1, epic = 5)."
                             :options nil
                             :random-event nil}
-              "Weak Hit" {:description "There is more to be done, or you realize the truth of your quest. Envision what you discover (Ask the Oracle if unsure). Then, mark experience (troublesome = 0, epic = 4). You may Swear an Iron Vow to set things right. If you do, add +1."
+              "Weak Hit" {:description "There is more to be done, or you realise the truth of your quest. Envision what you discover (Ask the Oracle if unsure). Then, mark experience (troublesome = 0, epic = 4). You may Swear an Iron Vow to set things right. If you do, add +1."
                           :options nil
                           :random-event nil}
               "Miss" {:description "Your quest is undone. Envision what happens (Ask the Oracle if unsure), and choose one."
@@ -407,7 +407,7 @@
                       :random-event nil}}}
    {:name "Forsake your Vow"
     :move-type :no-roll
-    :description "When you renouce your quest, betray your promise, or the goal is lost to you, clear the vow and Endure Stress. You suffer -spirit equal to the rank of your quest (troublesome = 1, epic = 5)."
+    :description "When you renounce your quest, betray your promise, or the goal is lost to you, clear the vow and Endure Stress. You suffer -spirit equal to the rank of your quest (troublesome = 1, epic = 5)."
     :results nil}
    {:name "Advance"
     :move-type :no-roll
@@ -432,7 +432,7 @@
                                       [59 "It causes delay or puts you at a disadvantage."]
                                       [68 "It is harmful."]
                                       [77 "It is stressful."]
-                                      [85 "A suprising devolpment complicates your quest."]
+                                      [85 "A surprising development complicates your quest."]
                                       [90 "It wastes resources."]
                                       [94 "It forces you to act against your best intentions."]
                                       [98 "A friend, companion, or ally is put in harm's way (or you are, if alone)."]
@@ -592,8 +592,8 @@
                                                           [17 "Renown"]
                                                           [18 "Direction"]
                                                           [19 "Death"]
-                                                          [20 "Honor"]
-                                                          [21 "Labor"]
+                                                          [20 "Honour"]
+                                                          [21 "Labour"]
                                                           [22 "Solution"]
                                                           [23 "Tool"]
                                                           [24 "Balance"]
@@ -806,7 +806,7 @@
                                                                         [90 "Expansive"]
                                                                         [92 "Settled"]
                                                                         [94 "Dense"]
-                                                                        [96 "Civilized"]
+                                                                        [96 "Civilised"]
                                                                         [98 "Desolate"]
                                                                         [100 "Isolated"]]}]
                                  ["Settlement Name" {:description "Divine the name of a settlement"
@@ -823,7 +823,7 @@
                                                                                         [80 "Whitefall"]
                                                                                         [90 "Graycliff"]
                                                                                         [100 "Three Rivers"]]}
-                                                                     30 {:description "A manmade edifice. What is it? Why is it important to this settlement's history?"
+                                                                     30 {:description "A man made edifice. What is it? Why is it important to this settlement's history?"
                                                                          :options nil
                                                                          :random-event [[10 "Whitebridge"]
                                                                                         [20 "Lonefort"]
@@ -1010,7 +1010,7 @@
                                                                    [21 "Outcast"]
                                                                    [24 "Vagrant"]
                                                                    [27 "Forester"]
-                                                                   [30 "Traveler"]
+                                                                   [30 "Traveller"]
                                                                    [33 "Mystic"]
                                                                    [36 "Priest"]
                                                                    [39 "Sailor"]
@@ -1058,7 +1058,7 @@
                                                                    [72 "Advance status"]
                                                                    [75 "Defend a place"]
                                                                    [78 "Avenge a wrong"]
-                                                                   [81 "Fulfill a duty"]
+                                                                   [81 "Fulfil a duty"]
                                                                    [84 "Gain Knowledge"]
                                                                    [87 "Prove worthiness"]
                                                                    [90 "Find redemption"]
@@ -1142,13 +1142,13 @@
                                                                          [73 "Weak"]
                                                                          [74 "Friendly"]
                                                                          [75 "Wise"]
-                                                                         [76 "Influental"]
+                                                                         [76 "Influential"]
                                                                          [77 "Young"]
                                                                          [78 "Adventurous"]
                                                                          [79 "Oppressed"]
                                                                          [80 "Vengeful"]
                                                                          [81 "Cooperative"]
-                                                                         [82 "Armored"]
+                                                                         [82 "Armoured"]
                                                                          [83 "Apathetic"]
                                                                          [84 "Determined"]
                                                                          [85 "Loyal"]
@@ -1510,7 +1510,7 @@
                                                    :options nil
                                                    :random-event [[3 "Compel a surrender"]
                                                                   [6 "Coordinate with allies"]
-                                                                  [9 "Gather reinforcments"]
+                                                                  [9 "Gather reinforcements"]
                                                                   [13 "Seize something or someone"]
                                                                   [17 "Provoke a reckless response"]
                                                                   [21 "Intimidate or frighten"]
@@ -1518,7 +1518,7 @@
                                                                   [29 "Shift focus to someone or something else"]
                                                                   [33 "Destroy something, or render it useless"]
                                                                   [39 "Take a decisive action"]
-                                                                  [45 "Reinforce defenses"]
+                                                                  [45 "Reinforce defences"]
                                                                   [52 "Ready an action"]
                                                                   [60 "Use the terrain to gain advantage"]
                                                                   [68 "Leverage the advantage of a weapon or ability"]
@@ -1549,7 +1549,7 @@
                                                                     [76 "You see a troubling vision of your future"]
                                                                     [80 "You can't perform this ritual again until you acquire an important component"]
                                                                     [84 "You develop a strange fear or compulsion"]
-                                                                    [88 "Your ritual causes creatures to exhibit strange or aggressive behavior"]
+                                                                    [88 "Your ritual causes creatures to exhibit strange or aggressive behaviour"]
                                                                     [92 "You are tormented by an apparition from your past"]
                                                                     [96 "You are wracked with sudden sickness"]
                                                                     [100 "Roll twice more on this table. Both results occur. If they are the same result, make it worse."]]}]
@@ -1575,7 +1575,7 @@
                                                                      [90 "Two seemingly unrelated situations are shown to be connected"]
                                                                      [95 "Unexpected powers or abilities are revealed"]
                                                                      [100 "Roll twice more. Both results occur. If they are the same result, make it more dramatic."]]}]
-                                 ["Challenge Rank" {:desription "Divine the rank of a challenge"
+                                 ["Challenge Rank" {:description "Divine the rank of a challenge"
                                                     :options nil
                                                     :random-event [[20 "Troublesome"]
                                                                    [55 "Dangerous"]
