@@ -1,0 +1,11 @@
+Ironsworn Companion
+
+Privacy Policy
+
+This app does not collect or store your data outside of your Android device.
+As a consequence, it does not transmit this data to any other third party.
+There is no server backend which would enable this.
+
+To say it clearly:
+
+All data is only stored on your device!
