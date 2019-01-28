@@ -428,8 +428,10 @@
          asset (first (filter
                        #(= asset-name (:name %))
                        (:assets db)))]
-     (update-in db [:characters act-char :assets]
-                conj asset))))
+     (if act-char
+       (update-in db [:characters act-char :assets]
+                  conj asset)
+       db))))
 
 (reg-event-db
  :rm-ass
