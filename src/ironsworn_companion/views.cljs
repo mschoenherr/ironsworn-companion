@@ -141,6 +141,22 @@
       item])])
 
 ;; Views for the Journal
+(defn journal-entry-view [entry]
+  "Component for viewing and editing a single entry to the journal."
+  (let [edit? (atom false)]
+    (fn [entry]
+      [view {:flex-direction "row"
+             :padding 1
+             :justify-content "space-between"}
+       (if @edit?
+         [text-input {:on-submit-editing #(dispatch [:mod-journal-entry entry %])
+                      :default-value entry}]
+         [text {:style {:margin 2
+                        :width "80%"
+                        :padding 1}} entry])
+       [button {:title "Edit"
+                :on-press #(swap! edit? not)}]])))
+
 (defn journal-view []
   "View for reading journal and inserting new entries."
   (let [journal (subscribe [:get-journal])]
@@ -154,9 +170,7 @@
      [scroll-view
       (for [entry @journal]
         ^{:key entry}
-        [text {:style {:font-size 16
-                       :padding 2}}
-         entry])]]))
+        [journal-entry-view entry])]]))
 
 ;; Views for Char
 (defn stat-view [char-name [stat-name stat-value]]
@@ -888,7 +902,8 @@
 (defn topic-view [topic]
   "Component for viewing a topic in world views."
   (let [add-theme? (atom false)
-        new-theme (atom {})]
+        new-theme (atom {})
+        really-delete? (atom false)]
     (fn [topic]
       [view {:style {:border-width 1
                      :margin 2
@@ -902,8 +917,6 @@
            ^{:key theme}
            [picker-item {:label theme :value theme}])]
         [theme-view (get-in topic [:themes (:selected-val topic)])]
-        [button {:title "Add theme"
-                 :on-press #(swap! add-theme? not)}]
         (when @add-theme?
           [view
            [text-input {:on-submit-editing (fn [title]
@@ -917,8 +930,17 @@
                         :placeholder "Quest starter"}]
            [button {:title "Submit"
                     :on-press #(dispatch [:add-theme topic @new-theme])}]])
-        [button {:title "Delete theme"
-                 :on-press #(dispatch [:del-theme topic])}]]])))
+        [view {:style {:flex-direction "row"}}
+         [button {:title "Add theme"
+                  :on-press #(swap! add-theme? not)}
+          :enclosing-style {:flex 1}]
+         (if @really-delete?
+           [button {:title "Really delete theme?"
+                    :on-press #(dispatch [:del-theme topic])}
+            :enclosing-style {:flex 1}]
+           [button {:title "Delete theme"
+                    :on-press #(swap! really-delete? not)}
+            :enclosing-style {:flex 1}])]]])))
 
 (defn world-view []
   (let [world (subscribe [:get-world])]
@@ -933,6 +955,7 @@
 (defn location-view [region-name name description]
   "Component for viewing a location."
   (let [edit? (atom false)
+        really-delete? (atom false)
         new-name (atom name)
         new-desc (atom description)]
     (fn [region-name name description]
@@ -956,9 +979,13 @@
         [button {:title "Edit"
                  :on-press #(swap! edit? not)}
          :enclosing-style {:flex 1}]
-        [button {:title "Delete"
-                 :on-press #(dispatch [:del-location region-name name])}
-         :enclosing-style {:flex 1}]]])))
+        (if @really-delete?
+          [button {:title "Really delete?"
+                  :on-press #(dispatch [:del-location region-name name])}
+           :enclosing-style {:flex 1}]
+          [button {:title "Delete"
+                   :on-press #(swap! really-delete? not)}
+           :enclosing-style {:flex 1}])]])))
 
 (defn region-view [name region]
   "Component for viewing a region."
@@ -1054,17 +1081,19 @@
                         :padding 1
                         :margin 1}}
           (:description detail)]
-         [view {:style {:flex-direction "row"
-                        :justify-content "space-evenly"}}
+         [view {:style {:flex-direction "row"}}
           [button {:title "Edit"
-                   :on-press #(swap! edit? not)}]
+                   :on-press #(swap! edit? not)}
+           :enclosing-style {:flex 1}]
           (if @really-delete?
-            [button {:title "Really delete"
+            [button {:title "Really delete?"
                      :on-press #(do
                                   (dispatch [:del-bond-detail (:name detail)])
-                                  (swap! really-delete? not))}]
+                                  (swap! really-delete? not))}
+             :enclosing-style {:flex 1}]
             [button {:title "Delete"
-                     :on-press #(swap! really-delete? not)}])]]))))
+                     :on-press #(swap! really-delete? not)}
+             :enclosing-style {:flex 1}])]]))))
 
 (defn bond-details-view []
   (let [bond-details (subscribe [:get-bond-details])]

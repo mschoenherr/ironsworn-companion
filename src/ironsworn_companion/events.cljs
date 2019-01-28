@@ -533,3 +533,13 @@
    (update db :bond-details
            (fn [details]
              (filter #(not= name (:name %)) details)))))
+
+(reg-event-db
+ :mod-journal-entry
+ validate-spec
+ (fn [db [_ old-entry new-entry]]
+   (let [update-if-entry (fn [entry] (if (= old-entry entry)
+                                       new-entry
+                                       entry))]
+     (update db :journal
+             #(map update-if-entry %)))))
