@@ -919,13 +919,13 @@
         [theme-view (get-in topic [:themes (:selected-val topic)])]
         (when @add-theme?
           [view
-           [text-input {:on-submit-editing (fn [title]
+           [text-input {:on-change-text (fn [title]
                                              (swap! new-theme #(assoc % :key title)))
                         :placeholder "Title"}]
-           [text-input {:on-submit-editing (fn [description]
+           [text-input {:on-change-text (fn [description]
                                              (swap! new-theme #(assoc % :description description)))
                         :placeholder "Description"}]
-           [text-input {:on-submit-editing (fn [starter]
+           [text-input {:on-change-text (fn [starter]
                                              (swap! new-theme #(assoc % :starter starter)))
                         :placeholder "Quest starter"}]
            [button {:title "Submit"
