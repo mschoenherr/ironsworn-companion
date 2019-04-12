@@ -37,8 +37,19 @@
 (def current-save (atom nil))
 
 (defn set-cur-id [db-id]
-  "Sets the default id to db-id."
+  "Sets the default id to db-id. Returns a promise."
   (.setItem AsyncStorage cur-db-id-key db-id))
+
+(defn id-already-present? [db-id]
+  "Checks wether a given id is already present. Returns a promise."
+  (-> (.getAllKeys AsyncStorage)
+      (.then #(contains? % db-id))))
+
+(defn rename-possible? [old-id new-id]
+  "Checks wether a rename is possible. Returns a promise."
+  (-> (.getAllKeys AsyncStorage)
+      (.then #(and (contains? % old-id)
+                   (not (contains? % new-id))))))
 
 (declare new-game)
 
@@ -46,61 +57,64 @@
   ([callback]
    "Gets default db, parses it and feeds it back to caller."
    (-> (.getItem AsyncStorage cur-db-id-key)
-       (.then #(if %
-                 (load-db callback %)
-                 (new-game callback)))))
+       (.then #(when %
+                 (load-db callback %))))) ;; if no save is present, create a new one with default name
   ([callback db-id]
    "Gets db item from Storage by id, then parses it and feeds it into callback."
    (-> (.getItem AsyncStorage db-id)
-       (.then #(if % (cljs.reader/read-string %) app-db))
-       (.then #(do
-                 (set-cur-id db-id)
-                 (swap! all-savegames conj db-id)
-                 (reset! current-save db-id) ;; check if this is really necessary (does not hurt, at least)
-                 %))
-       (.then callback))))
+       (.then #(when %
+                (-> (set-cur-id db-id)
+                    (.then (fn [_] (swap! all-savegames conj db-id)))
+                    (.then (fn [_] (reset! current-save db-id)))
+                    (.then (fn [_] (cljs.reader/read-string %)))
+                    (.then callback)))))))
 
 (defn save-db
   ([db]
    "Save db to Storage under default db-id."
    (-> (.getItem AsyncStorage cur-db-id-key)
-       (.then #(if %
-                 (save-db db %)
-                 (-> (set-cur-id default-db-id)
-                     (.then (fn [_]
-                              (save-db db default-db-id))))))))
+       (.then #(when (and % db)
+                 (save-db db %)))))
   ([db db-id]
    "Saves db to Storage."
    (-> (.setItem AsyncStorage db-id db)
        (.then (fn [_]
                 (swap! all-savegames conj db-id))))))
 
-(defn switch-to-save [db callback db-id]
+(defn switch-to-save [db callback new-id]
   "Saves current db and reloads new one."
   (-> (save-db db)
-      (.then #(load-db callback db-id))))
+      (.then (fn [_]
+               (load-db callback new-id)))))
 
 (defn del-savegame [db-id]
   "Delete savegame with given id from storage."
   (-> (.getItem AsyncStorage cur-db-id-key)
       (.then #(when (not= db-id %)
-                (do
-                  (swap! all-savegames disj db-id)
-                  (.removeItem AsyncStorage db-id))))))
+                (-> (.removeItem AsyncStorage db-id)
+                    (.then (fn [_]
+                             (swap! all-savegames disj db-id))))))))
+
+(defn- rename-save-aux [db-id new-id callback]
+  "Rename savegame. No saveguards."
+  (-> (.getItem AsyncStorage db-id)
+      (.then #(save-db % new-id))
+      (.then (fn [_]
+               (set-cur-id new-id)))
+      (.then (fn [_]
+               (del-savegame db-id)))
+      (.then (fn [_]
+               (.getItem AsyncStorage db-id)))
+      (.then (fn [_]
+               (load-db callback new-id)))))
 
 (defn rename-save [db-id new-id callback]
   "Rename savegame, if db-id does not already exist."
-  (when (and (contains? @all-savegames db-id)
-             (not (empty? new-id))
-             (not (contains? @all-savegames new-id)))
-    (-> (.getItem AsyncStorage db-id)
-        (.then #(save-db % new-id))
-        (.then (fn [_]
-                 (set-cur-id new-id)))
-        (.then (fn [_]
-                 (del-savegame db-id)))
-        (.then (fn [_]
-                 (load-db callback new-id))))))
+  (when (and (not (empty? new-id))
+             (not= new-id cur-db-id-key))
+    (-> (rename-possible? db-id new-id)
+        (.then #(when %
+                  (rename-save-aux db-id new-id callback))))))
 
 (defn load-all-savegames []
   (let [aux-key-pred (fn [key] (= cur-db-id-key key))]
@@ -109,16 +123,15 @@
                           (into (sorted-set)
                                 (remove aux-key-pred %)))))))
 
-(defn new-game [callback]
-  "Creates a new savegame with a default name, loads it and calls callback on the new db."
-  (when-not (contains? @all-savegames default-db-id)
-    (-> (.setItem AsyncStorage default-db-id (pr-str app-db))
-        (.then (fn [_]
-                 (load-all-savegames)))
-        (.then (fn [_]
-                 (do
-                   (set-cur-id default-db-id)
-                   (load-db callback default-db-id)))))))
+(defn new-game [new-id callback]
+  "Creates a new savegame with new-id, loads it and calls callback on the new db."
+  (-> (id-already-present? new-id)
+      (.then #(when-not %
+                (-> (.setItem AsyncStorage new-id (pr-str app-db))
+                    (.then (fn [_]
+                             (load-all-savegames)))
+                    (.then (fn [_]
+                             (load-db callback new-id))))))))
 
 
 
@@ -154,14 +167,14 @@
 
 (reg-fx
  :new-game-in-storage
- (fn [_]
-   (new-game #(dispatch [:reload-db %]))))
+ (fn [new-id]
+   (new-game new-id #(dispatch [:reload-db %]))))
 
 (reg-event-fx
  :new-game
  validate-spec
- (fn [_ [_]]
-   {:new-game-in-storage nil}))
+ (fn [_ [_ new-id]]
+   {:new-game-in-storage new-id}))
 
 (reg-fx
  :load-db-from-storage

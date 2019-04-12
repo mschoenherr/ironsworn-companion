@@ -855,29 +855,42 @@
 
 (defn savegame-view [save]
   "Component for rendering all buttons for working on given savefile."
-  [view {:margin 1
-         :border-width 1}
-   (when (= @current-save save)
-     [subheading-view "Currently playing:"])
-   [view {:style {:flex-direction "row"}}
-    [button {:title save
-             :on-press #(do
-                          (dispatch [:load-db save])
-                          (toast (str "Loading: " save)))}]
-    [button {:title "Delete"
-             :on-press #(dispatch [:del-save save])}]
-    [text-input {:on-submit-editing #(dispatch [:rename-save save %])
-                 :placeholder "New name"}]]])
+  (let [really-delete? (atom false)]
+    (fn [save]
+      [view {:margin 1
+             :border-width 1}
+       (when (= @current-save save)
+         [subheading-view "Currently playing:"])
+       [view {:style {:flex-direction "row"}}
+        [button {:title save
+                 :on-press #(do
+                              (dispatch [:load-db save])
+                              (toast (str "Loading: " save)))}]
+        (if @really-delete?
+          [button {:title "Really Delete"
+                   :on-press #(dispatch [:del-save save])}]
+          [button {:title "Delete"
+                   :on-press #(swap! really-delete? not)}])
+        [text-input {:on-submit-editing #(dispatch [:rename-save save %])
+                     :placeholder "New name"}]]])))
 
 (defn savegame-menu []
   "Component for loading and saving games"
-  [view {:style {:flex 7}}
-   [heading-view "Campaigns"]
-   (for [save @all-savegames]
-     ^{:key save}
-     [savegame-view save])
-   [button {:title "New Game"
-            :on-press #(dispatch [:new-game])}]])
+  (let [input-new? (atom false)]
+    (fn []
+      [view {:style {:flex 7}}
+       [heading-view "Campaigns"]
+       (for [save @all-savegames]
+         ^{:key save}
+         [savegame-view save])
+       (if @input-new?
+         [text-input {:on-submit-editing #(do
+                                            (swap! input-new? not)
+                                            (toast "Please wait a sec.")
+                                            (dispatch [:new-game %]))
+                      :placeholder "Type a name here"}]
+         [button {:title "New Game"
+                  :on-press #(swap! input-new? not)}])])))
 
 ;; world-views
 (defn quest-starter-view [starter]
