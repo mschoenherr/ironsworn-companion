@@ -90,10 +90,14 @@
 (defn del-savegame [db-id]
   "Delete savegame with given id from storage."
   (-> (.getItem AsyncStorage cur-db-id-key)
-      (.then #(when (not= db-id %)
-                (-> (.removeItem AsyncStorage db-id)
-                    (.then (fn [_]
-                             (swap! all-savegames disj db-id))))))))
+      (.then (fn [cur-id]
+               (-> (.removeItem AsyncStorage db-id)
+                   (.then (fn [_]
+                            (swap! all-savegames disj db-id)))
+                   (.then (fn [_]
+                            (when (= cur-id db-id)
+                              (reset! current-save nil)
+                              (.removeItem AsyncStorage cur-db-id-key)))))))))
 
 (defn- rename-save-aux [db-id new-id callback]
   "Rename savegame. No saveguards."
@@ -129,9 +133,7 @@
       (.then #(when-not %
                 (-> (.setItem AsyncStorage new-id (pr-str app-db))
                     (.then (fn [_]
-                             (load-all-savegames)))
-                    (.then (fn [_]
-                             (load-db callback new-id))))))))
+                             (load-all-savegames))))))))
 
 
 
