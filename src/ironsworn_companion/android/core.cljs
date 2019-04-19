@@ -36,6 +36,8 @@
 
 (defn init []
   (dispatch-sync [:initialize-db])
+  (dispatch-sync [:load-list-of-saves])
+  (dispatch-sync [:load-default-db])
   (.addEventListener back-handler "hardwareBackPress" (fn []
                                                         (dispatch [:go-back])
                                                         true))

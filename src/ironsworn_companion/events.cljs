@@ -155,6 +155,28 @@
 
 ;; -- Handlers --------------------------------------------------------------
 
+(reg-fx
+ :load-list-of-saves-fx
+ (fn [_]
+   (load-all-savegames)))
+
+(reg-event-fx
+ :load-list-of-saves
+ validate-spec
+ (fn [_ _]
+   {:load-list-of-saves-fx nil}))
+
+(reg-fx
+ :load-default-db-fx
+ (fn [_]
+   (load-db #(dispatch [:reload-db %]))))
+
+(reg-event-fx
+ :load-default-db
+ validate-spec
+ (fn [_ _]
+   {:load-default-db-fx nil}))
+
 (reg-event-db
  :initialize-db
  validate-spec

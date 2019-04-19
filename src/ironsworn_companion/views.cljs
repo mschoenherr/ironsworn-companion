@@ -892,7 +892,7 @@
          [button {:title "New Game"
                   :on-press #(swap! input-new? not)}])
        (when (not @current-save)
-         [text "Currently, there is no campaign loaded. Create one. Then load it by tapping its name, or your progress will not be saved. Then, just pull in the drawer menu from the left."])])))
+         [text "Please wait a moment while saved games are loaded, or create a new one and tap its name to play it. Otherwise your progress will be lost."])])))
 
 ;; world-views
 (defn quest-starter-view [starter]
