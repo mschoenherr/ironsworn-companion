@@ -38,7 +38,9 @@
 
 (defn set-cur-id [db-id]
   "Sets the default id to db-id. Returns a promise."
-  (.setItem AsyncStorage cur-db-id-key db-id))
+  (do
+    (reset! current-save db-id)
+    (.setItem AsyncStorage cur-db-id-key db-id)))
 
 (defn id-already-present? [db-id]
   "Checks wether a given id is already present. Returns a promise."
@@ -48,8 +50,8 @@
 (defn rename-possible? [old-id new-id]
   "Checks wether a rename is possible. Returns a promise."
   (-> (.getAllKeys AsyncStorage)
-      (.then #(and (contains? % old-id)
-                   (not (contains? % new-id))))))
+      (.then #(and (some #{old-id} % )
+                   (not (some #{new-id} %))))))
 
 (declare new-game)
 
@@ -65,7 +67,6 @@
        (.then #(when %
                 (-> (set-cur-id db-id)
                     (.then (fn [_] (swap! all-savegames conj db-id)))
-                    (.then (fn [_] (reset! current-save db-id)))
                     (.then (fn [_] (cljs.reader/read-string %)))
                     (.then callback)))))))
 
@@ -114,8 +115,7 @@
 
 (defn rename-save [db-id new-id callback]
   "Rename savegame, if db-id does not already exist."
-  (when (and (not (empty? new-id))
-             (not= new-id cur-db-id-key))
+  (when (not (empty? new-id))
     (-> (rename-possible? db-id new-id)
         (.then #(when %
                   (rename-save-aux db-id new-id callback))))))
