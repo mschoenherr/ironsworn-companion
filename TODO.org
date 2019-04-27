@@ -1,6 +1,5 @@
 * unflicker switches 
   probably by using dispatch-sync and re-frame/flush
 * further split up bigger views and refactor (unifying smaller components for a uniform look)
-* remove unnecessary permissions (react native issue)
-* cleary indicate drawer menu
 * import/export functionality for custom assets, etc. or backup of a campaign
+* transition save system (and backend) to a stable solution
