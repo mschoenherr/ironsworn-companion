@@ -1,4 +1,3 @@
-* unflicker switches 
   probably by using dispatch-sync and re-frame/flush
 * further split up bigger views and refactor (unifying smaller components for a uniform look)
 * import/export functionality for custom assets, etc. or backup of a campaign
